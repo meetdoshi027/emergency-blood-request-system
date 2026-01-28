@@ -1,0 +1,57 @@
+.contact-path {
+  width: 100%;
+  min-height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+/* light & elegant overlay */
+.contact-path-overlay {
+  width: 100%;
+  padding: 80px 60px;
+  background: rgba(255, 245, 245, 0.88); /* very light red */
+}
+
+/* title */
+.contact-path h2 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #9b1c1c; /* blood red */
+  margin-bottom: 12px;
+}
+
+/* breadcrumb */
+.breadcrumb {
+  display: flex;
+  gap: 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #9b1c1c;
+  font-weight: 500;
+}
+
+.breadcrumb .active {
+  color: #444;
+  font-weight: 600;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .contact-path {
+    min-height: 220px;
+  }
+
+  .contact-path-overlay {
+    padding: 50px 25px;
+  }
+
+  .contact-path h2 {
+    font-size: 28px;
+  }
+}

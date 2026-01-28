@@ -1,0 +1,87 @@
+.donor-cta {
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  padding: 120px 20px;
+  position: relative;
+}
+
+.donor-overlay {
+  background: rgba(177, 18, 38, 0.9); /* blood red overlay */
+  padding: 80px 20px;
+}
+
+.donor-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+}
+
+.donor-content img {
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+.donor-content h2 {
+  font-size: 44px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.donor-content p {
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+/* BUTTONS */
+.donor-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.donor-primary {
+  background: #ffffff;
+  color: #b11226;
+  border: none;
+  padding: 16px 36px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.donor-secondary {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  padding: 16px 36px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.donor-primary:hover {
+  background: #ffeaea;
+}
+
+.donor-secondary:hover {
+  background: #ffffff;
+  color: #b11226;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .donor-content h2 {
+    font-size: 32px;
+  }
+
+  .donor-content p {
+    font-size: 16px;
+  }
+}

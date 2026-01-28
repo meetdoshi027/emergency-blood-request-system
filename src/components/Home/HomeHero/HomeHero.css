@@ -1,0 +1,115 @@
+.home-hero {
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  padding: 90px 20px;
+}
+
+/* Layout */
+.home-hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/* Text */
+.home-hero-text {
+  flex: 1;
+}
+
+.home-hero-text h1 {
+  font-size: 44px;
+  font-weight: 800;
+  color: #8b0000;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.home-hero-text h1 span {
+  color: #c62828;
+}
+
+.home-hero-text p {
+  font-size: 18px;
+  color: #444;
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.home-hero-actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.home-hero-actions button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.home-hero-actions img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Primary */
+.btn-primary {
+  background: #c62828;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #8b0000;
+}
+
+/* Secondary */
+.btn-secondary {
+  background: transparent;
+  color: #c62828;
+  border: 2px solid #c62828;
+}
+
+.btn-secondary:hover {
+  background: #ffecec;
+}
+
+/* Image */
+.home-hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.home-hero-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .home-hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .home-hero-text p {
+    margin: 0 auto 30px;
+  }
+
+  .home-hero-actions {
+    justify-content: center;
+  }
+}

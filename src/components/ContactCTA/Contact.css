@@ -1,0 +1,43 @@
+.contacthp {
+  background: linear-gradient(135deg, #b11226, #e53935);
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.contactcon {
+  background: #ffffff;
+  padding: 50px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 900px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.contactcon p {
+  color: #b11226;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.contactbtn {
+  background: #b11226;
+  color: #fff;
+  font-size: 18px;
+  padding: 12px 36px;
+  border: none;
+  border-radius: 30px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contactbtn:hover {
+  background: #e53935;
+}
+
+@media (max-width: 480px) {
+  .contactcon {
+    padding: 30px 20px;
+  }
+}

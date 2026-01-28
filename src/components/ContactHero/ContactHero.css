@@ -1,0 +1,59 @@
+.contact-hero {
+  width: 100%;
+  background-image: url("../../assets/contactus1bg.png");
+  background-size: cover;
+  background-position: center;
+  padding: 100px 20px;
+}
+
+.contact-hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/* LEFT CONTENT */
+.contact-hero-text {
+  flex: 1;
+}
+
+.contact-hero-text h1 {
+  font-size: 44px;
+  font-weight: 700;
+  color: #9b1c1c;
+  margin-bottom: 20px;
+}
+
+.contact-hero-text p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #555;
+  max-width: 520px;
+}
+
+/* RIGHT IMAGE */
+.contact-hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-hero-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .contact-hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contact-hero-text p {
+    margin: 0 auto;
+  }
+}

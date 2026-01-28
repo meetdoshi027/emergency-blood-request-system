@@ -1,0 +1,96 @@
+.navlogo {
+    max-height: 75px;
+    max-width: 100px;
+}
+
+.navtit {
+    font-size: 34px;
+    font-weight: 600;
+    color: #d10000 !important;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.navitem {
+    font-size: 22px;
+    font-weight: 500;
+    padding-right: 30px;
+}
+.dropdown-menu {
+    z-index: 1050;
+}
+.nav-link:hover{
+    color: #d10000 !important;
+}
+@media (max-width: 1024px) {
+    .navlogo {
+    max-height: 50px;
+    max-width: 50px;
+   }
+
+    .navtit {
+        font-size: 24px;
+    }
+
+    .navitem,
+    .navdrop {
+        font-size: 18px;
+        padding-right: 12px;
+    }
+
+    .navdrop1 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navlogo {
+        max-height: 50px;
+        max-width: 50px;
+    }
+
+    .navtit {
+        font-size: 17px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .navitem,
+    .navdrop {
+        padding-right: 0;
+        font-size: 14px;
+        padding-bottom: 10px;
+    }
+
+    .dropdown-menu {
+        text-align: center;
+    }
+}
+
+@media (max-width: 420px) {
+    .navlogo {
+        max-height: 50px;
+        max-width: 65px;
+    }
+
+    .navtit {
+        font-size: 24px;
+    }
+
+    .navitem,
+    .navdrop {
+        font-size: 16px;
+        padding: 8px 0;
+    }
+
+    .navdrop1 {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    .navbar-nav {
+        padding-bottom: 10px;
+    }
+}

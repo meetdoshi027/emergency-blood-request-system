@@ -1,0 +1,52 @@
+.stats-section {
+  background-image: url("../../../assets/stats-bg.png");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
+
+.stats-overlay {
+  background: rgba(177, 18, 38, 0.9); /* deep blood red */
+  padding: 90px 20px;
+}
+
+.stats-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  text-align: center;
+}
+
+.stat-card {
+  color: #fff;
+}
+
+.stat-card img {
+  width: 60px;
+  margin-bottom: 20px;
+}
+
+.stat-card h3 {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.stat-card p {
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffeaea;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-overlay {
+    padding: 60px 15px;
+  }
+
+  .stat-card h3 {
+    font-size: 28px;
+  }
+}
