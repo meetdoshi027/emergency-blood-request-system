@@ -8,6 +8,8 @@ import IndRegister from "./components/Register/IndRegister";
 import OrgRegister from "./components/Register/OrgRegister";
 import Contactus from './components/pages/Contactus.jsx';
 import Aboutus from './components/Aboutus/Aboutus';
+import AdminLogin from './components/admin/AdminLogin';
+import AdminDashboard from './components/admin/AdminDashboard';
 import Donate from './components/Donate/Donate';
 import Footer from './components/footer/footer';
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/register/organization" element={<OrgRegister />} />
          <Route path="/aboutus" element={<Aboutus />} /> 
         <Route path="/contactus" element={<Contactus />} /> 
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
          <Route path="/donate" element={<Donate />} /> 
       </Routes>
 

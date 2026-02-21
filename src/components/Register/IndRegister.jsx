@@ -96,12 +96,17 @@ const IndRegister = () => {
   if (!isFormValid) return;
 
   try {
-    const response = await axios.post(
-      "https://localhost:7156/api/Auth/register",
-      form
-    );
+  const payload = {
+  ...form,
+  dob: form.dob
+};
 
-    alert(response.data);
+const response = await axios.post(
+  "https://localhost:7156/api/Auth/register",
+  payload
+);
+
+   alert(response.data.message);
 
     setForm({
       fullName: "",
@@ -116,12 +121,24 @@ const IndRegister = () => {
     });
 
   } catch (error) {
-    if (error.response) {
-      alert(error.response.data);
-    } else {
-      alert("Server error. Please try again.");
+  if (error.response) {
+
+    // ASP.NET validation errors
+    if (error.response.data.errors) {
+      const firstError = Object.values(error.response.data.errors)[0][0];
+      alert(firstError);
     }
+    else if (error.response.data.message) {
+      alert(error.response.data.message);
+    }
+    else {
+      alert("Registration failed.");
+    }
+
+  } else {
+    alert("Server not reachable.");
   }
+}
 };
 
 
@@ -204,15 +221,3 @@ const IndRegister = () => {
 };
 
 export default IndRegister;
-
-
-
-
-
-
-
-
-
-
-
-
