@@ -1,4 +1,6 @@
 import React from "react";
+import donorboy from '../../assets/donorboy.png';
+import savedonate from "../../assets/savedonate.jpeg";
 import "./Donate.css";
 
 const Donate = () => {
@@ -14,7 +16,7 @@ const Donate = () => {
         </div>
 
         <div className="hero-image">
-          <img src="/hero-donor.png" alt="Blood Donor" />
+          <img src={donorboy} alt="Blood Donor" />
         </div>
       </section>
 
@@ -32,7 +34,7 @@ const Donate = () => {
       {/* Blood Type Matching */}
       <section className="blood-types">
         <h2>Who Can You Save?</h2>
-        <img src="/blood-table.png" alt="Blood Compatibility" />
+        <img src={savedonate} alt="Blood Compatibility" />
       </section>
 
       {/* Donation Process */}
