@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link,useLocation } from "react-router-dom";
 import "./Indlogin.css";
+import axios from "axios";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import loginimg from "../../assets/loginimg.png";
 
@@ -19,7 +20,7 @@ const Indlogin = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const role = isOrg ? "organization" : "individual";
+  //const role = isOrg ? "organization" : "individual";
 
   /* ---------------- SWITCH ---------------- */
   const handleSwitchChange = () => {
@@ -57,23 +58,45 @@ const Indlogin = () => {
   };
 
   /* ---------------- SUBMIT ---------------- */
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
+  const emailError = validateEmail(email);
+  const passwordError = validatePassword(password);
 
-    if (emailError || passwordError) {
-      setErrors({
-        email: emailError,
-        password: passwordError,
-      });
-      return;
+  if (emailError || passwordError) {
+    setErrors({
+      email: emailError,
+      password: passwordError,
+    });
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      "https://localhost:7156/api/Auth/login",
+      {
+        email,
+        password
+      }
+    );
+
+    alert(response.data.message);
+
+    // Save login session
+    localStorage.setItem("userId", response.data.userId);
+
+    // redirect (later dashboard)
+    window.location.href = "/";
+
+  } catch (error) {
+    if (error.response?.data?.message) {
+      alert(error.response.data.message);
+    } else {
+      alert("Server error");
     }
-
-    console.log("Login Data:", { role, email, password });
-    // API call here
-  };
+  }
+};
 
   return (
     <div className="login-page">
