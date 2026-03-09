@@ -88,49 +88,52 @@ const OrgRegister = () => {
       : form.licenseNumber);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!isFormValid) return;
+  e.preventDefault();
+  if (!isFormValid) return;
 
-    try {
-      const response = await axios.post(
-        "https://localhost:7156/api/Organization/register",
-        {
-          organizationType: form.orgType,
-          name: form.organizationName,
-          email: form.email,
-          username: form.username,
-          password: form.password,
-          phone: form.phone,
-          address: form.address,
-          city: form.city,
-          registrationNumber: form.registrationNumber,
-          licenseNumber: form.licenseNumber,
-        }
-      );
+  try {
+    const response = await axios.post(
+      "https://localhost:7156/api/Organization/register",
+      {
+        organizationType: form.orgType,
+        name: form.organizationName,
+        email: form.email,
+        username: form.username,
+        password: form.password,
+        phone: form.phone,
+        address: form.address,
+        city: form.city,
+        registrationNumber: form.registrationNumber,
+        licenseNumber: form.licenseNumber,
+      }
+    );
 
-      alert(response.data);
+    // FIXED LINE
+    alert(response.data.message);
 
-      setForm({
-        organizationName: "",
-        orgType: "",
-        username: "",
-        email: "",
-        password: "",
-        phone: "",
-        city: "",
-        address: "",
-        registrationNumber: "",
-        licenseNumber: "",
-      });
-    } catch (error) {
-      alert(
-        typeof error.response?.data === "string"
-          ? error.response.data
-          : error.response?.data?.message || "Server error"
-      );
+    setForm({
+      organizationName: "",
+      orgType: "",
+      username: "",
+      email: "",
+      password: "",
+      phone: "",
+      city: "",
+      address: "",
+      registrationNumber: "",
+      licenseNumber: "",
+    });
+
+  } catch (error) {
+
+    if (error.response?.data?.message) {
+      alert(error.response.data.message);
+    } else {
+      alert("Server error");
     }
-  };
 
+  }
+};
   return (
     <div className="register-page">
       <div className="register-container">
