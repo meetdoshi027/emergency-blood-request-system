@@ -1,226 +1,301 @@
+/* ================= PAGE ================= */
+
 .donate-page {
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(to bottom, #fff5f5, #ffffff);
-  color: #333;
-  overflow-x: hidden;
+font-family: "Poppins", sans-serif;
+background: linear-gradient(to bottom, #fff5f5, #ffffff);
+color: #333;
+overflow-x: hidden;
 }
 
 /* ================= HERO ================= */
 
 .donate-hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 80px 8%;
-  min-height: 80vh;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 80px 8%;
+min-height: 80vh;
 }
 
 .hero-text {
-  max-width: 500px;
+max-width: 500px;
 }
 
 .hero-text h1 {
-  font-size: 48px;
-  color: #c1121f;
-  font-weight: 700;
-  line-height: 1.2;
+font-size: 48px;
+color: #c1121f;
+font-weight: 700;
+line-height: 1.2;
 }
 
 .hero-text p {
-  margin: 20px 0;
-  font-size: 18px;
-  color: #555;
+margin: 20px 0;
+font-size: 18px;
+color: #555;
 }
 
 .primary-btn {
-  background: #c1121f;
-  color: white;
-  border: none;
-  padding: 14px 32px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s ease;
-  box-shadow: 0 8px 20px rgba(193, 18, 31, 0.3);
+background: #c1121f;
+color: white;
+border: none;
+padding: 14px 32px;
+border-radius: 30px;
+cursor: pointer;
+font-size: 16px;
+transition: 0.3s ease;
+box-shadow: 0 8px 20px rgba(193, 18, 31, 0.3);
 }
 
 .primary-btn:hover {
-  background: #a00f1a;
-  transform: translateY(-3px);
+background: #a00f1a;
+transform: translateY(-3px);
 }
 
 .hero-image img {
-  width: 320px;
-  animation: float 3s ease-in-out infinite;
+width: 340px;
+animation: float 3s ease-in-out infinite;
 }
 
-/* Floating animation */
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
+0% { transform: translateY(0px); }
+50% { transform: translateY(-15px); }
+100% { transform: translateY(0px); }
 }
 
 /* ================= WHY DONATE ================= */
 
 .why-donate {
-  padding: 80px 8%;
-  text-align: center;
+padding: 80px 8%;
+text-align: center;
 }
 
 .why-donate h2 {
-  font-size: 32px;
-  color: #c1121f;
-  margin-bottom: 40px;
+font-size: 32px;
+color: #c1121f;
+margin-bottom: 40px;
 }
 
 .why-cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 30px;
 }
 
 .card {
-  background: white;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.06);
-  transition: 0.3s ease;
+background: white;
+padding: 30px;
+border-radius: 16px;
+box-shadow: 0 15px 30px rgba(0,0,0,0.06);
+transition: 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(193, 18, 31, 0.15);
+transform: translateY(-10px);
+box-shadow: 0 20px 40px rgba(193,18,31,0.15);
 }
 
 .card h4 {
-  margin-top: 15px;
-  color: #c1121f;
+margin-top: 15px;
+color: #c1121f;
 }
 
 .card p {
-  font-size: 14px;
-  margin-top: 10px;
-  color: #666;
+font-size: 14px;
+margin-top: 10px;
+color: #666;
 }
 
 /* ================= BLOOD TYPES ================= */
 
 .blood-types {
-  padding: 80px 8%;
-  text-align: center;
-  background: #fff;
+padding: 80px 8%;
+text-align: center;
+background: #fff;
 }
 
 .blood-types h2 {
-  font-size: 32px;
-  color: #c1121f;
-  margin-bottom: 40px;
+font-size: 32px;
+color: #c1121f;
+margin-bottom: 40px;
 }
 
 .blood-types img {
-  width: 100%;
-  max-width: 750px;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+width: 100%;
+max-width: 750px;
+border-radius: 20px;
+box-shadow: 0 15px 40px rgba(0,0,0,0.08);
 }
 
-/* ================= PROCESS ================= */
+/* ================= DONATION PROCESS ================= */
 
 .donation-process {
-  padding: 80px 8%;
-  background: linear-gradient(to right, #fff5f5, #ffffff);
-  text-align: center;
+padding: 90px 8%;
+text-align: center;
+background: linear-gradient(to bottom,#fff5f5,#ffffff);
 }
 
 .donation-process h2 {
-  font-size: 32px;
-  color: #c1121f;
-  margin-bottom: 40px;
+font-size: 34px;
+color: #c1121f;
+margin-bottom: 60px;
 }
 
 .process-steps {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
+display: flex;
+justify-content: center;
+gap: 40px;
+flex-wrap: wrap;
 }
 
-.step {
-  background: white;
-  padding: 25px 30px;
-  border-radius: 14px;
-  font-weight: 600;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  transition: 0.3s ease;
+/* CARD */
+
+.process-card {
+width: 260px;
+height: 260px;
+perspective: 1000px;
+transition: transform 0.3s ease;
 }
 
-.step:hover {
-  background: #c1121f;
-  color: white;
-  transform: scale(1.05);
+.card-inner {
+width: 100%;
+height: 100%;
+position: relative;
+transform-style: preserve-3d;
+transition: transform 0.7s;
+}
+
+.process-card:hover .card-inner {
+transform: rotateY(180deg);
+}
+
+/* FRONT */
+
+.card-front {
+position: absolute;
+width: 100%;
+height: 140%;
+background: white;
+border-radius: 18px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+padding: 20px;
+box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+backface-visibility: hidden;
+}
+
+.card-front img {
+width: 100%;
+max-width: 200px;
+height: 100%;
+object-fit: contain;
+}
+
+.card-front h4 {
+margin-top: 12px;
+color: #c1121f;
+font-size: 17px;
+}
+
+/* BACK */
+
+.card-back {
+position: absolute;
+width: 100%;
+height: 140%;
+background: linear-gradient(135deg,#c1121f,#e63946);
+color: white;
+border-radius: 18px;
+transform: rotateY(180deg);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 20px;
+backface-visibility: hidden;
+box-shadow: 0 15px 35px rgba(193,18,31,0.3);
+}
+
+.card-back h3 {
+margin-bottom: 10px;
+}
+
+.card-back p {
+font-size: 14px;
+text-align: center;
+}
+
+/* Hover lift */
+
+.process-card:hover {
+transform: translateY(-10px);
 }
 
 /* ================= ELIGIBILITY ================= */
 
 .eligibility {
-  padding: 80px 8%;
-  background: #fff;
+padding: 80px 8%;
+background: #fff;
 }
 
 .eligibility h2 {
-  font-size: 32px;
-  color: #c1121f;
-  margin-bottom: 30px;
+font-size: 32px;
+color: #c1121f;
+margin-bottom: 30px;
 }
 
 .eligibility ul {
-  list-style: none;
-  padding: 0;
+list-style: none;
+padding: 0;
 }
 
 .eligibility li {
-  margin-bottom: 15px;
-  padding-left: 25px;
-  position: relative;
-  font-size: 16px;
+margin-bottom: 15px;
+padding-left: 25px;
+position: relative;
+font-size: 16px;
 }
 
 .eligibility li::before {
-  content: "✔";
-  color: #c1121f;
-  position: absolute;
-  left: 0;
+content: "✔";
+color: #c1121f;
+position: absolute;
+left: 0;
 }
 
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 1000px) {
-  .why-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
 
-  .donate-hero {
-    flex-direction: column;
-    text-align: center;
-  }
+.why-cards {
+grid-template-columns: repeat(2,1fr);
+}
 
-  .hero-image {
-    margin-top: 40px;
-  }
+.donate-hero {
+flex-direction: column;
+text-align: center;
+}
+
+.hero-image {
+margin-top: 40px;
+}
+
 }
 
 @media (max-width: 600px) {
-  .why-cards {
-    grid-template-columns: 1fr;
-  }
 
-  .hero-text h1 {
-    font-size: 34px;
-  }
+.why-cards {
+grid-template-columns: 1fr;
+}
 
-  .process-steps {
-    flex-direction: column;
-    gap: 20px;
-  }
+.hero-text h1 {
+font-size: 34px;
+}
+
+.process-steps {
+flex-direction: column;
+gap: 25px;
+}
+
 }

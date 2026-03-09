@@ -1,6 +1,10 @@
 import React from "react";
 import donorboy from '../../assets/donorboy.png';
 import savedonate from "../../assets/savedonate.jpeg";
+import process1 from "../../assets/donationprocess1.png";
+import process2 from "../../assets/donationprocess2.png";
+import process3 from "../../assets/donationprocess3.png";
+import process4 from "../../assets/donationprocess4.png";
 import "./Donate.css";
 
 const Donate = () => {
@@ -38,15 +42,89 @@ const Donate = () => {
       </section>
 
       {/* Donation Process */}
-      <section className="donation-process">
+      {/* <section className="donation-process">
         <h2>Donation Process</h2>
+        
         <div className="process-steps">
+         
           <div className="step">1️⃣ Register</div>
+           <img src={process1} alt="Blood Compatibility" />
           <div className="step">2️⃣ Get Matched</div>
+           <img src={process2} alt="Blood Compatibility" />
           <div className="step">3️⃣ Donate</div>
+           <img src={process3} alt="Blood Compatibility" />
           <div className="step">4️⃣ Save Life</div>
+           <img src={process4} alt="Blood Compatibility" />
         </div>
-      </section>
+      </section> */}
+      {/* Donation Process */}
+<section className="donation-process">
+  <h2>Donation Process</h2>
+
+  <div className="process-steps">
+
+    <div className="process-card">
+      <div className="card-inner">
+
+        <div className="card-front">
+          <img src={process1} alt="Register" />
+        </div>
+
+        <div className="card-back">
+          <h3>Register</h3>
+          <p>Create your donor account and provide your basic details.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div className="process-card">
+      <div className="card-inner">
+
+        <div className="card-front">
+          <img src={process2} alt="Get Matched" />
+        </div>
+
+        <div className="card-back">
+          <h3>Get Matched</h3>
+          <p>Our system matches your blood type with patients in need.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div className="process-card">
+      <div className="card-inner">
+
+        <div className="card-front">
+          <img src={process3} alt="Donate" />
+        </div>
+
+        <div className="card-back">
+          <h3>Donate</h3>
+          <p>Visit the donation center and donate safely with medical staff.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div className="process-card">
+      <div className="card-inner">
+
+        <div className="card-front">
+          <img src={process4} alt="Save Life" />
+        </div>
+
+        <div className="card-back">
+          <h3>Save Life</h3>
+          <p>Your blood helps save lives and gives hope to patients.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
 
       {/* Eligibility */}
       <section className="eligibility">
