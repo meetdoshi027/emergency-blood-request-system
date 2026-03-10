@@ -4,6 +4,25 @@ import axios from "axios";
 import "./Register.css";
 
 const OrgRegister = () => {
+
+  const cities = [
+    "Ahmedabad",
+    "Surat",
+    "Vadodara",
+    "Rajkot",
+    "Gandhinagar",
+    "Bhavnagar",
+    "Jamnagar",
+    "Junagadh",
+    "Anand",
+    "Navsari",
+    "Valsad",
+    "Bharuch",
+    "Patan",
+    "Mehsana",
+    "Morbi"
+  ];
+
   const [form, setForm] = useState({
     organizationName: "",
     orgType: "",
@@ -21,6 +40,7 @@ const OrgRegister = () => {
 
   const validate = (name, value) => {
     switch (name) {
+
       case "organizationName":
         return value.length < 3 ? "Organization name is too short" : "";
 
@@ -62,15 +82,27 @@ const OrgRegister = () => {
       case "orgType":
         return value ? "" : "Select organization type";
 
+      case "city":
+        return value ? "" : "Select city";
+
       default:
         return "";
     }
   };
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: validate(name, value) }));
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: validate(name, value)
+    }));
   };
 
   const isFormValid =
@@ -88,85 +120,125 @@ const OrgRegister = () => {
       : form.licenseNumber);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!isFormValid) return;
 
-  try {
-    const response = await axios.post(
-      "https://localhost:7156/api/Organization/register",
-      {
-        organizationType: form.orgType,
-        name: form.organizationName,
-        email: form.email,
-        username: form.username,
-        password: form.password,
-        phone: form.phone,
-        address: form.address,
-        city: form.city,
-        registrationNumber: form.registrationNumber,
-        licenseNumber: form.licenseNumber,
+    e.preventDefault();
+    if (!isFormValid) return;
+
+    try {
+
+      const response = await axios.post(
+        "https://localhost:7156/api/Organization/register",
+        {
+          organizationType: form.orgType,
+          name: form.organizationName,
+          email: form.email,
+          username: form.username,
+          password: form.password,
+          phone: form.phone,
+          address: form.address,
+          city: form.city,
+          registrationNumber: form.registrationNumber,
+          licenseNumber: form.licenseNumber,
+        }
+      );
+
+      alert(response.data.message);
+
+      setForm({
+        organizationName: "",
+        orgType: "",
+        username: "",
+        email: "",
+        password: "",
+        phone: "",
+        city: "",
+        address: "",
+        registrationNumber: "",
+        licenseNumber: "",
+      });
+
+    } catch (error) {
+
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("Server error");
       }
-    );
 
-    // FIXED LINE
-    alert(response.data.message);
-
-    setForm({
-      organizationName: "",
-      orgType: "",
-      username: "",
-      email: "",
-      password: "",
-      phone: "",
-      city: "",
-      address: "",
-      registrationNumber: "",
-      licenseNumber: "",
-    });
-
-  } catch (error) {
-
-    if (error.response?.data?.message) {
-      alert(error.response.data.message);
-    } else {
-      alert("Server error");
     }
+  };
 
-  }
-};
   return (
     <div className="register-page">
       <div className="register-container">
+
         <h2>Organization Registration</h2>
 
         <form className="register-form grid" onSubmit={handleSubmit}>
-          {[
-            ["organizationName", "Organization Name"],
-            ["username", "Username"],
-            ["email", "Email Address"],
-            ["password", "Password"],
-            ["phone", "Phone Number"],
-            ["city", "City"],
-          ].map(([name, placeholder]) => (
-            <div key={name}>
-              <input
-                type={name === "password" ? "password" : "text"}
-                name={name}
-                placeholder={placeholder}
-                value={form[name]}
-                onChange={handleChange}
-              />
-              {errors[name] && (
-                <span className="error-text">{errors[name]}</span>
-              )}
-            </div>
-          ))}
+
+          <input
+            type="text"
+            name="organizationName"
+            placeholder="Organization Name"
+            value={form.organizationName}
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={form.email}
+            onChange={handleChange}
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone Number"
+            value={form.phone}
+            onChange={handleChange}
+          />
+
+          {/* CITY DROPDOWN */}
+          <select
+            name="city"
+            value={form.city}
+            onChange={handleChange}
+          >
+            <option value="">Select City</option>
+
+            {cities.map((city, index) => (
+              <option key={index} value={city}>
+                {city}
+              </option>
+            ))}
+
+          </select>
+
 
           {/* Organization Type */}
           <div className="org-type full-width">
             <p className="section-label">Organization Type</p>
 
             <div className="radio-cards">
+
               <label className={form.orgType === "BloodBank" ? "active" : ""}>
                 <input
                   type="radio"
@@ -188,47 +260,42 @@ const OrgRegister = () => {
                 />
                 🏥 Hospital
               </label>
+
             </div>
           </div>
 
-          {/* Hospital Registration Number */}
+
           {form.orgType === "Hospital" && (
-            <div className="full-width">
-              <input
-                type="text"
-                name="registrationNumber"
-                placeholder="Hospital Registration Number"
-                value={form.registrationNumber}
-                onChange={handleChange}
-              />
-            </div>
-          )}
-
-          {/* Blood Bank License Number */}
-          {form.orgType === "BloodBank" && (
-            <div className="full-width">
-              <input
-                type="text"
-                name="licenseNumber"
-                placeholder="Blood Bank License Number"
-                value={form.licenseNumber}
-                onChange={handleChange}
-              />
-            </div>
-          )}
-
-          <div className="full-width">
-            <textarea
-              name="address"
-              placeholder="Organization Address"
-              value={form.address}
+            <input
+              type="text"
+              name="registrationNumber"
+              placeholder="Hospital Registration Number"
+              value={form.registrationNumber}
               onChange={handleChange}
             />
-          </div>
+          )}
+
+          {form.orgType === "BloodBank" && (
+            <input
+              type="text"
+              name="licenseNumber"
+              placeholder="Blood Bank License Number"
+              value={form.licenseNumber}
+              onChange={handleChange}
+            />
+          )}
+
+          <textarea
+            name="address"
+            placeholder="Organization Address"
+            value={form.address}
+            onChange={handleChange}
+          />
 
           <button type="submit" disabled={!isFormValid}>
             Register Organization
           </button>
+
         </form>
 
         <div className="register-footer">
@@ -237,6 +304,7 @@ const OrgRegister = () => {
             Login here
           </Link>
         </div>
+
       </div>
     </div>
   );
