@@ -6,9 +6,12 @@ import process2 from "../../assets/donationprocess2.png";
 import process3 from "../../assets/donationprocess3.png";
 import process4 from "../../assets/donationprocess4.png";
 import eligibility from "../../assets/eligibility.png"
+import { useNavigate } from "react-router-dom";
 import "./Donate.css";
 
+
 const Donate = () => {
+const navigate = useNavigate();
   return (
     <div className="donate-page">
 
@@ -17,7 +20,7 @@ const Donate = () => {
         <div className="hero-text">
           <h1>Become a Blood Hero</h1>
           <p>Save lives with your blood donation</p>
-          <button className="primary-btn">Register as Donor</button>
+          <button className="primary-btn" onClick={()=> navigate("/DonorRegister")}>Register as Donor</button>
         </div>
 
         <div className="hero-image">

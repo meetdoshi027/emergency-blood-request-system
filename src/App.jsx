@@ -13,7 +13,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import BloodRequest from './components/BloodRequest/BloodRequest';
 import Donate from './components/Donate/Donate';
 import Footer from './components/footer/footer';
-
+import DonorRegister from './components/Register/DonorRegister.jsx';
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
          <Route path="/donate" element={<Donate />} /> 
           <Route path="/bloodrequest" element={<BloodRequest />} /> 
+          <Route path="/donorregister" element={<DonorRegister />} /> 
       </Routes>
 
       <Footer/>
