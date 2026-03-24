@@ -36,7 +36,7 @@ const Navbar = () => {
             </li>
 
             <li className="nav-item navitem">
-              <Link className="nav-link" to="#">Event</Link>
+              <Link className="nav-link" to="/event">Event</Link>
             </li>
 
             <li className="nav-item navitem">

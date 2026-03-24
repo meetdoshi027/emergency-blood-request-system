@@ -11,7 +11,9 @@ import Aboutus from './components/Aboutus/Aboutus';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import Donate from './components/Donate/Donate';
+import Event from './components/Event/Event';
 import Footer from './components/footer/footer';
+
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
          <Route path="/donate" element={<Donate />} /> 
+         <Route path="/event" element={<Event />} /> 
+
       </Routes>
 
       <Footer/>

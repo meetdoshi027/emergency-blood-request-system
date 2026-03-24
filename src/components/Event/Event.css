@@ -1,0 +1,116 @@
+/* 🌄 BACKGROUND */
+.event-container{
+width:100%;
+min-height:100vh;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+padding:30px;
+position:relative;
+z-index:1;
+}
+
+/* 🌑 DARK OVERLAY */
+.event-container::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+z-index:-1;
+}
+
+/* 🎯 TITLES */
+.main-title{
+text-align:center;
+color:#fff;
+margin-bottom:25px;
+font-size:28px;
+}
+
+.section-title{
+margin:25px 0 15px;
+font-size:22px;
+color:#fff;
+}
+
+/* 📦 GRID (4 CARDS) */
+.event-grid{
+display:grid;
+grid-template-columns: repeat(4, 1fr);
+gap:20px;
+}
+
+/* 🧊 GLASS CARD */
+.event-card{
+background: rgba(255,255,255,0.15);
+backdrop-filter: blur(10px);
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,0.3);
+transition:0.3s;
+color:#fff;
+}
+
+.event-card:hover{
+transform:translateY(-5px);
+}
+
+/* 🖼 IMAGE */
+.event-card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+/* 📄 CONTENT */
+.event-content{
+padding:15px;
+}
+
+.event-content h3{
+margin-bottom:8px;
+}
+
+.event-content p{
+font-size:14px;
+color:#ddd;
+}
+
+.desc{
+font-size:13px;
+color:#ccc;
+margin-top:5px;
+}
+
+/* 🔘 BUTTON */
+.btn{
+margin-top:10px;
+background:linear-gradient(45deg,#ff0000,#c40000);
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* ❌ NO DATA */
+.no-data{
+text-align:center;
+color:#fff;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width:1024px){
+.event-grid{
+grid-template-columns: repeat(2,1fr);
+}
+}
+
+@media (max-width:600px){
+.event-grid{
+grid-template-columns:1fr;
+}
+}
