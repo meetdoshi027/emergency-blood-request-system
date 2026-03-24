@@ -3,6 +3,7 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* ================= PAGE ================= */
 
 .register-page {
   min-height: 100vh;
@@ -12,6 +13,7 @@
   padding: 40px 20px;
 }
 
+/* ================= CONTAINER ================= */
 
 .register-container {
   background: #fff;
@@ -22,7 +24,6 @@
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
 }
 
-
 .register-container h2 {
   text-align: center;
   color: #c62828;
@@ -30,6 +31,7 @@
   font-size: 28px;
 }
 
+/* ================= FORM GRID ================= */
 
 .register-form.grid {
   display: grid;
@@ -37,32 +39,48 @@
   gap: 20px;
 }
 
+/* ================= INPUTS ================= */
 
 .register-form input,
-.register-form textarea {
+.register-form textarea,
+.register-form select {
   width: 100%;
   padding: 14px 16px;
   border-radius: 12px;
   border: 1px solid #ccc;
   font-size: 14px;
+  background: #fff;
 }
+
+/* Remove default select styling */
+.register-form select {
+  appearance: none;
+  cursor: pointer;
+}
+
+/* ================= TEXTAREA ================= */
 
 .register-form textarea {
   resize: none;
   min-height: 100px;
 }
 
+/* ================= FOCUS ================= */
+
 .register-form input:focus,
-.register-form textarea:focus {
+.register-form textarea:focus,
+.register-form select:focus {
   outline: none;
   border-color: #c62828;
 }
 
+/* ================= FULL WIDTH FIELDS ================= */
 
 .full-width {
   grid-column: span 2;
 }
 
+/* ================= SECTION LABEL ================= */
 
 .section-label {
   font-weight: 600;
@@ -70,6 +88,7 @@
   color: #444;
 }
 
+/* ================= RADIO CARDS ================= */
 
 .radio-cards {
   display: flex;
@@ -97,6 +116,7 @@
   color: #c62828;
 }
 
+/* ================= ERROR TEXT ================= */
 
 .error-text {
   font-size: 12px;
@@ -105,6 +125,7 @@
   display: block;
 }
 
+/* ================= BUTTON ================= */
 
 .register-form button {
   grid-column: span 2;
@@ -116,6 +137,11 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.register-form button:hover {
+  background: #b71c1c;
 }
 
 .register-form button:disabled {
@@ -123,6 +149,7 @@
   cursor: not-allowed;
 }
 
+/* ================= FOOTER ================= */
 
 .register-footer {
   text-align: center;
@@ -135,8 +162,10 @@
   text-decoration: none;
 }
 
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
+
   .register-form.grid {
     grid-template-columns: 1fr;
   }
@@ -148,4 +177,5 @@
   .radio-cards {
     flex-direction: column;
   }
+
 }

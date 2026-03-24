@@ -10,10 +10,11 @@ import Contactus from './components/pages/Contactus.jsx';
 import Aboutus from './components/Aboutus/Aboutus';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
+import BloodRequest from './components/BloodRequest/BloodRequest';
 import Donate from './components/Donate/Donate';
 import Event from './components/Event/Event';
 import Footer from './components/footer/footer';
-
+import DonorRegister from './components/Register/DonorRegister.jsx';
 
 
 function App() {
@@ -32,8 +33,13 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
          <Route path="/donate" element={<Donate />} /> 
+<<<<<<< HEAD
          <Route path="/event" element={<Event />} /> 
 
+=======
+          <Route path="/bloodrequest" element={<BloodRequest />} /> 
+          <Route path="/donorregister" element={<DonorRegister />} /> 
+>>>>>>> a94a6dd2c36922723d55e62c847f847129fcd1d1
       </Routes>
 
       <Footer/>

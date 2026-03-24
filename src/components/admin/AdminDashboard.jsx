@@ -1,106 +1,65 @@
-import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import React from "react";
 import "./Admin.css";
 
 const AdminDashboard = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  /* ===============================
-     LOAD PENDING USERS
-     =============================== */
-  const loadUsers = useCallback(async () => {
-    try {
-      const res = await axios.get(
-        "https://localhost:7156/api/admin/pending-users"
-      );
-      setUsers(res.data);
-    } catch (error) {
-      console.error("Failed to load users", error);
-      alert("Failed to load pending users");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  /* ===============================
-     ON PAGE LOAD
-     =============================== */
-  useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
-
-  /* ===============================
-     APPROVE USER
-     =============================== */
-  const approve = async (id) => {
-    try {
-      await axios.put(
-        `https://localhost:7156/api/admin/approve-user/${id}`
-      );
-      loadUsers();
-    } catch (error) {
-      console.error("Approval failed", error);
-      alert("Failed to approve user");
-    }
-  };
-
-  /* ===============================
-     REJECT USER
-     =============================== */
-  const reject = async (id) => {
-    try {
-      await axios.put(
-        `https://localhost:7156/api/admin/reject-user/${id}`
-      );
-      loadUsers();
-    } catch (error) {
-      console.error("Rejection failed", error);
-      alert("Failed to reject user");
-    }
-  };
-
-  /* ===============================
-     UI
-     =============================== */
   return (
-    <div className="admin-dashboard">
-      <h2>Pending User Approvals</h2>
+    <div className="dashboard-container">
 
-      {loading && <p className="admin-empty">Loading users...</p>}
+      {/* SIDEBAR */}
+      <aside className="sidebar">
+        <h2 className="logo">Connect Life</h2>
 
-      {!loading && users.length === 0 && (
-        <p className="admin-empty">No pending users</p>
-      )}
+        <ul className="menu">
+          <li>Dashboard</li>
+          <li>Requests</li>
+          <li>Donations</li>
+          <li>Hospitals</li>
+          <li>Blood Banks</li>
+          <li>Users</li>
+          <li>Settings</li>
+        </ul>
+      </aside>
 
-      <div className="admin-users">
-        {users.map((u) => (
-          <div className="admin-user-card" key={u.userID}>
-            <div className="admin-user-info">
-              <strong>{u.fullName}</strong>
-              <span>{u.email}</span>
-              <span>Blood Group: {u.bloodGroup}</span>
-             
-            </div>
+      {/* MAIN CONTENT */}
+      <main className="main-content">
 
-            <div className="admin-actions">
-              <button
-                className="approve"
-                onClick={() => approve(u.userID)}
-              >
-                Approve
-              </button>
+        <h1>Admin Dashboard</h1>
 
-              <button
-                className="reject"
-                onClick={() => reject(u.userID)}
-              >
-                Reject
-              </button>
-            </div>
+        {/* STATS */}
+        <div className="stats">
+
+          <div className="stat-card">
+            <h3>Pending Users</h3>
+            <p>12</p>
           </div>
-        ))}
-      </div>
+
+          <div className="stat-card">
+            <h3>Hospitals</h3>
+            <p>5</p>
+          </div>
+
+          <div className="stat-card">
+            <h3>Blood Banks</h3>
+            <p>3</p>
+          </div>
+
+          <div className="stat-card">
+            <h3>Requests</h3>
+            <p>8</p>
+          </div>
+
+        </div>
+
+        {/* QUICK ACTION */}
+        <div className="quick-actions">
+
+          <button className="btn-red">Request Blood</button>
+          <button className="btn-green">Approve Donation</button>
+          <button className="btn-blue">Find Drives</button>
+
+        </div>
+
+      </main>
     </div>
   );
 };

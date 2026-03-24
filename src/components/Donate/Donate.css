@@ -1,6 +1,8 @@
+/* ================= PAGE ================= */
+
 .donate-page {
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(to bottom, #fff5f5, #ffffff);
+  background-color: #ffebec;
   color: #333;
   overflow-x: hidden;
 }
@@ -13,17 +15,18 @@
   align-items: center;
   padding: 80px 8%;
   min-height: 80vh;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .hero-text {
-  max-width: 500px;
+  flex: 1;
 }
 
 .hero-text h1 {
   font-size: 48px;
   color: #c1121f;
   font-weight: 700;
-  line-height: 1.2;
 }
 
 .hero-text p {
@@ -40,8 +43,7 @@
   border-radius: 30px;
   cursor: pointer;
   font-size: 16px;
-  transition: 0.3s ease;
-  box-shadow: 0 8px 20px rgba(193, 18, 31, 0.3);
+  transition: 0.3s;
 }
 
 .primary-btn:hover {
@@ -49,29 +51,38 @@
   transform: translateY(-3px);
 }
 
+.hero-image {
+  flex: 1;
+  text-align: center;
+}
+
 .hero-image img {
-  width: 320px;
+  width: 100%;
+  max-width: 350px;
   animation: float 3s ease-in-out infinite;
 }
 
-/* Floating animation */
 @keyframes float {
-  0% { transform: translateY(0px); }
+  0% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
+  100% { transform: translateY(0); }
 }
 
 /* ================= WHY DONATE ================= */
 
 .why-donate {
   padding: 80px 8%;
+  padding-top: 40px;
   text-align: center;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .why-donate h2 {
-  font-size: 32px;
+  font-size: 38px;
+  font-weight: 700;
   color: #c1121f;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .why-cards {
@@ -84,13 +95,14 @@
   background: white;
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.06);
-  transition: 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: 0.3s;
+  margin-right: -10px;
 }
 
 .card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(193, 18, 31, 0.15);
+  box-shadow: 0 20px 40px rgba(193,18,31,0.15);
 }
 
 .card h4 {
@@ -100,7 +112,6 @@
 
 .card p {
   font-size: 14px;
-  margin-top: 10px;
   color: #666;
 }
 
@@ -109,13 +120,15 @@
 .blood-types {
   padding: 80px 8%;
   text-align: center;
-  background: #fff;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .blood-types h2 {
-  font-size: 32px;
+  font-size: 38px;
   color: #c1121f;
-  margin-bottom: 40px;
+  font-weight: 700;
+  margin-bottom: 70px;
 }
 
 .blood-types img {
@@ -125,79 +138,183 @@
   box-shadow: 0 15px 40px rgba(0,0,0,0.08);
 }
 
-/* ================= PROCESS ================= */
+/* ================= DONATION PROCESS ================= */
 
 .donation-process {
-  padding: 80px 8%;
-  background: linear-gradient(to right, #fff5f5, #ffffff);
-  text-align: center;
+  padding: 90px 8%;
+  padding-top: 30px;
 }
 
 .donation-process h2 {
-  font-size: 32px;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+  padding-bottom: 40px;
+  padding-top: 0px;
   color: #c1121f;
   margin-bottom: 40px;
 }
 
-.process-steps {
+.process-container {
   display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 100px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.step {
-  background: white;
-  padding: 25px 30px;
-  border-radius: 14px;
-  font-weight: 600;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  transition: 0.3s ease;
+.process-step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
 }
 
-.step:hover {
-  background: #c1121f;
-  color: white;
+.process-step img {
+  width: 130%;
+  max-width: 360px;
+  padding-top: 15px;
+  border-radius: 40px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.process-step img:hover {
   transform: scale(1.05);
+}
+
+.process-text {
+  flex: 1;
+}
+
+.process-text h3 {
+  color: #c1121f;
+  font-size: 32px;
+  font-weight: 600;
+  padding-bottom: 40px;
+  margin-bottom: 10px;
+}
+
+.process-text p {
+  color: #555;
+  font-size: 19px;
+  line-height: 1.7;
+  text-align: justify;
+  font-weight: 600;
+}
+
+.reverse {
+  flex-direction: row-reverse;
 }
 
 /* ================= ELIGIBILITY ================= */
 
 .eligibility {
-  padding: 80px 8%;
-  background: #fff;
+  padding: 120px 8%;
+  background: #fdeeee;
 }
 
-.eligibility h2 {
-  font-size: 32px;
+.eligibility-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.eligibility-left {
+  flex: 1;
+}
+
+.eligibility-left h2 {
+  font-size: 40px;
   color: #c1121f;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  font-weight: 700;
 }
 
-.eligibility ul {
+.eligibility-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+  max-width: 520px;
+}
+
+.eligibility-card ul {
   list-style: none;
   padding: 0;
 }
 
-.eligibility li {
-  margin-bottom: 15px;
-  padding-left: 25px;
+.eligibility-card li {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #555;
+  padding-left: 35px;
   position: relative;
-  font-size: 16px;
 }
 
-.eligibility li::before {
+.eligibility-card li::before {
   content: "✔";
-  color: #c1121f;
   position: absolute;
   left: 0;
+  color: #c1121f;
+  font-weight: bold;
+}
+
+.eligibility-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.eligibility-right img {
+  width: 140%;
+  max-width: 750px;
+  padding-top: 30px;
 }
 
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 1000px) {
+
   .why-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .process-step {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .reverse {
+    flex-direction: column;
+  }
+
+  .process-text {
+    text-align: center;
+  }
+
+  .eligibility-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .eligibility-right {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .why-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text h1 {
+    font-size: 34px;
   }
 
   .donate-hero {
@@ -207,20 +324,5 @@
 
   .hero-image {
     margin-top: 40px;
-  }
-}
-
-@media (max-width: 600px) {
-  .why-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-text h1 {
-    font-size: 34px;
-  }
-
-  .process-steps {
-    flex-direction: column;
-    gap: 20px;
   }
 }

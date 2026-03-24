@@ -2,7 +2,7 @@ import React from "react";
 import "./footer.css";
 import logo from "../../assets/logo.jpg"; // change if needed
 
-const footer = () => {
+const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -85,4 +85,4 @@ const footer = () => {
   );
 };
 
-export default footer;
+export default Footer;

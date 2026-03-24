@@ -58,7 +58,7 @@ const Indlogin = () => {
   };
 
   /* ---------------- SUBMIT ---------------- */
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
 
   const emailError = validateEmail(email);
@@ -73,28 +73,37 @@ const Indlogin = () => {
   }
 
   try {
-    const response = await axios.post(
-      "https://localhost:7156/api/Auth/login",
-      {
-        email,
-        password
-      }
-    );
+
+    const apiUrl = isOrg
+      ? "https://localhost:7156/api/Organization/login"
+      : "https://localhost:7156/api/Auth/login";
+
+    const response = await axios.post(apiUrl, {
+      email,
+      password
+    });
 
     alert(response.data.message);
 
-    // Save login session
-    localStorage.setItem("userId", response.data.userId);
+    // store login session
+    if (response.data.userId) {
+      localStorage.setItem("userId", response.data.userId);
+    }
 
-    // redirect (later dashboard)
+    if (response.data.id) {
+      localStorage.setItem("orgId", response.data.id);
+    }
+
     window.location.href = "/";
 
   } catch (error) {
+
     if (error.response?.data?.message) {
       alert(error.response.data.message);
     } else {
       alert("Server error");
     }
+
   }
 };
 

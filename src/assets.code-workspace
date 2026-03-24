@@ -1,0 +1,53 @@
+{
+	"folders": [
+		{
+			"path": "assets"
+		},
+		{
+			"path": "components"
+		},
+		{
+			"path": "components/admin"
+		},
+		{
+			"path": "components/Aboutus"
+		},
+		{
+			"path": "components/ContactCTA"
+		},
+		{
+			"path": "components/BloodRequest"
+		},
+		{
+			"path": "components/ContactForm"
+		},
+		{
+			"path": "components/ContactHero"
+		},
+		{
+			"path": "components/Donate"
+		},
+		{
+			"path": "components/ContactPath"
+		},
+		{
+			"path": "components/Home"
+		},
+		{
+			"path": "components/footer"
+		},
+		{
+			"path": "components/Login"
+		},
+		{
+			"path": "components/Navbar"
+		},
+		{
+			"path": "components/pages"
+		},
+		{
+			"path": "components/Register"
+		}
+	],
+	"settings": {}
+}
