@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./Admin.css";
 
@@ -26,6 +26,10 @@ const AdminDashboard = () => {
         url = "https://localhost:7156/api/admin/pending-bloodbanks";
       }
 
+      if (type === "donors") {
+        url = "https://localhost:7156/api/admin/pending-donors";
+      }
+
       if (!url) return;
 
       const res = await axios.get(url);
@@ -37,16 +41,19 @@ const AdminDashboard = () => {
     }
   };
 
- 
-
   /* ================= TAB SWITCH ================= */
   const handleTab = async (type) => {
-  setActiveTab(type);
+    setActiveTab(type);
 
-  if (type === "users" || type === "hospitals" || type === "bloodbanks") {
-    await loadData(type);
-  }
-};
+    if (
+      type === "users" ||
+      type === "hospitals" ||
+      type === "bloodbanks" ||
+      type === "donors"
+    ) {
+      await loadData(type);
+    }
+  };
 
   /* ================= APPROVE ================= */
   const approve = async (id) => {
@@ -64,6 +71,10 @@ const AdminDashboard = () => {
 
       if (activeTab === "bloodbanks") {
         url = `https://localhost:7156/api/admin/approve-bloodbank/${id}`;
+      }
+
+      if (activeTab === "donors") {
+        url = `https://localhost:7156/api/admin/approve-donor/${id}`;
       }
 
       await axios.put(url);
@@ -92,6 +103,10 @@ const AdminDashboard = () => {
         url = `https://localhost:7156/api/admin/reject-bloodbank/${id}`;
       }
 
+      if (activeTab === "donors") {
+        url = `https://localhost:7156/api/admin/reject-donor/${id}`;
+      }
+
       await axios.put(url);
       loadData(activeTab);
 
@@ -113,6 +128,7 @@ const AdminDashboard = () => {
           <li onClick={() => handleTab("donations")}>Donations</li>
           <li onClick={() => handleTab("hospitals")}>Hospitals</li>
           <li onClick={() => handleTab("bloodbanks")}>Blood Banks</li>
+          <li onClick={() => handleTab("donors")}>Donors</li>
           <li onClick={() => handleTab("users")}>Users</li>
           <li onClick={() => handleTab("settings")}>Settings</li>
         </ul>
@@ -144,6 +160,11 @@ const AdminDashboard = () => {
               </div>
 
               <div className="stat-card">
+                <h3>Donors</h3>
+                <p>--</p>
+              </div>
+
+              <div className="stat-card">
                 <h3>Requests</h3>
                 <p>--</p>
               </div>
@@ -158,10 +179,11 @@ const AdminDashboard = () => {
           </>
         )}
 
-        {/* ================= USERS / HOSPITALS / BLOODBANKS ================= */}
+        {/* ================= DATA SECTIONS ================= */}
         {(activeTab === "users" ||
           activeTab === "hospitals" ||
-          activeTab === "bloodbanks") && (
+          activeTab === "bloodbanks" ||
+          activeTab === "donors") && (
 
           <>
             <h2 style={{ marginBottom: "20px", textTransform: "capitalize" }}>
@@ -176,7 +198,12 @@ const AdminDashboard = () => {
 
                 <div
                   className="admin-user-card"
-                  key={item.userID || item.hospitalID || item.bloodBankID}
+                  key={
+                    item.userID ||
+                    item.hospitalID ||
+                    item.bloodBankID ||
+                    item.donorID
+                  }
                 >
 
                   {/* USERS */}
@@ -206,12 +233,27 @@ const AdminDashboard = () => {
                     </>
                   )}
 
+                  {/* DONORS */}
+                  {activeTab === "donors" && (
+                    <>
+                      <strong>{item.name}</strong>
+                      <p>{item.email}</p>
+                      <p>{item.bloodGroup}</p>
+                      <p>{item.city}</p>
+                    </>
+                  )}
+
                   <div className="admin-actions">
 
                     <button
                       className="approve"
                       onClick={() =>
-                        approve(item.userID || item.hospitalID || item.bloodBankID)
+                        approve(
+                          item.userID ||
+                          item.hospitalID ||
+                          item.bloodBankID ||
+                          item.donorID
+                        )
                       }
                     >
                       Approve
@@ -220,7 +262,12 @@ const AdminDashboard = () => {
                     <button
                       className="reject"
                       onClick={() =>
-                        reject(item.userID || item.hospitalID || item.bloodBankID)
+                        reject(
+                          item.userID ||
+                          item.hospitalID ||
+                          item.bloodBankID ||
+                          item.donorID
+                        )
                       }
                     >
                       Reject

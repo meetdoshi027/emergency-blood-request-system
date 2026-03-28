@@ -33,13 +33,13 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
          <Route path="/donate" element={<Donate />} /> 
-<<<<<<< HEAD
+
          <Route path="/event" element={<Event />} /> 
 
-=======
+
           <Route path="/bloodrequest" element={<BloodRequest />} /> 
           <Route path="/donorregister" element={<DonorRegister />} /> 
->>>>>>> a94a6dd2c36922723d55e62c847f847129fcd1d1
+
       </Routes>
 
       <Footer/>
