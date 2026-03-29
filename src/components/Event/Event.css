@@ -27,16 +27,16 @@ z-index:-1;
 text-align:center;
 color:#fff;
 margin-bottom:25px;
-font-size:28px;
+font-size:60px;
 }
 
 .section-title{
 margin:25px 0 15px;
-font-size:22px;
+font-size:35px;
 color:#fff;
 }
 
-/* 📦 GRID (4 CARDS) */
+/* 📦 GRID */
 .event-grid{
 display:grid;
 grid-template-columns: repeat(4, 1fr);
@@ -68,6 +68,7 @@ object-fit:cover;
 /* 📄 CONTENT */
 .event-content{
 padding:15px;
+text-align:center; /* ✅ CENTER EVERYTHING */
 }
 
 .event-content h3{
@@ -87,13 +88,22 @@ margin-top:5px;
 
 /* 🔘 BUTTON */
 .btn{
-margin-top:10px;
+margin-top:12px;
 background:linear-gradient(45deg,#ff0000,#c40000);
 color:white;
 border:none;
 padding:8px 15px;
 border-radius:6px;
 cursor:pointer;
+
+/* ✅ CENTER BUTTON */
+display:block;
+margin-left:auto;
+margin-right:auto;
+}
+
+.btn:hover{
+opacity:0.9;
 }
 
 /* ❌ NO DATA */
@@ -114,3 +124,4 @@ grid-template-columns: repeat(2,1fr);
 grid-template-columns:1fr;
 }
 }
+
