@@ -15,7 +15,7 @@ const Home = () => {
     <>
       <HomeHero />
       <HowItWorks />
-      <WhyChooseUs />
+      {/* <WhyChooseUs /> */}
       <TrustSafety />
       <ImpactStats />
       <Stats />

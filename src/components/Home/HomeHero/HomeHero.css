@@ -33,10 +33,11 @@
 }
 
 .home-hero-text p {
-  font-size: 18px;
-  color: #444;
+  font-size: 19px;
+  color: #6f6f70;
   line-height: 1.7;
   max-width: 520px;
+  font-weight: 600;
   margin-bottom: 30px;
 }
 
@@ -56,34 +57,21 @@
   font-weight: 600;
   border-radius: 30px;
   cursor: pointer;
-  border: none;
+  border: 2px solid #c62828;
+  background: transparent;
+  color: #c62828;
   transition: all 0.3s ease;
+}
+
+.home-hero-actions button:hover {
+  background: #c62828;
+  color: #fff;
+  border: #c62828;
 }
 
 .home-hero-actions img {
   width: 20px;
   height: 20px;
-}
-
-/* Primary */
-.btn-primary {
-  background: #c62828;
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background: #8b0000;
-}
-
-/* Secondary */
-.btn-secondary {
-  background: transparent;
-  color: #c62828;
-  border: 2px solid #c62828;
-}
-
-.btn-secondary:hover {
-  background: #ffecec;
 }
 
 /* Image */

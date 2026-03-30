@@ -6,35 +6,40 @@ import formIcon from "../../../assets/icon-form.png";
 import notifyIcon from "../../../assets/icon-notify.png";
 import connectIcon from "../../../assets/icon-connect.png";
 import saveLifeIcon from "../../../assets/icon-save-life.png";
+import registerIcon from "../../../assets/icon-register.png";
 
 const steps = [
   {
+    icon: registerIcon,
+    title: "Register",
+    text: "Create your account by entering basic details. Join our platform to request or donate blood anytime during emergencies.",
+  },
+  {
     icon: requestIcon,
     title: "Request Blood",
-    text: "Submit an emergency blood request with patient details.",
+    text: "Raise a blood request by providing patient details. This helps us connect you with the right donors quickly.",
   },
   {
     icon: formIcon,
     title: "Fill Quick Form",
-    text: "Enter blood group, location, and urgency in seconds.",
+    text: "Enter blood group, location, and urgency level. The process is simple and takes only a few seconds.",
   },
   {
     icon: notifyIcon,
     title: "Notify Donors",
-    text: "Nearby donors and hospitals are instantly notified.",
+    text: "Nearby donors and hospitals are instantly alerted. Notifications ensure faster response in critical situations.",
   },
   {
     icon: connectIcon,
     title: "Get Connected",
-    text: "Direct contact is established without delays.",
+    text: "Directly connect with available donors or hospitals. Communicate quickly to arrange blood without delays.",
   },
   {
     icon: saveLifeIcon,
     title: "Save Lives",
-    text: "Timely blood donation helps save precious lives.",
+    text: "Timely blood donation can make a life-saving difference. Your action helps someone in urgent need.",
   },
 ];
-
 const HowItWorks = () => {
   return (
     <section className="how-it-works">
