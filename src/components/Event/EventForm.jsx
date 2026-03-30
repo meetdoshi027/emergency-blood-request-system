@@ -5,17 +5,44 @@ const EventForm = ({ event, closeForm }) => {
 
 const [formData, setFormData] = useState({
 name:"",
-email:"",
 phone:"",
-bloodGroup:"",
+gender:"",
+dob:"",
+weight:"",
+address:"",
+city:"",
+state:"",
+pincode:"",
+agree:false
 });
 
+// ✅ DATE FORMAT FUNCTION
+const formatDate = (date) => {
+const d = new Date(date);
+const day = String(d.getDate()).padStart(2, '0');
+const month = String(d.getMonth() + 1).padStart(2, '0');
+const year = d.getFullYear();
+return `${day}-${month}-${year}`;
+};
+
 const handleChange = (e) => {
-setFormData({...formData, [e.target.name]: e.target.value});
+const { name, value, type, checked } = e.target;
+
+setFormData({
+...formData,
+[name]: type === "checkbox" ? checked : value
+});
 };
 
 const handleSubmit = (e) => {
 e.preventDefault();
+
+// ✅ CHECK TERMS
+if (!formData.agree) {
+alert("Please accept Terms & Conditions");
+return;
+}
+
 alert("Registration Successful ✅");
 closeForm();
 };
@@ -28,10 +55,21 @@ return (
 <h2>Register for Event</h2>
 
 <p><b>{event?.title}</b></p>
-<p>{event?.date}</p>
+
+{/* ✅ UPDATED DATE FORMAT */}
+<p>{formatDate(event?.date)}</p>
 
 <form onSubmit={handleSubmit}>
 
+{/* EVENT NAME READONLY */}
+<input 
+type="text" 
+value={event?.title || ""} 
+readOnly 
+className="readonly-field"
+/>
+
+{/* NAME */}
 <input 
 type="text" 
 name="name"
@@ -40,14 +78,7 @@ required
 onChange={handleChange}
 />
 
-<input 
-type="email" 
-name="email"
-placeholder="Email" 
-required 
-onChange={handleChange}
-/>
-
+{/* PHONE */}
 <input 
 type="tel" 
 name="phone"
@@ -56,15 +87,80 @@ required
 onChange={handleChange}
 />
 
-<select name="bloodGroup" required onChange={handleChange}>
-<option value="">Select Blood Group</option>
-<option>A+</option><option>B+</option>
-<option>O+</option><option>AB+</option>
+{/* GENDER */}
+<select name="gender" required onChange={handleChange}>
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
 </select>
 
-<button type="submit" className="submit-btn">Submit</button>
+{/* DOB */}
+<input 
+type="date" 
+name="dob"
+required 
+onChange={handleChange}
+/>
+
+{/* WEIGHT */}
+<input 
+type="number" 
+name="weight"
+placeholder="Weight (kg)" 
+required 
+onChange={handleChange}
+/>
+
+{/* ADDRESS */}
+<textarea 
+name="address"
+placeholder="Address"
+required
+onChange={handleChange}
+/>
+
+{/* CITY */}
+<input 
+type="text" 
+name="city"
+placeholder="City"
+required
+onChange={handleChange}
+/>
+
+{/* STATE */}
+<input 
+type="text" 
+name="state"
+placeholder="State"
+required
+onChange={handleChange}
+/>
+
+{/* PINCODE */}
+<input 
+type="number" 
+name="pincode"
+placeholder="Pincode"
+required
+onChange={handleChange}
+/>
+
+{/* TERMS */}
+<label className="checkbox">
+<input 
+type="checkbox"
+name="agree"
+onChange={handleChange}
+/>
+ I agree to Terms & Conditions
+</label>
+
+<button type="submit" className="submit-btn">Register</button>
+
 <button type="button" className="close-btn" onClick={closeForm}>
-Close
+Cancel
 </button>
 
 </form>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Event.css";
-import EventForm from "./EventForm"; // ✅ import form
+import EventForm from "./EventForm";
 
 /* IMAGES */
 import img1 from "../../assets/Megablood.jpg";
@@ -12,25 +12,31 @@ const Event = () => {
 
 const today = new Date().toISOString().split("T")[0];
 
+// ✅ DATE FORMAT FUNCTION
+const formatDate = (date) => {
+const d = new Date(date);
+const day = String(d.getDate()).padStart(2, '0');
+const month = String(d.getMonth() + 1).padStart(2, '0');
+const year = d.getFullYear();
+return `${day}-${month}-${year}`;
+};
+
 // ✅ STATE
 const [showForm, setShowForm] = useState(false);
 const [selectedEvent, setSelectedEvent] = useState(null);
 
 const events = [
 
-// 🔴 PAST
 {title:"Blood Donation Camp",organization:"Red Cross",date:"2025-03-01",image:img1,description:"Donate blood"},
 {title:"Community Blood Drive",organization:"NGO Trust",date:"2025-02-15",image:img2,description:"Helping people"},
 {title:"Health Awareness Camp",organization:"City NGO",date:"2025-01-10",image:img3,description:"Awareness"},
 {title:"Old Blood Camp",organization:"Health Org",date:"2024-12-20",image:img1,description:"Old event"},
 
-// 🟡 TODAY
 {title:"Today Blood Camp 1",organization:"Local NGO",date:today,image:img2,description:"Donate today"},
 {title:"Today Blood Camp 2",organization:"City Hospital",date:today,image:img3,description:"Emergency"},
 {title:"Today Health Camp",organization:"Health Org",date:today,image:img1,description:"Free checkup"},
 {title:"Today Mega Drive",organization:"Trust Org",date:today,image:img2,description:"Join now"},
 
-// 🟢 FUTURE
 {title:"Future Blood Camp",organization:"Apollo Hospital",date:"2026-05-20",image:img1,description:"Biggest drive"},
 {title:"Upcoming Donation",organization:"NGO Trust",date:"2026-06-10",image:img2,description:"Save lives"},
 {title:"Mega Health Camp",organization:"City Hospital",date:"2026-07-01",image:img3,description:"Free services"},
@@ -42,7 +48,7 @@ const pastEvents = events.filter(e => e.date < today);
 const presentEvents = events.filter(e => e.date === today);
 const futureEvents = events.filter(e => e.date > today);
 
-// ✅ CLICK REGISTER
+// REGISTER
 const handleRegister = (event) => {
 setSelectedEvent(event);
 setShowForm(true);
@@ -61,7 +67,10 @@ const renderEvents = (list, type) => (
 <div className="event-content">
 <h3>{event.title}</h3>
 <p>🏥 {event.organization}</p>
-<p>📅 {event.date}</p>
+
+{/* ✅ UPDATED DATE */}
+<p>📅 {formatDate(event.date)}</p>
+
 <p className="desc">{event.description}</p>
 
 {type === "future" && (
@@ -89,13 +98,12 @@ return (
 <h2 className="section-title">🕘 Past Event</h2>
 {renderEvents(pastEvents,"past")}
 
-<h2 className="section-title">📍 Today Event</h2>
+<h2 className="section-title">📍 Present Event</h2>
 {renderEvents(presentEvents,"present")}
 
 <h2 className="section-title">🚀 Future Event</h2>
 {renderEvents(futureEvents,"future")}
 
-{/* ✅ FORM POPUP */}
 {showForm && (
 <EventForm 
 event={selectedEvent}

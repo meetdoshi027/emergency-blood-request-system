@@ -68,7 +68,7 @@ object-fit:cover;
 /* 📄 CONTENT */
 .event-content{
 padding:15px;
-text-align:center; /* ✅ CENTER EVERYTHING */
+text-align:center;
 }
 
 .event-content h3{
@@ -95,8 +95,6 @@ border:none;
 padding:8px 15px;
 border-radius:6px;
 cursor:pointer;
-
-/* ✅ CENTER BUTTON */
 display:block;
 margin-left:auto;
 margin-right:auto;
@@ -104,12 +102,6 @@ margin-right:auto;
 
 .btn:hover{
 opacity:0.9;
-}
-
-/* ❌ NO DATA */
-.no-data{
-text-align:center;
-color:#fff;
 }
 
 /* 📱 RESPONSIVE */
@@ -124,4 +116,3 @@ grid-template-columns: repeat(2,1fr);
 grid-template-columns:1fr;
 }
 }
-
