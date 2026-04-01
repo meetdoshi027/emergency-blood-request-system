@@ -1,33 +1,33 @@
 import React, { useState } from "react";
-import { Link,useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Indlogin.css";
 import axios from "axios";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import loginimg from "../../assets/loginimg.png";
 
-
-
 const Indlogin = () => {
-   const location = useLocation();
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   /* -------- ROLE MODE -------- */
   const [isOrg, setIsOrg] = useState(
     location.state?.loginType === "organization"
   );
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
 
-  //const role = isOrg ? "organization" : "individual";
+  const [errors, setErrors] = useState({});
 
   /* ---------------- SWITCH ---------------- */
   const handleSwitchChange = () => {
     setIsOrg(!isOrg);
   };
 
-  /* ---------------- VALIDATION HELPERS ---------------- */
+  /* ---------------- VALIDATION ---------------- */
   const validateEmail = (value) => {
     if (!value) return "Email is required";
     if (!/\S+@\S+\.\S+/.test(value)) return "Enter a valid email";
@@ -40,75 +40,77 @@ const Indlogin = () => {
     return "";
   };
 
-  /* ---------------- LIVE HANDLERS ---------------- */
+  /* ---------------- HANDLERS ---------------- */
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
-
-    const errorMsg = validateEmail(value);
-    setErrors((prev) => ({ ...prev, email: errorMsg }));
+    setErrors((prev) => ({ ...prev, email: validateEmail(value) }));
   };
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-
-    const errorMsg = validatePassword(value);
-    setErrors((prev) => ({ ...prev, password: errorMsg }));
+    setErrors((prev) => ({ ...prev, password: validatePassword(value) }));
   };
 
   /* ---------------- SUBMIT ---------------- */
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const emailError = validateEmail(email);
-  const passwordError = validatePassword(password);
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
 
-  if (emailError || passwordError) {
-    setErrors({
-      email: emailError,
-      password: passwordError,
-    });
-    return;
-  }
-
-  try {
-
-    const apiUrl = isOrg
-      ? "https://localhost:7156/api/Organization/login"
-      : "https://localhost:7156/api/Auth/login";
-
-    const response = await axios.post(apiUrl, {
-      email,
-      password
-    });
-
-    alert(response.data.message);
-
-    // store login session
-    if (response.data.userId) {
-      localStorage.setItem("userId", response.data.userId);
+    if (emailError || passwordError) {
+      setErrors({
+        email: emailError,
+        password: passwordError,
+      });
+      return;
     }
 
-    if (response.data.id) {
-      localStorage.setItem("orgId", response.data.id);
+    try {
+
+      const apiUrl = isOrg
+        ? "https://localhost:7156/api/Organization/login"
+        : "https://localhost:7156/api/Auth/login";
+
+      const response = await axios.post(apiUrl, {
+        email,
+        password
+      });
+
+      alert(response.data.message);
+
+      /* ===== STORE SESSION ===== */
+      if (response.data.userId) {
+        localStorage.setItem("userId", response.data.userId);
+      }
+
+      if (response.data.id) {
+        localStorage.setItem("orgId", response.data.id);
+      }
+
+      /* ===== REDIRECT ===== */
+      if (isOrg) {
+        navigate("/org/dashboard");   // optional (future)
+      } else {
+        navigate("/user/dashboard");  // ✅ USER DASHBOARD
+      }
+
+    } catch (error) {
+
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("Server error");
+      }
+
     }
-
-    window.location.href = "/";
-
-  } catch (error) {
-
-    if (error.response?.data?.message) {
-      alert(error.response.data.message);
-    } else {
-      alert("Server error");
-    }
-
-  }
-};
+  };
 
   return (
     <div className="login-page">
+
       {/* LEFT SECTION */}
       <div className="login-left">
         <img src={loginimg} alt="Blood Donation" className="login-illustration" />
@@ -123,7 +125,8 @@ const Indlogin = () => {
       {/* RIGHT SECTION */}
       <div className="login-right">
         <div className="login-card">
-          {/* MODE SWITCH */}
+
+          {/* SWITCH */}
           <div className="role-switch">
             <span className="role-label">
               {isOrg ? "Organization Mode" : "Individual Mode"}
@@ -144,6 +147,7 @@ const Indlogin = () => {
           </h3>
 
           <form onSubmit={handleSubmit} noValidate>
+
             {/* EMAIL */}
             <label>Email Address</label>
             <div className="input-box">
@@ -178,18 +182,24 @@ const Indlogin = () => {
               <p className="error-text">{errors.password}</p>
             )}
 
+            {/* LINKS */}
             <div className="helper-row">
-            <Link className="register-link" to={isOrg ? "/register/organization" : "/register/individual"}>
+              <Link
+                className="register-link"
+                to={isOrg ? "/register/organization" : "/register/individual"}
+              >
                 {isOrg ? "Register Organization" : "Register as Individual"}
-           </Link>
-           
-            <span className="forgot">Forgot Password?</span>
+              </Link>
+
+              <span className="forgot">Forgot Password?</span>
             </div>
 
             <button className="login-btn">Login</button>
+
           </form>
         </div>
       </div>
+
     </div>
   );
 };
