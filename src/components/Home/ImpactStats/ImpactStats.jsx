@@ -6,7 +6,7 @@ import saveLife from "../../../assets/icon-save-life.png";
 import donors from "../../../assets/icon-verified.png";
 import hospitals from "../../../assets/icon-hospital.png";
 import fast from "../../../assets/icon-fast.png";
-
+import CountUp from 'react-countup'
 const ImpactStats = () => {
   return (
     <section
@@ -23,19 +23,20 @@ const ImpactStats = () => {
           <div className="impact-grid">
             <div className="impact-card">
               <img src={saveLife} alt="Lives Saved" />
-              <h3>25,000+</h3>
+               <h3><CountUp end={25000} duration={5} />+</h3>            
               <p>Lives Saved</p>
             </div>
 
             <div className="impact-card">
               <img src={donors} alt="Donors" />
-              <h3>12,000+</h3>
+               <h3><CountUp end={12000} duration={5} />+</h3>
               <p>Verified Donors</p>
             </div>
 
             <div className="impact-card">
               <img src={hospitals} alt="Hospitals" />
-              <h3>850+</h3>
+              
+               <h3><CountUp end={850} duration={5} />+</h3>
               <p>Hospitals Connected</p>
             </div>
 
