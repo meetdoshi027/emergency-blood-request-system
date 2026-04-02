@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminLogin.css";
 import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 
 const AdminLogin = () => {
 
@@ -73,6 +74,7 @@ const AdminLogin = () => {
       </div>
 
     </div>
+    <Footer/>
           </>
   );
 };

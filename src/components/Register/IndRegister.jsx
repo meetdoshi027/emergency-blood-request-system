@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
+
 
 const IndRegister = () => {
   const [form, setForm] = useState({
@@ -221,6 +223,7 @@ const response = await axios.post(
         </div>
       </div>
     </div>
+    <Footer/>
     </>
   );
 };

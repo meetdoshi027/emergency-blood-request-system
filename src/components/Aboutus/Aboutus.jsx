@@ -4,7 +4,7 @@ import aboutImg from '../../assets/whoarewe.png'
 import team from '../../assets/teammember.jpg'
 import CountUp from 'react-countup'
 import Navbar from '../Navbar/Navbar';
-
+import Footer from '../footer/footer';
 
 const Aboutus = () => {
   return (
@@ -100,6 +100,7 @@ const Aboutus = () => {
         </div>
       </div>
     </section>
+    <Footer/>
     </>
   )
 }

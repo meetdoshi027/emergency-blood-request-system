@@ -8,6 +8,7 @@ import process4 from "../../assets/donationprocess4.png";
 import eligibility from "../../assets/eligibility.png"
 import { useNavigate } from "react-router-dom";
 import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 import "./Donate.css";
 
 
@@ -166,6 +167,7 @@ const navigate = useNavigate();
 
 </section>
     </div>
+    <Footer/>
     </>
   );
 };

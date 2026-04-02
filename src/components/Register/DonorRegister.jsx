@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./DonorRegister.css";
 import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 
 const DonorRegister = () => {
 
@@ -207,6 +208,7 @@ const DonorRegister = () => {
 
       </div>
     </div>
+    <Footer/>
               </>
   );
 };

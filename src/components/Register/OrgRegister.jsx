@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 
 const OrgRegister = () => {
 
@@ -310,6 +311,7 @@ const OrgRegister = () => {
 
       </div>
     </div>
+    <Footer/>
             </>
   );
 };

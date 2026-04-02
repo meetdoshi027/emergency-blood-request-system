@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./BloodRequest.css";
 import Navbar from '../Navbar/Navbar';
-
+import Footer from '../footer/footer';
 
 const BloodRequest = () => {
 
@@ -211,6 +211,7 @@ const BloodRequest = () => {
       )}
 
     </div>
+    <Footer/>
 </>
   );
 };

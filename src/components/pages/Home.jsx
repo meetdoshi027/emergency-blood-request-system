@@ -10,6 +10,7 @@ import Stats from "../Home/Stats/Stats";
 import DonorCTA from "../Home/DonorCTA/DonorCTA";
 import Testimonials from "../Home/Testimonials/Testimonials";
 import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 
 const Home = () => {
   return (
@@ -23,6 +24,7 @@ const Home = () => {
       {/* <Stats /> */}
       {/* <DonorCTA /> */}
       <Testimonials />
+      <Footer/>
     </>
   );
 };

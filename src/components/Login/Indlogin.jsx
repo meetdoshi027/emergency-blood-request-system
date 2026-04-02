@@ -5,6 +5,8 @@ import axios from "axios";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import loginimg from "../../assets/loginimg.png";
 import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
+
 
 const Indlogin = () => {
 
@@ -204,6 +206,7 @@ const Indlogin = () => {
       </div>
 
     </div>
+    <Footer/>
                  </>
   );
 };
