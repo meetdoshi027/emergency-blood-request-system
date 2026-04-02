@@ -33,7 +33,7 @@ font-size:60px;
 .section-title{
 margin:25px 0 15px;
 font-size:35px;
-color:#fff;
+color:#f5f4f4;
 }
 
 /* 📦 GRID */
@@ -51,7 +51,7 @@ border-radius:12px;
 overflow:hidden;
 box-shadow:0 4px 12px rgba(0,0,0,0.3);
 transition:0.3s;
-color:#fff;
+color:#840d0d;
 }
 
 .event-card:hover{
@@ -77,12 +77,12 @@ margin-bottom:8px;
 
 .event-content p{
 font-size:14px;
-color:#ddd;
+color:#c8101c;
 }
 
 .desc{
 font-size:13px;
-color:#ccc;
+color:#0b5a07;
 margin-top:5px;
 }
 
