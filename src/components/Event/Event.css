@@ -90,7 +90,7 @@ margin-top:5px;
 .btn{
 margin-top:12px;
 background:linear-gradient(45deg,#ff0000,#c40000);
-color:white;
+color:rgb(255, 255, 255);
 border:none;
 padding:8px 15px;
 border-radius:6px;

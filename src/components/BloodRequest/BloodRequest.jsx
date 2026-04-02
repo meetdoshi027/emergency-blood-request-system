@@ -1,133 +1,136 @@
-
 import React from "react";
-import "./BloodRequest.css";
-import requestImg from "../../assets/blood.webp";
-import bgImg from "../../assets/blood.webp";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../footer/footer";
+import savedonate from "../../assets/savedonate.jpeg";
+import "./BloodRequest.css";
 
 const BloodRequest = () => {
-
   const navigate = useNavigate();
 
   return (
-    
-<>
-     <Navbar/>
-    <div className="blood-request">
+    <>
+      <Navbar />
 
-      {/* HERO */}
-      <section className="hero" style={{ backgroundImage: `url(${bgImg})` }}>
-        <div className="hero-overlay"></div>
+      <div className="creative-request-page">
 
-        <div className="hero-content">
-          <h1>Emergency Blood Needed?</h1>
-          <p>Connect with nearby donors instantly and save lives</p>
+        {/* HERO */}
+        <section className="creative-hero">
+          <div className="hero-blob-container">
 
-          <div className="hero-buttons">
-            <button className="btn-primary">Create Request</button>
-            <button 
-              className="btn-secondary"
-              onClick={() => navigate("/DonorList")}
+            <div className="blob-text">
+              <span className="mini-label">Emergency Support System</span>
+
+              <h1>
+                Connecting <span>Donors</span><br />
+                With <span>Lives in Need</span>
+              </h1>
+
+              <p>
+                Every second matters in a medical emergency. Instantly connect with
+                nearby verified donors.
+              </p>
+
+              <div className="hero-stats">
+                <span>🩸 10,000+ Donors</span>
+                <span>⚡ Fast Response</span>
+                <span>🏥 Trusted Hospitals</span>
+              </div>
+
+              <button
+                className="blob-btn"
+                onClick={() => navigate("/PostRequest")}
               >
-              Find Donors
-            </button>
+                Request Blood Now
+              </button>
+            </div>
+
+            <div className="abstract-shape">
+              <div className="circle-pulse"></div>
+              <div className="circle-pulse-delayed"></div>
+              <div className="main-circle">❤️</div>
+            </div>
+
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* LIVE ALERT */}
-      <section className="alert-bar">
-        <p>🚨 3 Emergency requests nearby • O+ and A- urgently needed</p>
-      </section>
+        {/* COMPATIBILITY */}
+        <section className="compatibility-focus">
+          <div className="focus-content">
 
-      {/* FEATURES */}
-      <section className="features">
-        <h2>How We Help You Fast</h2>
+            <div className="text-side">
+              <h2>Find the Right Donor Faster</h2>
+              <p>
+                Smart matching connects patients with compatible donors quickly.
+              </p>
 
-        <div className="feature-grid">
+              <div className="quick-tags">
+                <span className="tag urgent">O- Universal</span>
+                <span className="tag rare">AB- Rare</span>
+                <span className="tag urgent">A+ Demand</span>
+              </div>
+            </div>
 
-          <div className="feature-card">
-            <h3>⚡ Instant Request</h3>
-            <p>Create request in seconds during emergency</p>
+            <div className="image-side">
+              <div className="image-frame">
+                <img src={savedonate} alt="Blood" />
+                <div className="floating-info">Fast Matching</div>
+              </div>
+            </div>
+
           </div>
+        </section>
 
-          <div className="feature-card">
-            <h3>📍 Smart Matching</h3>
-            <p>Nearby donors are notified instantly</p>
+        {/* PROCESS */}
+        <section className="wave-process">
+          <h2>How It Works</h2>
+
+          <div className="wave-container">
+
+            <div className="wave-step">
+              <div className="step-circle">1</div>
+              <h4>Submit Request</h4>
+              <p>Enter patient and hospital details.</p>
+            </div>
+
+            <div className="wave-line"></div>
+
+            <div className="wave-step">
+              <div className="step-circle">2</div>
+              <h4>Notify Donors</h4>
+              <p>Nearby donors get alerts instantly.</p>
+            </div>
+
+            <div className="wave-line"></div>
+
+            <div className="wave-step">
+              <div className="step-circle">3</div>
+              <h4>Receive Help</h4>
+              <p>Donors reach hospital quickly.</p>
+            </div>
+
           </div>
+        </section>
 
-          <div className="feature-card">
-            <h3>📞 Direct Contact</h3>
-            <p>Talk to donors without delay</p>
+        {/* CTA */}
+        <section className="creative-cta">
+          <div className="cta-glass">
+            <h3>Need Immediate Help?</h3>
+            <p>Our support team is available 24/7.</p>
+
+            <div className="cta-actions">
+              <button className="outline-btn">Call Emergency</button>
+              <span className="divider">or</span>
+              <button className="primary-btn-new">Become Donor</button>
+            </div>
           </div>
+        </section>
 
-          <div className="feature-card">
-            <h3>❤️ Life Saving</h3>
-            <p>Every request can save a life</p>
-          </div>
+      </div>
 
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="process">
-        <h2>Simple 4-Step Process</h2>
-
-        <div className="steps">
-
-          <div className="step">
-            <span>1</span>
-            <h4>Create Request</h4>
-          </div>
-
-          <div className="step">
-            <span>2</span>
-            <h4>Notify Donors</h4>
-          </div>
-
-          <div className="step">
-            <span>3</span>
-            <h4>Get Response</h4>
-          </div>
-
-          <div className="step">
-            <span>4</span>
-            <h4>Save Life</h4>
-          </div>
-
-        </div>
-      </section>
-
-      {/* CTA SECTION */}
-      <section className="cta">
-
-        <div className="cta-left">
-          <h2>Your One Request Can Save a Life</h2>
-          <p>
-            Thousands of patients need blood every day.
-            Don't wait — create a request and connect instantly.
-          </p>
-
-          <button className="btn-primary big-btn">
-            Request Blood Now
-          </button>
-        </div>
-
-        <div className="cta-right">
-          <img src={requestImg} alt="Blood Request"/>
-        </div>
-
-      </section>
-
-    </div>
-    
-              <Footer/>
-              </>
-             
+      <Footer />
+    </>
   );
 };
 
 export default BloodRequest;
-

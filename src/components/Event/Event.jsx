@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Event.css";
 import EventForm from "./EventForm";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../footer/footer";
 
 /* IMAGES */
 import img1 from "../../assets/Megablood.jpg";
@@ -91,6 +93,8 @@ Register
 );
 
 return (
+    <>
+      <Navbar />
 <div className="event-container" style={{ backgroundImage: `url(${bg})` }}>
 
 <h1 className="main-title">Blood Donation Events</h1>
@@ -112,6 +116,8 @@ closeForm={() => setShowForm(false)}
 )}
 
 </div>
+ <Footer />
+    </>
 );
 };
 
