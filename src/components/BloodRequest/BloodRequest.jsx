@@ -4,12 +4,17 @@ import "./BloodRequest.css";
 import requestImg from "../../assets/blood.webp";
 import bgImg from "../../assets/blood.webp";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../footer/footer";
 
 const BloodRequest = () => {
 
   const navigate = useNavigate();
 
   return (
+    
+<>
+     <Navbar/>
     <div className="blood-request">
 
       {/* HERO */}
@@ -25,7 +30,7 @@ const BloodRequest = () => {
             <button 
               className="btn-secondary"
               onClick={() => navigate("/DonorList")}
-            >
+              >
               Find Donors
             </button>
           </div>
@@ -117,6 +122,10 @@ const BloodRequest = () => {
       </section>
 
     </div>
+    
+              <Footer/>
+              </>
+             
   );
 };
 

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./Event.css";
 import EventForm from "./EventForm";
 import Navbar from "../Navbar/Navbar";
+import Footer from "../footer/footer";
 
 /* IMAGES */
 import img1 from "../../assets/Megablood.jpg";
 import img2 from "../../assets/hospital.jpg";
 import img3 from "../../assets/togetherblood.jpg";
 import bg from "../../assets/blood.webp";
-import Footer from "../footer/footer";
 
 const Event = () => {
 
