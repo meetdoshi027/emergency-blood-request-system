@@ -2,8 +2,9 @@ import React from "react";
 import "./DonorCTA.css";
 import ctaBg from "../../../assets/donor-cta-bg.png";
 import donateIcon from "../../../assets/icon-donate-blood.png";
-
+import { useNavigate } from "react-router-dom";
 const DonorCTA = () => {
+  const navigate = useNavigate();
   return (
     <section
       className="donor-cta"
@@ -19,8 +20,8 @@ const DonorCTA = () => {
           </p>
 
           <div className="donor-buttons">
-            <button className="donor-primary">Register as Donor</button>
-            <button className="donor-secondary">Request Blood</button>
+            <button className="donor-primary" onClick={()=>navigate("/DonorRegister")}>Register as Donor</button>
+            <button className="donor-secondary" onClick={()=>navigate("/BloodRequest")}>Request Blood</button>
           </div>
         </div>
       </div>

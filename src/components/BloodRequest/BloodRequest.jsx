@@ -1,15 +1,26 @@
 import React from "react";
 import "./BloodRequest.css";
+<<<<<<< HEAD
 import requestImg from "../../assets/blood.webp";
 import bgImg from "../../assets/blood.webp";
 import { useNavigate } from "react-router-dom";
+=======
+import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
+>>>>>>> 997901cefa53b1318a58aa081217cdaf902f5408
 
 const BloodRequest = () => {
 
   const navigate = useNavigate();
 
   return (
+<<<<<<< HEAD
     <div className="blood-request">
+=======
+    <>
+ <Navbar/>
+    <div className="blood-request-page">
+>>>>>>> 997901cefa53b1318a58aa081217cdaf902f5408
 
       {/* HERO */}
       <section className="hero" style={{ backgroundImage: `url(${bgImg})` }}>
@@ -19,6 +30,7 @@ const BloodRequest = () => {
           <h1>Emergency Blood Needed?</h1>
           <p>Connect with nearby donors instantly and save lives</p>
 
+<<<<<<< HEAD
           <div className="hero-buttons">
             <button className="btn-primary">Create Request</button>
             <button 
@@ -35,6 +47,30 @@ const BloodRequest = () => {
       <section className="alert-bar">
         <p>🚨 3 Emergency requests nearby • O+ and A- urgently needed</p>
       </section>
+=======
+        {/* BLOOD GROUP */}
+        <select
+          value={bloodGroup}
+          onChange={(e) => setBloodGroup(e.target.value)}
+          >
+          <option value="">Select Blood Group</option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+
+        {/* CITY LIST */}
+        <select
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          >
+          <option value="">Select City</option>
+>>>>>>> 997901cefa53b1318a58aa081217cdaf902f5408
 
       {/* FEATURES */}
       <section className="features">
@@ -116,6 +152,8 @@ const BloodRequest = () => {
       </section>
 
     </div>
+    <Footer/>
+</>
   );
 };
 

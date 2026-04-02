@@ -9,18 +9,22 @@ import ImpactStats from "../Home/ImpactStats/ImpactStats";
 import Stats from "../Home/Stats/Stats";
 import DonorCTA from "../Home/DonorCTA/DonorCTA";
 import Testimonials from "../Home/Testimonials/Testimonials";
+import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 
 const Home = () => {
   return (
     <>
+    <Navbar/>
       <HomeHero />
       <HowItWorks />
       {/* <WhyChooseUs /> */}
       <TrustSafety />
       <ImpactStats />
-      <Stats />
-      <DonorCTA />
+      {/* <Stats /> */}
+      {/* <DonorCTA /> */}
       <Testimonials />
+      <Footer/>
     </>
   );
 };

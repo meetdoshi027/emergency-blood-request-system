@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Admin.css";
 
@@ -7,6 +7,23 @@ const AdminDashboard = () => {
   /* ================= STATE ================= */
   const [activeTab, setActiveTab] = useState("dashboard");
   const [data, setData] = useState([]);
+
+  const [counts, setCounts] = useState({
+    users: 0,
+    hospitals: 0,
+    bloodBanks: 0,
+    donors: 0
+  });
+
+  /* ================= LOAD COUNTS ================= */
+  const loadCounts = async () => {
+    try {
+      const res = await axios.get("https://localhost:7156/api/admin/counts");
+      setCounts(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   /* ================= LOAD DATA ================= */
   const loadData = async (type) => {
@@ -41,6 +58,14 @@ const AdminDashboard = () => {
     }
   };
 
+  /* ================= LOAD ON START ================= */
+  useEffect(() => {
+    const fetchData = async () => {
+      await loadCounts();
+    };
+    fetchData();
+  }, []);
+
   /* ================= TAB SWITCH ================= */
   const handleTab = async (type) => {
     setActiveTab(type);
@@ -58,6 +83,22 @@ const AdminDashboard = () => {
   /* ================= APPROVE ================= */
   const approve = async (id) => {
     try {
+
+      // 🔥 REMOVE FROM UI INSTANTLY
+      setData(prev =>
+        prev.filter(item =>
+          (item.userID ||
+           item.hospitalID ||
+           item.bloodBankID ||
+           item.donorID) !== id
+        )
+      );
+
+      // 🔥 UPDATE COUNT
+      setCounts(prev => ({
+        ...prev,
+        [activeTab]: prev[activeTab] - 1
+      }));
 
       let url = "";
 
@@ -78,16 +119,33 @@ const AdminDashboard = () => {
       }
 
       await axios.put(url);
-      loadData(activeTab);
 
     } catch {
       alert("Approve failed");
+      loadData(activeTab);
+      loadCounts();
     }
   };
 
   /* ================= REJECT ================= */
   const reject = async (id) => {
     try {
+
+      // 🔥 REMOVE FROM UI INSTANTLY
+      setData(prev =>
+        prev.filter(item =>
+          (item.userID ||
+           item.hospitalID ||
+           item.bloodBankID ||
+           item.donorID) !== id
+        )
+      );
+
+      // 🔥 UPDATE COUNT
+      setCounts(prev => ({
+        ...prev,
+        [activeTab]: prev[activeTab] - 1
+      }));
 
       let url = "";
 
@@ -108,10 +166,11 @@ const AdminDashboard = () => {
       }
 
       await axios.put(url);
-      loadData(activeTab);
 
     } catch {
       alert("Reject failed");
+      loadData(activeTab);
+      loadCounts();
     }
   };
 
@@ -134,52 +193,51 @@ const AdminDashboard = () => {
         </ul>
       </aside>
 
-      {/* ================= MAIN CONTENT ================= */}
+      {/* ================= MAIN ================= */}
       <main className="main-content">
 
         <h1>Admin Dashboard</h1>
 
         {/* ================= DASHBOARD ================= */}
         {activeTab === "dashboard" && (
-          <>
-            <div className="stats">
+          <div className="dashboard-grid">
 
-              <div className="stat-card">
-                <h3>Pending Users</h3>
-                <p>--</p>
-              </div>
-
-              <div className="stat-card">
-                <h3>Hospitals</h3>
-                <p>--</p>
-              </div>
-
-              <div className="stat-card">
-                <h3>Blood Banks</h3>
-                <p>--</p>
-              </div>
-
-              <div className="stat-card">
-                <h3>Donors</h3>
-                <p>--</p>
-              </div>
-
-              <div className="stat-card">
-                <h3>Requests</h3>
-                <p>--</p>
-              </div>
-
+            <div className="dashboard-card">
+              <h2>Users</h2>
+              <p className="count">{counts.users}</p>
+              <button onClick={() => handleTab("users")}>
+                View Details
+              </button>
             </div>
 
-            <div className="quick-actions">
-              <button className="btn-red">Request Blood</button>
-              <button className="btn-green">Approve Donation</button>
-              <button className="btn-blue">Find Drives</button>
+            <div className="dashboard-card">
+              <h2>Donors</h2>
+              <p className="count">{counts.donors}</p>
+              <button onClick={() => handleTab("donors")}>
+                View Details
+              </button>
             </div>
-          </>
+
+            <div className="dashboard-card">
+              <h2>Hospitals</h2>
+              <p className="count">{counts.hospitals}</p>
+              <button onClick={() => handleTab("hospitals")}>
+                View Details
+              </button>
+            </div>
+
+            <div className="dashboard-card">
+              <h2>Blood Banks</h2>
+              <p className="count">{counts.bloodBanks}</p>
+              <button onClick={() => handleTab("bloodbanks")}>
+                View Details
+              </button>
+            </div>
+
+          </div>
         )}
 
-        {/* ================= DATA SECTIONS ================= */}
+        {/* ================= DATA ================= */}
         {(activeTab === "users" ||
           activeTab === "hospitals" ||
           activeTab === "bloodbanks" ||
@@ -206,7 +264,6 @@ const AdminDashboard = () => {
                   }
                 >
 
-                  {/* USERS */}
                   {activeTab === "users" && (
                     <>
                       <strong>{item.fullName}</strong>
@@ -215,7 +272,6 @@ const AdminDashboard = () => {
                     </>
                   )}
 
-                  {/* HOSPITALS */}
                   {activeTab === "hospitals" && (
                     <>
                       <strong>{item.hospitalName}</strong>
@@ -224,7 +280,6 @@ const AdminDashboard = () => {
                     </>
                   )}
 
-                  {/* BLOOD BANKS */}
                   {activeTab === "bloodbanks" && (
                     <>
                       <strong>{item.bankName}</strong>
@@ -233,7 +288,6 @@ const AdminDashboard = () => {
                     </>
                   )}
 
-                  {/* DONORS */}
                   {activeTab === "donors" && (
                     <>
                       <strong>{item.name}</strong>
@@ -283,14 +337,11 @@ const AdminDashboard = () => {
           </>
         )}
 
-        {/* ================= OTHER SECTIONS ================= */}
-        {activeTab === "requests" && <h2>Requests Section (Coming Soon)</h2>}
-        {activeTab === "donations" && <h2>Donations Section (Coming Soon)</h2>}
-        {activeTab === "settings" && <h2>Settings Section (Coming Soon)</h2>}
-
       </main>
     </div>
   );
 };
 
 export default AdminDashboard;
+
+
