@@ -11,6 +11,7 @@ import Aboutus from './components/Aboutus/Aboutus';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import UserDashboard from "./components/user/UserDashboard";
+import HospitalDashboard from "./components/hospital/HospitalDashboard";
 import BloodRequest from './components/BloodRequest/BloodRequest';
 import Donate from './components/Donate/Donate';
 import Event from './components/Event/Event';
@@ -32,6 +33,7 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/user/dashboard" element={<UserDashboard />} />
+        <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
          <Route path="/donate" element={<Donate />} /> 
          <Route path="/event" element={<Event />} /> 
           <Route path="/bloodrequest" element={<BloodRequest />} /> 
