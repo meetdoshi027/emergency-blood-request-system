@@ -3,9 +3,13 @@ import './Aboutus.css'
 import aboutImg from '../../assets/whoarewe.png'
 import team from '../../assets/teammember.jpg'
 import CountUp from 'react-countup'
+import Navbar from '../Navbar/Navbar';
+
 
 const Aboutus = () => {
   return (
+    <>
+    <Navbar/>
     <section className="aboutus">
       {/* About Section */}
       <div className="aboutus-container">
@@ -96,6 +100,7 @@ const Aboutus = () => {
         </div>
       </div>
     </section>
+    </>
   )
 }
 

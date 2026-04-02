@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminLogin.css";
+import Navbar from '../Navbar/Navbar';
 
 const AdminLogin = () => {
 
@@ -43,6 +44,8 @@ const AdminLogin = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="admin-login-page">
 
       <div className="admin-login-card">
@@ -54,7 +57,7 @@ const AdminLogin = () => {
           placeholder="Admin Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+          />
 
         <input
           type="password"
@@ -70,6 +73,7 @@ const AdminLogin = () => {
       </div>
 
     </div>
+          </>
   );
 };
 

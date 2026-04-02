@@ -9,10 +9,12 @@ import ImpactStats from "../Home/ImpactStats/ImpactStats";
 import Stats from "../Home/Stats/Stats";
 import DonorCTA from "../Home/DonorCTA/DonorCTA";
 import Testimonials from "../Home/Testimonials/Testimonials";
+import Navbar from '../Navbar/Navbar';
 
 const Home = () => {
   return (
     <>
+    <Navbar/>
       <HomeHero />
       <HowItWorks />
       {/* <WhyChooseUs /> */}

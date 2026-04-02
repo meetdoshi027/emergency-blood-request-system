@@ -7,12 +7,15 @@ import process3 from "../../assets/donationprocess3.png";
 import process4 from "../../assets/donationprocess4.png";
 import eligibility from "../../assets/eligibility.png"
 import { useNavigate } from "react-router-dom";
+import Navbar from '../Navbar/Navbar';
 import "./Donate.css";
 
 
 const Donate = () => {
 const navigate = useNavigate();
   return (
+    <>
+    <Navbar/>  
     <div className="donate-page">
 
       {/* HERO */}
@@ -163,6 +166,7 @@ const navigate = useNavigate();
 
 </section>
     </div>
+    </>
   );
 };
 

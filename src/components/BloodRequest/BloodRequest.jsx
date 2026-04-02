@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./BloodRequest.css";
+import Navbar from '../Navbar/Navbar';
+
 
 const BloodRequest = () => {
 
@@ -65,6 +67,8 @@ const BloodRequest = () => {
   };
 
   return (
+    <>
+ <Navbar/>
     <div className="blood-request-page">
 
       <h1 className="page-title">Find Blood Availability</h1>
@@ -76,7 +80,7 @@ const BloodRequest = () => {
         <select
           value={bloodGroup}
           onChange={(e) => setBloodGroup(e.target.value)}
-        >
+          >
           <option value="">Select Blood Group</option>
           <option>A+</option>
           <option>A-</option>
@@ -92,7 +96,7 @@ const BloodRequest = () => {
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-        >
+          >
           <option value="">Select City</option>
 
           {cities.map((c, index) => (
@@ -207,6 +211,7 @@ const BloodRequest = () => {
       )}
 
     </div>
+</>
   );
 };
 

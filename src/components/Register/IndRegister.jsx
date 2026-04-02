@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
+import Navbar from '../Navbar/Navbar';
 
 const IndRegister = () => {
   const [form, setForm] = useState({
@@ -143,6 +144,9 @@ const response = await axios.post(
 
 
   return (
+    <>
+    <Navbar/>
+  
     <div className="register-page">
       <div className="register-container">
         <h2>Individual Registration</h2>
@@ -217,6 +221,7 @@ const response = await axios.post(
         </div>
       </div>
     </div>
+    </>
   );
 };
 

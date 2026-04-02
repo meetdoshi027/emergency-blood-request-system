@@ -4,6 +4,7 @@ import "./Indlogin.css";
 import axios from "axios";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import loginimg from "../../assets/loginimg.png";
+import Navbar from '../Navbar/Navbar';
 
 const Indlogin = () => {
 
@@ -109,6 +110,8 @@ const Indlogin = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="login-page">
 
       {/* LEFT SECTION */}
@@ -137,7 +140,7 @@ const Indlogin = () => {
                 type="checkbox"
                 checked={isOrg}
                 onChange={handleSwitchChange}
-              />
+                />
               <span className="slider"></span>
             </label>
           </div>
@@ -157,7 +160,7 @@ const Indlogin = () => {
                 placeholder="Enter email"
                 value={email}
                 onChange={handleEmailChange}
-              />
+                />
             </div>
             {errors.email && <p className="error-text">{errors.email}</p>}
 
@@ -170,11 +173,11 @@ const Indlogin = () => {
                 placeholder="Enter password"
                 value={password}
                 onChange={handlePasswordChange}
-              />
+                />
               <span
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
-              >
+                >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -187,7 +190,7 @@ const Indlogin = () => {
               <Link
                 className="register-link"
                 to={isOrg ? "/register/organization" : "/register/individual"}
-              >
+                >
                 {isOrg ? "Register Organization" : "Register as Individual"}
               </Link>
 
@@ -201,6 +204,7 @@ const Indlogin = () => {
       </div>
 
     </div>
+                 </>
   );
 };
 
