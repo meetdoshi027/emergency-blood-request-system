@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
+import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 
 const OrgRegister = () => {
 
@@ -169,6 +171,8 @@ const OrgRegister = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="register-page">
       <div className="register-container">
 
@@ -182,7 +186,7 @@ const OrgRegister = () => {
             placeholder="Organization Name"
             value={form.organizationName}
             onChange={handleChange}
-          />
+            />
 
           <input
             type="text"
@@ -198,7 +202,7 @@ const OrgRegister = () => {
             placeholder="Email Address"
             value={form.email}
             onChange={handleChange}
-          />
+            />
 
           <input
             type="password"
@@ -214,7 +218,7 @@ const OrgRegister = () => {
             placeholder="Phone Number"
             value={form.phone}
             onChange={handleChange}
-          />
+            />
 
           {/* CITY DROPDOWN */}
           <select
@@ -246,7 +250,7 @@ const OrgRegister = () => {
                   value="BloodBank"
                   checked={form.orgType === "BloodBank"}
                   onChange={handleChange}
-                />
+                  />
                 🩸 Blood Bank
               </label>
 
@@ -267,10 +271,10 @@ const OrgRegister = () => {
 
           {form.orgType === "Hospital" && (
             <input
-              type="text"
-              name="registrationNumber"
-              placeholder="Hospital Registration Number"
-              value={form.registrationNumber}
+            type="text"
+            name="registrationNumber"
+            placeholder="Hospital Registration Number"
+            value={form.registrationNumber}
               onChange={handleChange}
             />
           )}
@@ -282,15 +286,15 @@ const OrgRegister = () => {
               placeholder="Blood Bank License Number"
               value={form.licenseNumber}
               onChange={handleChange}
-            />
-          )}
+              />
+            )}
 
           <textarea
             name="address"
             placeholder="Organization Address"
             value={form.address}
             onChange={handleChange}
-          />
+            />
 
           <button type="submit" disabled={!isFormValid}>
             Register Organization
@@ -307,6 +311,8 @@ const OrgRegister = () => {
 
       </div>
     </div>
+    <Footer/>
+            </>
   );
 };
 

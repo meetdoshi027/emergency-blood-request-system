@@ -22,8 +22,6 @@ import DonorRegister from './components/Register/DonorRegister.jsx';
 function App() {
   return (
     <Router>
-      <Navbar />
-
       <Routes>
         <Route path="/home" element={<Home />} />  
         <Route path="/" element={<Indlogin />} />
@@ -37,16 +35,11 @@ function App() {
         <Route path="/user/dashboard" element={<UserDashboard />} />
         <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
          <Route path="/donate" element={<Donate />} /> 
-
          <Route path="/event" element={<Event />} /> 
-
-
           <Route path="/bloodrequest" element={<BloodRequest />} /> 
           <Route path="/donorregister" element={<DonorRegister />} /> 
 
       </Routes>
-
-      <Footer/>
     </Router>
   );
 }

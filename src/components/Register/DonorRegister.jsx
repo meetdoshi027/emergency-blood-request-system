@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./DonorRegister.css";
+import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer';
 
 const DonorRegister = () => {
 
@@ -57,6 +59,8 @@ const DonorRegister = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="donor-page">
 
       <div className="donor-header">
@@ -91,7 +95,7 @@ const DonorRegister = () => {
                 value={form.age}
                 onChange={handleChange}
                 required
-              />
+                />
               <label>Age</label>
             </div>
 
@@ -101,7 +105,7 @@ const DonorRegister = () => {
                 value={form.gender}
                 onChange={handleChange}
                 required
-              >
+                >
                 <option value=""></option>
                 <option>Male</option>
                 <option>Female</option>
@@ -116,7 +120,7 @@ const DonorRegister = () => {
                 value={form.bloodGroup}
                 onChange={handleChange}
                 required
-              >
+                >
                 <option value=""></option>
                 <option>A+</option>
                 <option>A-</option>
@@ -137,7 +141,7 @@ const DonorRegister = () => {
                 value={form.weight}
                 onChange={handleChange}
                 required
-              />
+                />
               <label>Weight (kg)</label>
             </div>
 
@@ -148,7 +152,7 @@ const DonorRegister = () => {
                 value={form.phone}
                 onChange={handleChange}
                 required
-              />
+                />
               <label>Phone Number</label>
             </div>
 
@@ -159,7 +163,7 @@ const DonorRegister = () => {
                 value={form.email}
                 onChange={handleChange}
                 required
-              />
+                />
               <label>Email</label>
             </div>
 
@@ -170,7 +174,7 @@ const DonorRegister = () => {
                 value={form.city}
                 onChange={handleChange}
                 required
-              />
+                />
               <label>City</label>
             </div>
 
@@ -182,7 +186,7 @@ const DonorRegister = () => {
               value={form.address}
               onChange={handleChange}
               required
-            ></textarea>
+              ></textarea>
             <label>Address</label>
           </div>
 
@@ -192,7 +196,7 @@ const DonorRegister = () => {
               name="medicalHistory"
               value={form.medicalHistory}
               onChange={handleChange}
-            />
+              />
             <label>Medical History (If any)</label>
           </div>
 
@@ -204,6 +208,8 @@ const DonorRegister = () => {
 
       </div>
     </div>
+    <Footer/>
+              </>
   );
 };
 
