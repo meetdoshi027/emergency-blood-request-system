@@ -14,21 +14,18 @@ const Event = () => {
 
 const today = new Date().toISOString().split("T")[0];
 
-// ✅ DATE FORMAT FUNCTION
+// DATE FORMAT
 const formatDate = (date) => {
-const d = new Date(date);
-const day = String(d.getDate()).padStart(2, '0');
-const month = String(d.getMonth() + 1).padStart(2, '0');
-const year = d.getFullYear();
-return `${day}-${month}-${year}`;
+  const d = new Date(date);
+  return `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
 };
 
-// ✅ STATE
+// STATE
 const [showForm, setShowForm] = useState(false);
 const [selectedEvent, setSelectedEvent] = useState(null);
 
+// EVENTS
 const events = [
-
 {title:"Blood Donation Camp",organization:"Red Cross",date:"2025-03-01",image:img1,description:"Donate blood"},
 {title:"Community Blood Drive",organization:"NGO Trust",date:"2025-02-15",image:img2,description:"Helping people"},
 {title:"Health Awareness Camp",organization:"City NGO",date:"2025-01-10",image:img3,description:"Awareness"},
@@ -52,8 +49,8 @@ const futureEvents = events.filter(e => e.date > today);
 
 // REGISTER
 const handleRegister = (event) => {
-setSelectedEvent(event);
-setShowForm(true);
+  setSelectedEvent(event);
+  setShowForm(true);
 };
 
 // RENDER
@@ -62,17 +59,14 @@ const renderEvents = (list, type) => (
 
 {list.map((event,index)=>(
 
-<div className="event-card" key={index}>
+<div className={`event-card ${type}`} key={index}>
 
 <img src={event.image} alt="event" />
 
 <div className="event-content">
 <h3>{event.title}</h3>
 <p>🏥 {event.organization}</p>
-
-{/* ✅ UPDATED DATE */}
 <p>📅 {formatDate(event.date)}</p>
-
 <p className="desc">{event.description}</p>
 
 {type === "future" && (
@@ -93,20 +87,21 @@ Register
 );
 
 return (
-    <>
-      <Navbar />
+<>
+<Navbar />
+
 <div className="event-container" style={{ backgroundImage: `url(${bg})` }}>
 
 <h1 className="main-title">Blood Donation Events</h1>
 
-<h2 className="section-title">🕘 Past Event</h2>
-{renderEvents(pastEvents,"past")}
+<h2 className="section-title">🚀 Future Event</h2>
+{renderEvents(futureEvents,"future")}
 
 <h2 className="section-title">📍 Present Event</h2>
 {renderEvents(presentEvents,"present")}
 
-<h2 className="section-title">🚀 Future Event</h2>
-{renderEvents(futureEvents,"future")}
+<h2 className="section-title">🕘 Past Event</h2>
+{renderEvents(pastEvents,"past")}
 
 {showForm && (
 <EventForm 
@@ -116,8 +111,9 @@ closeForm={() => setShowForm(false)}
 )}
 
 </div>
- <Footer />
-    </>
+
+<Footer />
+</>
 );
 };
 

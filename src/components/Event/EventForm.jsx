@@ -16,7 +16,7 @@ pincode:"",
 agree:false
 });
 
-// ✅ DATE FORMAT FUNCTION
+// DATE FORMAT
 const formatDate = (date) => {
 const d = new Date(date);
 const day = String(d.getDate()).padStart(2, '0');
@@ -37,7 +37,7 @@ setFormData({
 const handleSubmit = (e) => {
 e.preventDefault();
 
-// ✅ CHECK TERMS
+// CHECK TERMS
 if (!formData.agree) {
 alert("Please accept Terms & Conditions");
 return;
@@ -56,7 +56,6 @@ return (
 
 <p><b>{event?.title}</b></p>
 
-{/* ✅ UPDATED DATE FORMAT */}
 <p>{formatDate(event?.date)}</p>
 
 <form onSubmit={handleSubmit}>
@@ -154,10 +153,18 @@ type="checkbox"
 name="agree"
 onChange={handleChange}
 />
- I agree to Terms & Conditions
+<span>I agree to Terms & Conditions</span>   
 </label>
 
-<button type="submit" className="submit-btn">Register</button>
+
+{/* ✅ UPDATED BUTTON */}
+<button 
+type="submit" 
+className="submit-btn"
+disabled={!formData.agree}
+>
+Register
+</button>
 
 <button type="button" className="close-btn" onClick={closeForm}>
 Cancel

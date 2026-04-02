@@ -12,12 +12,13 @@ const RequestForm = () => {
     age: "",
     bloodGroup: "",
     units: "",
-    
+    hospital: "",
     city: "",
     state: "",
     contact: "",
     urgency: "",
-   
+    date: "",
+    time: "",
     message: "",
   });
 
@@ -74,7 +75,9 @@ const RequestForm = () => {
               <input type="number" name="units" placeholder="Units Required" required onChange={handleChange} />
             </div>
 
-          
+            {/* Hospital */}
+            <h4>Hospital Information</h4>
+            <input name="hospital" placeholder="Hospital Name" required onChange={handleChange} />
 
             {/* Location */}
             <h4>Location</h4>
@@ -83,7 +86,12 @@ const RequestForm = () => {
               <input name="state" placeholder="State" required onChange={handleChange} />
             </div>
 
-            
+            {/* Schedule */}
+            <h4>Required Time</h4>
+            <div className="form-row">
+              <input type="date" name="date" required onChange={handleChange} />
+              <input type="time" name="time" required onChange={handleChange} />
+            </div>
 
             {/* Contact */}
             <h4>Contact Details</h4>
