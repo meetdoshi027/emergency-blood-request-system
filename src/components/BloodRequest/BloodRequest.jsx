@@ -1,210 +1,119 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import "./BloodRequest.css";
+import requestImg from "../../assets/blood.webp";
+import bgImg from "../../assets/blood.webp";
+import { useNavigate } from "react-router-dom";
 
 const BloodRequest = () => {
 
-  const [bloodGroup, setBloodGroup] = useState("");
-  const [city, setCity] = useState("");
-
-  const [donors, setDonors] = useState([]);
-  const [hospitals, setHospitals] = useState([]);
-  const [bloodBanks, setBloodBanks] = useState([]);
-
-  const [searched, setSearched] = useState(false);
-
-  /* ===============================
-     CITY LIST
-     =============================== */
-  const cities = [
-    "Ahmedabad",
-    "Surat",
-    "Vadodara",
-    "Rajkot",
-    "Gandhinagar",
-    "Bhavnagar",
-    "Jamnagar",
-    "Junagadh",
-    "Anand",
-    "Navsari",
-    "Valsad",
-    "Bharuch",
-    "Patan",
-    "Mehsana",
-    "Morbi"
-  ];
-
-  /* ===============================
-     SEARCH FUNCTION
-     =============================== */
-  const searchBlood = async () => {
-
-    if (!bloodGroup || !city) {
-      alert("Please select blood group and city");
-      return;
-    }
-
-    try {
-
-      const res = await axios.get(
-        `https://localhost:7156/api/BloodRequest/search?bloodGroup=${bloodGroup}&city=${city}`
-      );
-
-      setDonors(res.data.donors || []);
-      setHospitals(res.data.hospitals || []);
-      setBloodBanks(res.data.bloodBanks || []);
-
-      setSearched(true);
-
-    } catch (error) {
-
-      console.error("Blood search error:", error);
-      alert("Failed to search blood availability");
-
-    }
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="blood-request-page">
+    <div className="blood-request">
 
-      <h1 className="page-title">Find Blood Availability</h1>
+      {/* HERO */}
+      <section className="hero" style={{ backgroundImage: `url(${bgImg})` }}>
+        <div className="hero-overlay"></div>
 
-      {/* ================= SEARCH BOX ================= */}
-      <div className="search-box">
+        <div className="hero-content">
+          <h1>Emergency Blood Needed?</h1>
+          <p>Connect with nearby donors instantly and save lives</p>
 
-        {/* BLOOD GROUP */}
-        <select
-          value={bloodGroup}
-          onChange={(e) => setBloodGroup(e.target.value)}
-        >
-          <option value="">Select Blood Group</option>
-          <option>A+</option>
-          <option>A-</option>
-          <option>B+</option>
-          <option>B-</option>
-          <option>AB+</option>
-          <option>AB-</option>
-          <option>O+</option>
-          <option>O-</option>
-        </select>
+          <div className="hero-buttons">
+            <button className="btn-primary">Create Request</button>
+            <button 
+              className="btn-secondary"
+              onClick={() => navigate("/DonorList")}
+            >
+              Find Donors
+            </button>
+          </div>
+        </div>
+      </section>
 
-        {/* CITY LIST */}
-        <select
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        >
-          <option value="">Select City</option>
+      {/* LIVE ALERT */}
+      <section className="alert-bar">
+        <p>🚨 3 Emergency requests nearby • O+ and A- urgently needed</p>
+      </section>
 
-          {cities.map((c, index) => (
-            <option key={index} value={c}>
-              {c}
-            </option>
-          ))}
+      {/* FEATURES */}
+      <section className="features">
+        <h2>How We Help You Fast</h2>
 
-        </select>
+        <div className="feature-grid">
 
-        {/* SEARCH BUTTON */}
-        <button onClick={searchBlood}>
-          Search
-        </button>
+          <div className="feature-card">
+            <h3>⚡ Instant Request</h3>
+            <p>Create request in seconds during emergency</p>
+          </div>
 
-      </div>
+          <div className="feature-card">
+            <h3>📍 Smart Matching</h3>
+            <p>Nearby donors are notified instantly</p>
+          </div>
 
-      {/* ================= RESULTS ================= */}
-      {searched && (
+          <div className="feature-card">
+            <h3>📞 Direct Contact</h3>
+            <p>Talk to donors without delay</p>
+          </div>
 
-        <div className="results-container">
-
-          {/* ================= DONORS ================= */}
-          <section>
-
-            <h2>Available Donors</h2>
-
-            {donors.length === 0 && <p>No donors found</p>}
-
-            <div className="cards">
-              {donors.map((d) => (
-                <div className="card" key={d.userID}>
-
-                  <h3>{d.fullName}</h3>
-
-                  <p>
-                    <strong>Blood Group:</strong> {d.bloodGroup}
-                  </p>
-
-                  <p>
-                    <strong>City:</strong> {d.address}
-                  </p>
-
-                  <p>
-                    <strong>Phone:</strong> {d.phone}
-                  </p>
-
-                </div>
-              ))}
-            </div>
-
-          </section>
-
-
-          {/* ================= HOSPITALS ================= */}
-          <section>
-
-            <h2>Hospitals</h2>
-
-            {hospitals.length === 0 && <p>No hospitals found</p>}
-
-            <div className="cards">
-              {hospitals.map((h) => (
-                <div className="card" key={h.hospitalID}>
-
-                  <h3>{h.hospitalName}</h3>
-
-                  <p>
-                    <strong>City:</strong> {h.city}
-                  </p>
-
-                  <p>
-                    <strong>Phone:</strong> {h.phone}
-                  </p>
-
-                </div>
-              ))}
-            </div>
-
-          </section>
-
-
-          {/* ================= BLOOD BANKS ================= */}
-          <section>
-
-            <h2>Blood Banks</h2>
-
-            {bloodBanks.length === 0 && <p>No blood banks found</p>}
-
-            <div className="cards">
-              {bloodBanks.map((b) => (
-                <div className="card" key={b.bloodBankID}>
-
-                  <h3>{b.bankName}</h3>
-
-                  <p>
-                    <strong>City:</strong> {b.city}
-                  </p>
-
-                  <p>
-                    <strong>Phone:</strong> {b.phone}
-                  </p>
-
-                </div>
-              ))}
-            </div>
-
-          </section>
+          <div className="feature-card">
+            <h3>❤️ Life Saving</h3>
+            <p>Every request can save a life</p>
+          </div>
 
         </div>
+      </section>
 
-      )}
+      {/* PROCESS */}
+      <section className="process">
+        <h2>Simple 4-Step Process</h2>
+
+        <div className="steps">
+
+          <div className="step">
+            <span>1</span>
+            <h4>Create Request</h4>
+          </div>
+
+          <div className="step">
+            <span>2</span>
+            <h4>Notify Donors</h4>
+          </div>
+
+          <div className="step">
+            <span>3</span>
+            <h4>Get Response</h4>
+          </div>
+
+          <div className="step">
+            <span>4</span>
+            <h4>Save Life</h4>
+          </div>
+
+        </div>
+      </section>
+
+      {/* CTA SECTION */}
+      <section className="cta">
+
+        <div className="cta-left">
+          <h2>Your One Request Can Save a Life</h2>
+          <p>
+            Thousands of patients need blood every day.
+            Don't wait — create a request and connect instantly.
+          </p>
+
+          <button className="btn-primary big-btn">
+            Request Blood Now
+          </button>
+        </div>
+
+        <div className="cta-right">
+          <img src={requestImg} alt="Blood Request"/>
+        </div>
+
+      </section>
 
     </div>
   );
