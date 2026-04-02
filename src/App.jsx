@@ -36,7 +36,6 @@ function App() {
          <Route path="/event" element={<Event />} /> 
           <Route path="/bloodrequest" element={<BloodRequest />} /> 
           <Route path="/donorregister" element={<DonorRegister />} /> 
-
       </Routes>
     </Router>
   );

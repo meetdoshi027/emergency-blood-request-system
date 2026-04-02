@@ -12,7 +12,7 @@ const Contactus = () => {
   return (
     <>
     <Navbar/>
-      <Contactuspath />
+      {/* <Contactuspath /> */}
       <ContactHero />
       <Contact />
       <Contactform />
