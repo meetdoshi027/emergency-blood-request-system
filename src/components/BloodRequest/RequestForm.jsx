@@ -17,8 +17,6 @@ const RequestForm = () => {
     state: "",
     contact: "",
     urgency: "",
-    date: "",
-    time: "",
     message: "",
   });
 
@@ -29,14 +27,31 @@ const RequestForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    alert("✅ Request Submitted Successfully!");
-    console.log(formData);
+  try {
+    const res = await fetch("https://localhost:7156/api/BloodRequest/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-    navigate("/");
-  };
+    if (!res.ok) {
+      throw new Error("Request failed");
+    }
+
+    alert("✅ Request Submitted!");
+
+    navigate(`/results/${formData.city}/${formData.bloodGroup}`);
+
+  } catch (error) {
+    console.error(error);  // 🔥 important
+    alert("❌ Failed to submit request");
+  }
+};
 
   return (
     <>
@@ -86,13 +101,7 @@ const RequestForm = () => {
               <input name="state" placeholder="State" required onChange={handleChange} />
             </div>
 
-            {/* Schedule */}
-            <h4>Required Time</h4>
-            <div className="form-row">
-              <input type="date" name="date" required onChange={handleChange} />
-              <input type="time" name="time" required onChange={handleChange} />
-            </div>
-
+          
             {/* Contact */}
             <h4>Contact Details</h4>
             <input type="tel" name="contact" placeholder="Phone Number" required onChange={handleChange} />

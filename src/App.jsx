@@ -18,6 +18,7 @@ import Event from './components/Event/Event';
 import Footer from './components/footer/footer';
 import DonorRegister from './components/Register/DonorRegister.jsx';
 import RequestForm from './components/BloodRequest/RequestForm.jsx';
+import RequestResults from './components/BloodRequest/RequestResults.jsx';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/bloodrequest" element={<BloodRequest />} /> 
           <Route path="/donorregister" element={<DonorRegister />} /> 
           <Route path="/PostRequest" element={<RequestForm />} />
+          <Route path="/results/:city/:bloodGroup" element={<RequestResults />} /> 
       </Routes>
     </Router>
   );

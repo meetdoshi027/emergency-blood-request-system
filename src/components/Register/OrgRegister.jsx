@@ -7,24 +7,6 @@ import Footer from '../footer/footer';
 
 const OrgRegister = () => {
 
-  const cities = [
-    "Ahmedabad",
-    "Surat",
-    "Vadodara",
-    "Rajkot",
-    "Gandhinagar",
-    "Bhavnagar",
-    "Jamnagar",
-    "Junagadh",
-    "Anand",
-    "Navsari",
-    "Valsad",
-    "Bharuch",
-    "Patan",
-    "Mehsana",
-    "Morbi"
-  ];
-
   const [form, setForm] = useState({
     organizationName: "",
     orgType: "",
@@ -85,7 +67,7 @@ const OrgRegister = () => {
         return value ? "" : "Select organization type";
 
       case "city":
-        return value ? "" : "Select city";
+        return value ? "" : "Enter city";   // ✅ changed
 
       default:
         return "";
@@ -186,7 +168,7 @@ const OrgRegister = () => {
             placeholder="Organization Name"
             value={form.organizationName}
             onChange={handleChange}
-            />
+          />
 
           <input
             type="text"
@@ -202,7 +184,7 @@ const OrgRegister = () => {
             placeholder="Email Address"
             value={form.email}
             onChange={handleChange}
-            />
+          />
 
           <input
             type="password"
@@ -218,24 +200,16 @@ const OrgRegister = () => {
             placeholder="Phone Number"
             value={form.phone}
             onChange={handleChange}
-            />
+          />
 
-          {/* CITY DROPDOWN */}
-          <select
+          {/* ✅ CITY INPUT (REPLACED DROPDOWN) */}
+          <input
+            type="text"
             name="city"
+            placeholder="Enter City"
             value={form.city}
             onChange={handleChange}
-          >
-            <option value="">Select City</option>
-
-            {cities.map((city, index) => (
-              <option key={index} value={city}>
-                {city}
-              </option>
-            ))}
-
-          </select>
-
+          />
 
           {/* Organization Type */}
           <div className="org-type full-width">
@@ -250,7 +224,7 @@ const OrgRegister = () => {
                   value="BloodBank"
                   checked={form.orgType === "BloodBank"}
                   onChange={handleChange}
-                  />
+                />
                 🩸 Blood Bank
               </label>
 
@@ -268,13 +242,12 @@ const OrgRegister = () => {
             </div>
           </div>
 
-
           {form.orgType === "Hospital" && (
             <input
-            type="text"
-            name="registrationNumber"
-            placeholder="Hospital Registration Number"
-            value={form.registrationNumber}
+              type="text"
+              name="registrationNumber"
+              placeholder="Hospital Registration Number"
+              value={form.registrationNumber}
               onChange={handleChange}
             />
           )}
@@ -286,15 +259,15 @@ const OrgRegister = () => {
               placeholder="Blood Bank License Number"
               value={form.licenseNumber}
               onChange={handleChange}
-              />
-            )}
+            />
+          )}
 
           <textarea
             name="address"
             placeholder="Organization Address"
             value={form.address}
             onChange={handleChange}
-            />
+          />
 
           <button type="submit" disabled={!isFormValid}>
             Register Organization
@@ -312,7 +285,7 @@ const OrgRegister = () => {
       </div>
     </div>
     <Footer/>
-            </>
+    </>
   );
 };
 
