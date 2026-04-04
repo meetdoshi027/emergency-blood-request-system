@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import './Navbar.css';
 import logo from '../../assets/logo.jpg';
+import Profile from '../Home/Profile/Profile';
 
 const Navbar = () => {
   return (
@@ -50,7 +51,9 @@ const Navbar = () => {
             <li className="nav-item navitem">
               <Link className="nav-link" to="/login">LOGIN</Link>
             </li>
-
+             <li className="nav-item navitem">
+             <Profile/>
+            </li>
           </ul>
         </div>
       </div>

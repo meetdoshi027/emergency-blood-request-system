@@ -1,0 +1,115 @@
+.profile {
+  position: relative;
+}
+
+/* Avatar */
+.profile .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #e63946;
+  padding: 2px;
+  transition: 0.3s;
+}
+
+.profile .avatar:hover {
+  transform: scale(1.05);
+}
+
+/* Dropdown */
+.profile .dropdown {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  width: 260px;
+  background: #fff;
+  color: #8c0000;
+  border-radius: 14px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Smooth animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* User section */
+.profile .user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile .user img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.profile .user h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.profile .user p {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Divider */
+.profile .divider {
+  height: 1px;
+  background: #eee;
+  margin: 12px 0;
+}
+
+/* Buttons */
+.profile button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+/* Account button */
+.profile .account {
+  background: #ffecec;
+  color: red;
+  font-weight: 550;
+}
+
+.proicon{
+    margin-right: 30px;
+    font-size: 20px;
+}
+
+.profile .account:hover {
+ background: #ffd6d6;
+}
+
+/* Logout button (theme red) */
+.profile .logout {
+  background: #ffecec;
+  color: red;
+  font-weight: 550;
+}
+
+.profile .logout:hover {
+  background: #ffd6d6;
+}
