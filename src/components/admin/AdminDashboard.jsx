@@ -1,259 +1,198 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Admin.css";
 
+const API = "https://localhost:7156/api/admin";
+
 const AdminDashboard = () => {
 
-  /* ================= STATE ================= */
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [counts, setCounts] = useState({});
   const [data, setData] = useState([]);
 
-  const [counts, setCounts] = useState({
-    users: 0,
-    hospitals: 0,
-    bloodBanks: 0,
-    donors: 0
-  });
-
-  /* ================= LOAD COUNTS ================= */
+  // ✅ LOAD COUNTS
   const loadCounts = async () => {
     try {
-      const res = await axios.get("https://localhost:7156/api/admin/counts");
+      const res = await axios.get(`${API}/counts`);
       setCounts(res.data);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error("Error loading counts", err);
     }
   };
 
-  /* ================= LOAD DATA ================= */
+  // ✅ LOAD DATA
   const loadData = async (type) => {
     try {
-
-      let url = "";
-
-      if (type === "users") {
-        url = "https://localhost:7156/api/admin/pending-users";
-      }
-
-      if (type === "hospitals") {
-        url = "https://localhost:7156/api/admin/pending-hospitals";
-      }
-
-      if (type === "bloodbanks") {
-        url = "https://localhost:7156/api/admin/pending-bloodbanks";
-      }
-
-      if (type === "donors") {
-        url = "https://localhost:7156/api/admin/pending-donors";
-      }
-
-      if (!url) return;
-
-      const res = await axios.get(url);
+      const res = await axios.get(`${API}/${type}`);
       setData(res.data);
-
-    } catch (error) {
-      console.error(error);
-      alert("Failed to load data");
+    } catch (err) {
+      console.error("Error loading data", err);
     }
   };
 
-  /* ================= LOAD ON START ================= */
+  // ✅ FIXED AUTO REFRESH (NO WARNING)
   useEffect(() => {
-    const fetchData = async () => {
-      await loadCounts();
+    let isMounted = true;
+
+    const fetchCounts = async () => {
+      if (isMounted) {
+        await loadCounts();
+      }
     };
-    fetchData();
+
+    fetchCounts();
+
+    const interval = setInterval(fetchCounts, 3000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
-  /* ================= TAB SWITCH ================= */
-  const handleTab = async (type) => {
-    setActiveTab(type);
+  // ✅ TAB SWITCH
+  const handleTab = (tab) => {
+    setActiveTab(tab);
 
-    if (
-      type === "users" ||
-      type === "hospitals" ||
-      type === "bloodbanks" ||
-      type === "donors"
-    ) {
-      await loadData(type);
-    }
+    if (tab === "users") loadData("pending-users");
+    if (tab === "hospitals") loadData("pending-hospitals");
+    if (tab === "bloodbanks") loadData("pending-bloodbanks");
+    if (tab === "donors") loadData("pending-donors");
+
+    if (tab === "manage-users") loadData("all-users");
+    if (tab === "manage-hospitals") loadData("all-hospitals");
+    if (tab === "manage-bloodbanks") loadData("all-bloodbanks");
   };
 
-  /* ================= APPROVE ================= */
+  // ✅ APPROVE
   const approve = async (id) => {
     try {
+      const type = activeTab.slice(0, -1);
 
-      // 🔥 REMOVE FROM UI INSTANTLY
+      await axios.put(`${API}/approve-${type}/${id}`);
+
       setData(prev =>
-        prev.filter(item =>
-          (item.userID ||
-           item.hospitalID ||
-           item.bloodBankID ||
-           item.donorID) !== id
+        prev.filter(x =>
+          (x.userID || x.hospitalID || x.bloodBankID || x.donorID) !== id
         )
       );
 
-      // 🔥 UPDATE COUNT
-      setCounts(prev => ({
-        ...prev,
-        [activeTab]: prev[activeTab] - 1
-      }));
-
-      let url = "";
-
-      if (activeTab === "users") {
-        url = `https://localhost:7156/api/admin/approve-user/${id}`;
-      }
-
-      if (activeTab === "hospitals") {
-        url = `https://localhost:7156/api/admin/approve-hospital/${id}`;
-      }
-
-      if (activeTab === "bloodbanks") {
-        url = `https://localhost:7156/api/admin/approve-bloodbank/${id}`;
-      }
-
-      if (activeTab === "donors") {
-        url = `https://localhost:7156/api/admin/approve-donor/${id}`;
-      }
-
-      await axios.put(url);
-
+      loadCounts();
     } catch {
       alert("Approve failed");
-      loadData(activeTab);
-      loadCounts();
     }
   };
 
-  /* ================= REJECT ================= */
+  // ✅ NEW: REJECT FUNCTION
   const reject = async (id) => {
     try {
+      const type = activeTab.slice(0, -1);
 
-      // 🔥 REMOVE FROM UI INSTANTLY
+      await axios.put(`${API}/reject-${type}/${id}`);
+
       setData(prev =>
-        prev.filter(item =>
-          (item.userID ||
-           item.hospitalID ||
-           item.bloodBankID ||
-           item.donorID) !== id
+        prev.filter(x =>
+          (x.userID || x.hospitalID || x.bloodBankID || x.donorID) !== id
         )
       );
 
-      // 🔥 UPDATE COUNT
-      setCounts(prev => ({
-        ...prev,
-        [activeTab]: prev[activeTab] - 1
-      }));
-
-      let url = "";
-
-      if (activeTab === "users") {
-        url = `https://localhost:7156/api/admin/reject-user/${id}`;
-      }
-
-      if (activeTab === "hospitals") {
-        url = `https://localhost:7156/api/admin/reject-hospital/${id}`;
-      }
-
-      if (activeTab === "bloodbanks") {
-        url = `https://localhost:7156/api/admin/reject-bloodbank/${id}`;
-      }
-
-      if (activeTab === "donors") {
-        url = `https://localhost:7156/api/admin/reject-donor/${id}`;
-      }
-
-      await axios.put(url);
-
+      loadCounts();
     } catch {
       alert("Reject failed");
-      loadData(activeTab);
-      loadCounts();
+    }
+  };
+
+  // ✅ BLOCK / UNBLOCK
+  const toggleBlock = async (id) => {
+    try {
+      const type = activeTab.replace("manage-", "").slice(0, -1);
+
+      await axios.put(`${API}/toggle-${type}/${id}`);
+
+      handleTab(activeTab);
+    } catch {
+      alert("Block/Unblock failed");
     }
   };
 
   return (
     <div className="dashboard-container">
 
-      {/* ================= SIDEBAR ================= */}
+      {/* ===== SIDEBAR ===== */}
       <aside className="sidebar">
-        <h2 className="logo">Connect Life</h2>
-
-        <ul className="menu">
+        <h2>Connect Life</h2>
+        <ul>
           <li onClick={() => handleTab("dashboard")}>Dashboard</li>
-          <li onClick={() => handleTab("requests")}>Requests</li>
-          <li onClick={() => handleTab("donations")}>Donations</li>
-          <li onClick={() => handleTab("hospitals")}>Hospitals</li>
-          <li onClick={() => handleTab("bloodbanks")}>Blood Banks</li>
-          <li onClick={() => handleTab("donors")}>Donors</li>
-          <li onClick={() => handleTab("users")}>Users</li>
-          <li onClick={() => handleTab("settings")}>Settings</li>
+          <li onClick={() => handleTab("users")}>Pending Users</li>
+          <li onClick={() => handleTab("donors")}>Pending Donors</li>
+          <li onClick={() => handleTab("hospitals")}>Pending Hospitals</li>
+          <li onClick={() => handleTab("bloodbanks")}>Pending Blood Banks</li>
+
+          <li onClick={() => handleTab("manage-users")}>Manage Users</li>
+          <li onClick={() => handleTab("manage-hospitals")}>Manage Hospitals</li>
+          <li onClick={() => handleTab("manage-bloodbanks")}>Manage Blood Banks</li>
         </ul>
       </aside>
 
-      {/* ================= MAIN ================= */}
+      {/* ===== MAIN ===== */}
       <main className="main-content">
 
         <h1>Admin Dashboard</h1>
 
-        {/* ================= DASHBOARD ================= */}
+        {/* ===== DASHBOARD ===== */}
         {activeTab === "dashboard" && (
           <div className="dashboard-grid">
 
             <div className="dashboard-card">
-              <h2>Users</h2>
-              <p className="count">{counts.users}</p>
-              <button onClick={() => handleTab("users")}>
-                View Details
-              </button>
+              <h2>Total Users</h2>
+              <p>{counts.users || 0}</p>
             </div>
 
             <div className="dashboard-card">
-              <h2>Donors</h2>
-              <p className="count">{counts.donors}</p>
-              <button onClick={() => handleTab("donors")}>
-                View Details
-              </button>
+              <h2>Total Donors</h2>
+              <p>{counts.donors || 0}</p>
             </div>
 
             <div className="dashboard-card">
-              <h2>Hospitals</h2>
-              <p className="count">{counts.hospitals}</p>
-              <button onClick={() => handleTab("hospitals")}>
-                View Details
-              </button>
+              <h2>Total Hospitals</h2>
+              <p>{counts.hospitals || 0}</p>
             </div>
 
             <div className="dashboard-card">
-              <h2>Blood Banks</h2>
-              <p className="count">{counts.bloodBanks}</p>
-              <button onClick={() => handleTab("bloodbanks")}>
-                View Details
-              </button>
+              <h2>Total Blood Banks</h2>
+              <p>{counts.bloodBanks || 0}</p>
+            </div>
+
+            <div className="dashboard-card">
+              <h2>Pending Users</h2>
+              <p>{counts.pendingUsers || 0}</p>
+            </div>
+
+            <div className="dashboard-card">
+              <h2>Pending Donors</h2>
+              <p>{counts.pendingDonors || 0}</p>
+            </div>
+
+            <div className="dashboard-card">
+              <h2>Pending Hospitals</h2>
+              <p>{counts.pendingHospitals || 0}</p>
+            </div>
+
+            <div className="dashboard-card">
+              <h2>Pending Blood Banks</h2>
+              <p>{counts.pendingBloodBanks || 0}</p>
             </div>
 
           </div>
         )}
 
-        {/* ================= DATA ================= */}
-        {(activeTab === "users" ||
-          activeTab === "hospitals" ||
-          activeTab === "bloodbanks" ||
-          activeTab === "donors") && (
-
-          <>
-            <h2 style={{ marginBottom: "20px", textTransform: "capitalize" }}>
-              Pending {activeTab}
-            </h2>
-
-            {data.length === 0 && <p>No pending {activeTab}</p>}
-
-            <div className="admin-users">
-
-              {data.map((item) => (
-
+        {/* ===== APPROVAL ===== */}
+        {["users","donors","hospitals","bloodbanks"].includes(activeTab) && (
+          <div className="admin-users">
+            {data.length === 0 ? (
+              <p>No pending records</p>
+            ) : (
+              data.map(item => (
                 <div
                   className="admin-user-card"
                   key={
@@ -263,42 +202,14 @@ const AdminDashboard = () => {
                     item.donorID
                   }
                 >
-
-                  {activeTab === "users" && (
-                    <>
-                      <strong>{item.fullName}</strong>
-                      <p>{item.email}</p>
-                      <p>{item.bloodGroup}</p>
-                    </>
-                  )}
-
-                  {activeTab === "hospitals" && (
-                    <>
-                      <strong>{item.hospitalName}</strong>
-                      <p>{item.email}</p>
-                      <p>{item.city}</p>
-                    </>
-                  )}
-
-                  {activeTab === "bloodbanks" && (
-                    <>
-                      <strong>{item.bankName}</strong>
-                      <p>{item.email}</p>
-                      <p>{item.city}</p>
-                    </>
-                  )}
-
-                  {activeTab === "donors" && (
-                    <>
-                      <strong>{item.name}</strong>
-                      <p>{item.email}</p>
-                      <p>{item.bloodGroup}</p>
-                      <p>{item.city}</p>
-                    </>
-                  )}
+                  <p>
+                    {item.fullName ||
+                     item.name ||
+                     item.hospitalName ||
+                     item.bankName}
+                  </p>
 
                   <div className="admin-actions">
-
                     <button
                       className="approve"
                       onClick={() =>
@@ -326,15 +237,73 @@ const AdminDashboard = () => {
                     >
                       Reject
                     </button>
-
                   </div>
 
                 </div>
+              ))
+            )}
+          </div>
+        )}
 
-              ))}
+        {/* ===== BLOCK SYSTEM ===== */}
+        {activeTab.includes("manage") && (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-            </div>
-          </>
+            <tbody>
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan="4">No data available</td>
+                </tr>
+              ) : (
+                data.map(item => (
+                  <tr key={item.userID || item.hospitalID || item.bloodBankID}>
+                    <td>
+                      {item.fullName ||
+                       item.hospitalName ||
+                       item.bankName}
+                    </td>
+
+                    <td>{item.email}</td>
+
+                    <td>
+  {item.status === "Rejected"
+    ? "Inactive ❌"
+    : item.isBlocked
+    ? "Blocked ❌"
+    : "Active ✅"}
+</td>
+
+<td>
+  {item.status === "Rejected" ? (
+    <span style={{ color: "gray" }}>No Action</span>
+  ) : (
+    <button
+      className={item.isBlocked ? "unblock" : "block"}
+      onClick={() =>
+        toggleBlock(
+          item.userID ||
+          item.hospitalID ||
+          item.bloodBankID
+        )
+      }
+    >
+      {item.isBlocked ? "Unblock" : "Block"}
+    </button>
+  )}
+</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         )}
 
       </main>
@@ -343,5 +312,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
-
