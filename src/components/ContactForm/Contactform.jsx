@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import './Contactform.css';
+import axios from "axios";
 
 const Contactform = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
-    subject: '',
-    message: ''
+    queryText: ''
   });
+
   const [errors, setErrors] = useState({});
 
   const validate = () => {
@@ -15,16 +16,16 @@ const Contactform = () => {
     const nameRegex = /^[A-Za-z\s]+$/;
     const newErrors = {};
 
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    else if (!nameRegex.test(formData.name.trim()))
-      newErrors.name = 'Name must contain only letters';
+    if (!formData.fullName.trim()) newErrors.fullName = 'Name is required';
+    else if (!nameRegex.test(formData.fullName))
+      newErrors.fullName = 'Only letters allowed';
 
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    if (!formData.email.trim()) newErrors.email = 'Email required';
     else if (!emailRegex.test(formData.email))
-      newErrors.email = 'Invalid email format';
+      newErrors.email = 'Invalid email';
 
-    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    if (!formData.queryText.trim())
+      newErrors.queryText = 'Query is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -35,11 +36,24 @@ const Contactform = () => {
     setErrors({ ...errors, [e.target.name]: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      console.log('Form submitted:', formData);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+
+    if (!validate()) return;
+
+    try {
+      await axios.post("https://localhost:7156/api/contact/add", formData);
+
+      alert("Query Sent Successfully!");
+
+      setFormData({
+        fullName: '',
+        email: '',
+        queryText: ''
+      });
+
+    } catch {
+      alert("Failed to send query");
     }
   };
 
@@ -47,8 +61,7 @@ const Contactform = () => {
     <section className="contact-section">
       <div className="contact-wrapper">
 
-        {/* LEFT SIDE */}
-        <div className="contact-info">
+         <div className="contact-info">
           <h2>Get in Touch</h2>
 
           <div className="contact-top">
@@ -74,24 +87,37 @@ const Contactform = () => {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="contact-form-box">
-          <h2>Emergency Blood Request</h2>
+          <h2>Send Query</h2>
 
-          <form onSubmit={handleSubmit} noValidate>
-            <input name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} />
-            {errors.name && <span className="error">{errors.name}</span>}
+          <form onSubmit={handleSubmit}>
 
-            <input name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} />
+            <input
+              name="fullName"
+              placeholder="Full Name"
+              value={formData.fullName}
+              onChange={handleChange}
+            />
+            {errors.fullName && <span className="error">{errors.fullName}</span>}
+
+            <input
+              name="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={handleChange}
+            />
             {errors.email && <span className="error">{errors.email}</span>}
 
-            <input name="subject" placeholder="Blood Requirement / Query" value={formData.subject} onChange={handleChange} />
-            {errors.subject && <span className="error">{errors.subject}</span>}
+            <textarea
+              name="queryText"
+              placeholder="Enter your query..."
+              value={formData.queryText}
+              onChange={handleChange}
+            />
+            {errors.queryText && <span className="error">{errors.queryText}</span>}
 
-            <textarea name="message" placeholder="Describe the emergency..." rows="5" value={formData.message} onChange={handleChange} />
-            {errors.message && <span className="error">{errors.message}</span>}
+            <button type="submit">Send Query</button>
 
-            <button type="submit">Send Emergency Request</button>
           </form>
         </div>
 

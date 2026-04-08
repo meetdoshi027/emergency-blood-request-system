@@ -37,6 +37,8 @@ setFormData({
 const handleSubmit = (e) => {
 e.preventDefault();
 
+  
+
 // CHECK TERMS
 if (!formData.agree) {
 alert("Please accept Terms & Conditions");

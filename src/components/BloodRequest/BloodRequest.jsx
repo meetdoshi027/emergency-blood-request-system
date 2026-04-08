@@ -7,7 +7,17 @@ import "./BloodRequest.css";
 
 const BloodRequest = () => {
   const navigate = useNavigate();
+  const handleRequestClick = () => {
+  const user = localStorage.getItem("user");
 
+  if (!user) {
+    alert("Please login first");
+    navigate("/login");
+    return;
+  }
+
+  navigate("/PostRequest");
+};
   return (
     <>
       <Navbar />
@@ -37,11 +47,8 @@ const BloodRequest = () => {
                 <span>🏥 Trusted Hospitals</span>
               </div>
 
-              <button
-                className="blob-btn"
-                onClick={() => navigate("/PostRequest")}
-              >
-                Request Blood Now
+             <button className="blob-btn" onClick={handleRequestClick}>
+                      Request Blood Now
               </button>
             </div>
 

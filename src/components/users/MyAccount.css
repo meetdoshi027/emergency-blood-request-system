@@ -1,0 +1,102 @@
+/* OVERLAY BACKGROUND */
+.account-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* MODAL BOX */
+.account-modal {
+  width: 750px;
+  max-height: 90vh;   /* ✅ FIX */
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* LEFT SIDEBAR */
+.account-sidebar {
+  width: 220px;
+  background: #f5f5f5;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.account-sidebar h2 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.menu {
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #e0e0e0;
+}
+
+.menu.active {
+  background: #e5e7eb;
+  font-weight: bold;
+}
+
+/* RIGHT CONTENT */
+.account-content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;   /* ✅ IMPORTANT FIX */
+}
+
+/* SCROLLBAR (OPTIONAL NICE LOOK) */
+.account-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.account-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* FIELD */
+.account-field {
+  margin-bottom: 15px;
+}
+
+.account-field label {
+  font-size: 14px;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* FIELD BOX */
+.field-box {
+  background: #f3f4f6;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* BADGE */
+.badge {
+  background: #d1d5db;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-left: 10px;
+}

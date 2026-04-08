@@ -57,60 +57,63 @@ const Indlogin = () => {
   };
 
   /* ---------------- SUBMIT ---------------- */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
+  const emailError = validateEmail(email);
+  const passwordError = validatePassword(password);
 
-    if (emailError || passwordError) {
-      setErrors({
-        email: emailError,
-        password: passwordError,
-      });
-      return;
+  if (emailError || passwordError) {
+    setErrors({
+      email: emailError,
+      password: passwordError,
+    });
+    return;
+  }
+
+  try {
+
+    const apiUrl = isOrg
+      ? "https://localhost:7156/api/Organization/login"
+      : "https://localhost:7156/api/Auth/login";
+
+    const response = await axios.post(apiUrl, {
+      email,
+      password
+    });
+
+    alert(response.data.message);
+
+    // ✅ STORE USER
+    if (response.data.user) {
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      navigate("/home");
     }
 
-    try {
-
-      const apiUrl = isOrg
-        ? "https://localhost:7156/api/Organization/login"
-        : "https://localhost:7156/api/Auth/login";
-
-      const response = await axios.post(apiUrl, {
-        email,
-        password
-      });
-
-      alert(response.data.message);
-
-      /* ===== STORE SESSION ===== */
-      if (response.data.userId) {
-        localStorage.setItem("userId", response.data.userId);
-      }
-
-      if (response.data.id) {
-        localStorage.setItem("orgId", response.data.id);
-      }
-
-      /* ===== REDIRECT ===== */
-      if (isOrg) {
-        navigate("/org/dashboard");   // optional (future)
-      } else {
-        navigate("/user/dashboard");  // ✅ USER DASHBOARD
-      }
-
-    } catch (error) {
-
-      if (error.response?.data?.message) {
-        alert(error.response.data.message);
-      } else {
-        alert("Server error");
-      }
-
+    if (response.data.type === "hospital") {
+         localStorage.setItem("orgType", response.data.type);
+         localStorage.setItem("orgData", JSON.stringify(response.data.data));
+         navigate("/hospital/dashboard");
     }
-  };
 
+     if (response.data.type === "bloodbank") {
+         localStorage.setItem("orgType", response.data.type);
+         localStorage.setItem("orgData", JSON.stringify(response.data.data));
+         navigate("/bloodbank/dashboard");
+    }
+
+    
+
+  } catch (error) {
+
+    if (error.response?.data?.message) {
+      alert(error.response.data.message);
+    } else {
+      alert("Server error");
+    }
+
+  }
+};
   return (
     <>
     <Navbar/>

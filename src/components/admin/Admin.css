@@ -215,6 +215,11 @@
   background: #15803d;
 }
 
+.admin-user-card p {
+  margin: 6px 0;
+  color: #374151;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .sidebar {

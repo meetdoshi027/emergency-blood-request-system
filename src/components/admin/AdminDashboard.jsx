@@ -62,6 +62,12 @@ const AdminDashboard = () => {
     if (tab === "manage-users") loadData("all-users");
     if (tab === "manage-hospitals") loadData("all-hospitals");
     if (tab === "manage-bloodbanks") loadData("all-bloodbanks");
+     if (tab === "queries") {
+    axios
+      .get("https://localhost:7156/api/contact/all")
+      .then(res => setData(res.data))
+      .catch(err => console.error("Error loading queries", err));
+  }
   };
 
   // ✅ APPROVE
@@ -115,6 +121,16 @@ const AdminDashboard = () => {
     }
   };
 
+  const deleteQuery = async (id) => {
+  try {
+    await axios.delete(`https://localhost:7156/api/contact/delete/${id}`);
+    handleTab("queries");
+  } catch {
+    alert("Delete failed");
+  }
+};
+
+
   return (
     <div className="dashboard-container">
 
@@ -123,14 +139,15 @@ const AdminDashboard = () => {
         <h2>Connect Life</h2>
         <ul>
           <li onClick={() => handleTab("dashboard")}>Dashboard</li>
-          <li onClick={() => handleTab("users")}>Pending Users</li>
-          <li onClick={() => handleTab("donors")}>Pending Donors</li>
-          <li onClick={() => handleTab("hospitals")}>Pending Hospitals</li>
-          <li onClick={() => handleTab("bloodbanks")}>Pending Blood Banks</li>
+          <li onClick={() => handleTab("users")}>Users</li>
+          <li onClick={() => handleTab("donors")}>Donors</li>
+          <li onClick={() => handleTab("hospitals")}>Hospitals</li>
+          <li onClick={() => handleTab("bloodbanks")}>Blood Banks</li>
 
           <li onClick={() => handleTab("manage-users")}>Manage Users</li>
           <li onClick={() => handleTab("manage-hospitals")}>Manage Hospitals</li>
           <li onClick={() => handleTab("manage-bloodbanks")}>Manage Blood Banks</li>
+          <li onClick={() => handleTab("queries")}>Queries</li>
         </ul>
       </aside>
 
@@ -305,6 +322,34 @@ const AdminDashboard = () => {
             </tbody>
           </table>
         )}
+
+        {activeTab === "queries" && (
+  <div className="admin-users">
+
+    {data.length === 0 ? (
+      <p>No Queries Found</p>
+    ) : (
+      data.map(q => (
+        <div className="admin-user-card" key={q.queryID}>
+
+          <p><strong>Name:</strong> {q.fullName}</p>
+          <p><strong>Email:</strong> {q.email}</p>
+          <p><strong>Query:</strong> {q.queryText}</p>
+
+          <button
+            className="reject"
+            onClick={() => deleteQuery(q.queryID)}
+          >
+            Delete
+          </button>
+
+        </div>
+      ))
+    )}
+
+  </div>
+)}
+
 
       </main>
     </div>

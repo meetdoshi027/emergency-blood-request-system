@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Event.css";
 import EventForm from "./EventForm";
 import Navbar from "../Navbar/Navbar";
@@ -47,8 +48,18 @@ const pastEvents = events.filter(e => e.date < today);
 const presentEvents = events.filter(e => e.date === today);
 const futureEvents = events.filter(e => e.date > today);
 
+const navigate = useNavigate();
 // REGISTER
 const handleRegister = (event) => {
+
+  const user = localStorage.getItem("user");
+
+  // ❌ NOT LOGGED IN
+  if (!user) {
+    alert("Please login first");
+    navigate("/login");
+    return;
+  }
   setSelectedEvent(event);
   setShowForm(true);
 };

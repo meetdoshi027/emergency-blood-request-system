@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import "./HospitalDashboard.css";
-import hospitalImg from "../../assets/hospitalimage.png"; 
+import "./BloodbankDashboard.css";
+import bloodbankImg from "../../assets/bloodbankimage.png"; 
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -16,7 +16,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const HospitalDashboard = () => {
+const BloodbankDashboard = () => {
 
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({});
@@ -25,16 +25,16 @@ const HospitalDashboard = () => {
   const [chartData, setChartData] = useState([]);
   const [active, setActive] = useState("Dashboard");
 
-  const navigate = useNavigate();
-const hospital = JSON.parse(localStorage.getItem("orgData"));
+   const navigate = useNavigate();
+const bloodbank = JSON.parse(localStorage.getItem("orgData"));
 
-  const [showMenu, setShowMenu] = useState(false);
+ const [showMenu, setShowMenu] = useState(false);
 
-  useEffect(() => {
-  if (!hospital) {
+ useEffect(() => {
+  if (!bloodbank) {
     navigate("/login", { state: { loginType: "organization" } });
   }
-}, [hospital, navigate]);
+}, [bloodbank, navigate]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -122,14 +122,14 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
         {active === "Dashboard" && (
           <>
             {/* HEADER */}
-             <div className="header">
-  <h1>🏥 Hospital Dashboard</h1>
+         <div className="header">
+  <h1>🩸 Blood Bank Dashboard</h1>
 
-  {hospital && (
+  {bloodbank && (
     <div className="profile-container">
 
       <img
-        src={hospitalImg}
+        src={bloodbankImg}
         alt="profile"
         onClick={() => setShowMenu(!showMenu)}
       />
@@ -137,10 +137,10 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
       {showMenu && (
         <div className="dropdown-box">
 
-          <h5>{hospital?.hospitalName}</h5>
-          <p>{hospital?.email}</p>
+          <h5>{bloodbank?.bankName}</h5> {/* ✅ FIXED bankame */}
+          <p>{bloodbank?.email}</p>
 
-          <button onClick={() => navigate("/hospital/account")}>
+          <button onClick={() => navigate("/bloodbank/account")}>
             My Account
           </button>
 
@@ -160,6 +160,7 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
     </div>
   )}
 </div>
+
             {/* STATS */}
             <div className="stats">
               {loading ? (
@@ -262,4 +263,4 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
   );
 };
 
-export default HospitalDashboard;
+export default BloodbankDashboard;

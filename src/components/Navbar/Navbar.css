@@ -1,96 +1,207 @@
+/* ===== LOGO ===== */
 .navlogo {
-    max-height: 75px;
-    max-width: 100px;
+  max-height: 70px;
+  max-width: 90px;
 }
 
+/* ===== TITLE ===== */
 .navtit {
-    font-size: 34px;
-    font-weight: 600;
-    color: #d10000 !important;
-    font-family: 'Times New Roman', Times, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #d10000 !important;
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 1px;
 }
 
+/* ===== NAV ITEMS ===== */
 .navitem {
-    font-size: 22px;
-    font-weight: 500;
-    padding-right: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  padding-right: 25px;
 }
-.dropdown-menu {
-    z-index: 1050;
+
+/* ===== NAV LINK HOVER ===== */
+.nav-link {
+  transition: 0.3s;
 }
-.nav-link:hover{
-    color: #d10000 !important;
+
+.nav-link:hover {
+  color: #d10000 !important;
+  transform: translateY(-2px);
 }
+
+/* ===== NAVBAR FIX ===== */
+.navbar {
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ===== PROFILE CONTAINER ===== */
+.profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ===== PROFILE IMAGE (🔥 PREMIUM LOOK) ===== */
+.profile img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  /* Gradient Border */
+  padding: 2px;
+  background: linear-gradient(135deg, #d10000, #ff4d4d);
+
+  /* Inner image */
+  object-fit: cover;
+
+  transition: all 0.3s ease;
+}
+
+/* Inner circle fix */
+.profile img {
+  background-clip: content-box;
+}
+
+/* ===== PROFILE HOVER EFFECT ===== */
+.profile img:hover {
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: 0 6px 18px rgba(209, 0, 0, 0.4);
+}
+
+/* ===== DROPDOWN BOX ===== */
+.dropdown-box {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  background: rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(10px);
+
+  padding: 18px;
+  width: 240px;
+  border-radius: 16px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 1000;
+
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ===== DROPDOWN TEXT ===== */
+.dropdown-box h5 {
+  color: #d10000;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.dropdown-box p {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 12px;
+}
+
+/* ===== DROPDOWN BUTTON ===== */
+.dropdown-box button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Hover effect */
+.dropdown-box button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+}
+
+/* ===== LOGOUT BUTTON ===== */
+.dropdown-box .logout {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+.dropdown-box .logout:hover {
+  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-    .navlogo {
+  .navlogo {
     max-height: 50px;
     max-width: 50px;
-   }
+  }
 
-    .navtit {
-        font-size: 24px;
-    }
+  .navtit {
+    font-size: 24px;
+  }
 
-    .navitem,
-    .navdrop {
-        font-size: 18px;
-        padding-right: 12px;
-    }
-
-    .navdrop1 {
-        font-size: 18px;
-    }
+  .navitem {
+    font-size: 18px;
+    padding-right: 12px;
+  }
 }
 
 @media (max-width: 768px) {
-    .navlogo {
-        max-height: 50px;
-        max-width: 50px;
-    }
+  .navlogo {
+    max-height: 45px;
+    max-width: 45px;
+  }
 
-    .navtit {
-        font-size: 17px;
-    }
+  .navtit {
+    font-size: 18px;
+  }
 
-    .navbar-nav {
-        text-align: center;
-        padding-top: 10px;
-    }
+  .navbar-nav {
+    text-align: center;
+    padding-top: 10px;
+  }
 
-    .navitem,
-    .navdrop {
-        padding-right: 0;
-        font-size: 14px;
-        padding-bottom: 10px;
-    }
+  .navitem {
+    padding-right: 0;
+    font-size: 14px;
+    padding-bottom: 10px;
+  }
 
-    .dropdown-menu {
-        text-align: center;
-    }
+  .dropdown-box {
+    right: 50%;
+    transform: translateX(50%);
+  }
 }
 
 @media (max-width: 420px) {
-    .navlogo {
-        max-height: 50px;
-        max-width: 65px;
-    }
+  .navlogo {
+    max-height: 45px;
+    max-width: 60px;
+  }
 
-    .navtit {
-        font-size: 24px;
-    }
+  .navtit {
+    font-size: 18px;
+  }
 
-    .navitem,
-    .navdrop {
-        font-size: 16px;
-        padding: 8px 0;
-    }
-
-    .navdrop1 {
-        font-size: 16px;
-        padding: 10px 0;
-    }
-
-    .navbar-nav {
-        padding-bottom: 10px;
-    }
+  .navitem {
+    font-size: 14px;
+    padding: 6px 0;
+  }
 }

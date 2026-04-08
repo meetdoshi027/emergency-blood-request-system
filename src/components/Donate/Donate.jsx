@@ -14,6 +14,18 @@ import "./Donate.css";
 
 const Donate = () => {
 const navigate = useNavigate();
+
+const handleDonorClick = () => {
+  const user = localStorage.getItem("user");
+
+  if (!user) {
+    alert("Please login first");
+    navigate("/login");
+    return;
+  }
+
+  navigate("/donorregister");
+};
   return (
     <>
     <Navbar/>  
@@ -24,7 +36,9 @@ const navigate = useNavigate();
         <div className="hero-text">
           <h1>Become a Blood Hero</h1>
           <p>Save lives with your blood donation</p>
-          <button className="primary-btn" onClick={()=> navigate("/DonorRegister")}>Register as Donor</button>
+          <button className="primary-btn" onClick={handleDonorClick}>
+                   Register as Donor
+          </button>
         </div>
 
         <div className="hero-image">

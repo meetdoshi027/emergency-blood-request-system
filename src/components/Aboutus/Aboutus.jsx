@@ -1,12 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import './Aboutus.css'
 import aboutImg from '../../assets/whoarewe.png'
 import team from '../../assets/teammember.jpg'
-import CountUp from 'react-countup'
+import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../footer/footer';
 
 const Aboutus = () => {
+
+   const [stats, setStats] = useState({
+    hospitals: 0,
+    bloodBanks: 0,
+    donors: 0,
+    requests: 0
+  });
+
+  // 🔥 FETCH DATA FROM STATS API
+  useEffect(() => {
+
+    const fetchStats = () => {
+      axios.get("https://localhost:7156/api/stats")
+        .then(res => {
+          setStats(res.data);
+        })
+        .catch(err => {
+          console.error("Error fetching stats:", err);
+        });
+    };
+
+    fetchStats(); // initial load
+
+    // 🔥 AUTO UPDATE EVERY 3 SEC
+    const interval = setInterval(fetchStats, 3000);
+
+    return () => clearInterval(interval);
+
+  }, []);
+
+
   return (
     <>
     <Navbar/>
@@ -52,26 +83,29 @@ const Aboutus = () => {
 
       {/* Count Up Section */}
       <div className="count-section">
-        <div className="count-card">
-          <h2><CountUp end={120} duration={5} />+</h2>
-          <p>Partner Hospitals</p>
+
+          <div className="count-card">
+            <h2>{stats.hospitals}</h2>
+            <p>Partner Hospitals</p>
+          </div>
+
+          <div className="count-card">
+            <h2>{stats.bloodBanks}</h2>
+            <p>Partner Blood Banks</p>
+          </div>
+
+          <div className="count-card">
+            <h2>{stats.donors}</h2>
+            <p>Registered Donors</p>
+          </div>
+
+          <div className="count-card">
+            <h2>{stats.requests}</h2>
+            <p>Lives Saved</p>
+          </div>
+
         </div>
 
-        <div className="count-card">
-          <h2><CountUp end={8500} duration={7} />+</h2>
-          <p>Registered Donors</p>
-        </div>
-
-        <div className="count-card">
-          <h2><CountUp end={4300} duration={6} />+</h2>
-          <p>Lives Saved</p>
-        </div>
-
-        <div className="count-card">
-          <h2><CountUp end={9800} duration={8} />+</h2>
-          <p>Blood Requests</p>
-        </div>
-      </div>
 
       <div className="team-section">
         <h3 className="team-title">Our Team</h3>

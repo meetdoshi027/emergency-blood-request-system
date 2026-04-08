@@ -27,8 +27,10 @@ const RequestForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
+
+ 
 
   try {
     const res = await fetch("https://localhost:7156/api/BloodRequest/create", {
@@ -39,12 +41,9 @@ const RequestForm = () => {
       body: JSON.stringify(formData),
     });
 
-    if (!res.ok) {
-      throw new Error("Request failed");
-    }
+    if (!res.ok) throw new Error("Request failed");
 
     alert("✅ Request Submitted!");
-
     navigate(`/results/${formData.city}/${formData.bloodGroup}`);
 
   } catch (error) {
@@ -52,7 +51,6 @@ const RequestForm = () => {
     alert("❌ Failed to submit request");
   }
 };
-
   return (
     <>
       <Navbar />
