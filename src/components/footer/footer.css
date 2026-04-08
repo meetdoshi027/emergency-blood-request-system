@@ -2,7 +2,7 @@
   /* background: linear-gradient(135deg, #8b0f1a, #b11226); */
   /* background: linear-gradient(90deg,#CCC1C1,#D92222FF); */
   background: #fcd2d5;
-  color: #ffffff;
+   color: red;
   padding-top: 70px;
 }
 
@@ -15,7 +15,6 @@
   gap: 40px;
 }
 
-/* ABOUT */
 .footer-about img {
   width: 120px;
   margin-bottom: 20px;
@@ -24,7 +23,7 @@
 .footer-about p {
   font-size: 15px;
   line-height: 1.7;
-  color: #ffeaea;
+  color: red;
 }
 
 .footer-socials {
@@ -39,7 +38,7 @@
 }
 
 .footer-socials i:hover {
-  color: #ffd6d6;
+   color: red;
 }
 
 /* LINKS */
@@ -58,12 +57,12 @@
   margin-bottom: 12px;
   font-size: 15px;
   cursor: pointer;
-  color: #ffeaea;
+   color: red;
   transition: 0.3s;
 }
 
 .footer-links ul li:hover {
-  color: #ffffff;
+   color: red;
   padding-left: 5px;
 }
 
@@ -75,6 +74,7 @@
 .footer-contact p {
   margin: 6px 0;
   color: #ffeaea;
+  color: red;
   font-size: 15px;
 }
 
