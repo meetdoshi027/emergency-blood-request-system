@@ -8,122 +8,135 @@ import Footer from "../footer/footer";
 import img1 from "../../assets/Megablood.jpg";
 import img2 from "../../assets/hospital.jpg";
 import img3 from "../../assets/togetherblood.jpg";
-import bg from "../../assets/blood.webp";
 
 const Event = () => {
 
-const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
 
-const formatDate = (date) => {
-  const d = new Date(date);
-  return `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
-};
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return d.toDateString();
+  };
 
+  const [showForm, setShowForm] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
-const [showForm, setShowForm] = useState(false);
-const [selectedEvent, setSelectedEvent] = useState(null);
+  // ✅ EXACT 4 FUTURE + 4 PAST
+  const events = [
+    // FUTURE
+    {title:"Blood Donation Camp",location:"Ahmedabad",date:"2026-05-20",image:img1},
+    {title:"Health Checkup Camp",location:"Surat",date:"2026-06-10",image:img2},
+    {title:"Mega Blood Drive",location:"Vadodara",date:"2026-07-01",image:img3},
+    {title:"Emergency Blood Camp",location:"Rajkot",date:"2026-08-15",image:img1},
 
-// EVENTS
-const events = [
-{title:"Blood Donation Camp",organization:"Red Cross",date:"2025-03-01",image:img1,description:"Donate blood"},
-{title:"Community Blood Drive",organization:"NGO Trust",date:"2025-02-15",image:img2,description:"Helping people"},
-{title:"Health Awareness Camp",organization:"City NGO",date:"2025-01-10",image:img3,description:"Awareness"},
-{title:"Old Blood Camp",organization:"Health Org",date:"2024-12-20",image:img1,description:"Old event"},
+    // PAST
+    {title:"Gandhinagar Blood Camp",location:"Gandhinagar",date:"2024-04-10",image:img2},
+    {title:"Vadodara Mega Drive",location:"Vadodara",date:"2024-02-22",image:img3},
+    {title:"Surat Health Camp",location:"Surat",date:"2024-01-10",image:img1},
+    {title:"Ahmedabad Blood Camp",location:"Ahmedabad",date:"2023-12-05",image:img2},
+  ];
 
-{title:"Today Blood Camp 1",organization:"Local NGO",date:today,image:img2,description:"Donate today"},
-{title:"Today Blood Camp 2",organization:"City Hospital",date:today,image:img3,description:"Emergency"},
-{title:"Today Health Camp",organization:"Health Org",date:today,image:img1,description:"Free checkup"},
-{title:"Today Mega Drive",organization:"Trust Org",date:today,image:img2,description:"Join now"},
+  const pastEvents = events.filter(e => e.date < today).slice(0,4);
+  const futureEvents = events.filter(e => e.date > today).slice(0,4);
 
-{title:"Future Blood Camp",organization:"Apollo Hospital",date:"2026-05-20",image:img1,description:"Biggest drive"},
-{title:"Upcoming Donation",organization:"NGO Trust",date:"2026-06-10",image:img2,description:"Save lives"},
-{title:"Mega Health Camp",organization:"City Hospital",date:"2026-07-01",image:img3,description:"Free services"},
-{title:"Emergency Future Drive",organization:"Red Cross",date:"2026-08-15",image:img1,description:"Urgent"}
-];
+  const navigate = useNavigate();
 
-// FILTER
-const pastEvents = events.filter(e => e.date < today);
-const presentEvents = events.filter(e => e.date === today);
-const futureEvents = events.filter(e => e.date > today);
+  const handleRegister = (event) => {
+    const user = localStorage.getItem("user");
 
-const navigate = useNavigate();
-// REGISTER
-const handleRegister = (event) => {
+    if (!user) {
+      alert("Please login first");
+      navigate("/login");
+      return;
+    }
 
-  const user = localStorage.getItem("user");
+    setSelectedEvent(event);
+    setShowForm(true);
+  };
 
-  // ❌ NOT LOGGED IN
-  if (!user) {
-    alert("Please login first");
-    navigate("/login");
-    return;
-  }
-  setSelectedEvent(event);
-  setShowForm(true);
-};
+  const renderEvents = (list, type) => (
+    <div className="event-grid">
+      {list.map((event,index)=>(
+        <div className="event-card" key={index}>
 
-// RENDER
-const renderEvents = (list, type) => (
-<div className="event-grid">
+          <div className={`tag ${type}`}>
+            {type === "future" ? "Upcoming" : "Completed"}
+          </div>
 
-{list.map((event,index)=>(
+          <img src={event.image} alt="event"/>
 
-<div className={`event-card ${type}`} key={index}>
+          <div className="event-content">
+            <h3>{event.title}</h3>
+            <p className="location">📍 {event.location}</p>
+            <p className="date">📅 {formatDate(event.date)}</p>
 
-<img src={event.image} alt="event" />
+            {type === "future" ? (
+              <button className="btn" onClick={()=>handleRegister(event)}>
+                Register
+              </button>
+            ) : (
+              <button className="btn light">View Details</button>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
-<div className="event-content">
-<h3>{event.title}</h3>
-<p>🏥 {event.organization}</p>
-<p>📅 {formatDate(event.date)}</p>
-<p className="desc">{event.description}</p>
+  return (
+    <>
+      <Navbar />
 
-{type === "future" && (
-<button 
-className="btn"
-onClick={() => handleRegister(event)}
->
-Register
-</button>
-)}
+      <div className="event-container">
 
-</div>
-</div>
+        {/* HERO */}
+        <div className="hero">
+          <div className="hero-text">
+            <h1>Community Health Events</h1>
+            <p>Join blood donation camps, health checkups & wellness drives</p>
+            <button className="explore-btn">Explore Events</button>
+          </div>
+          <img src={img3} alt="hero"/>
+        </div>
 
-))}
+        {/* UPCOMING */}
+        <h2 className="section-title">Upcoming Events</h2>
+        {renderEvents(futureEvents,"future")}
 
-</div>
-);
+        {/* PAST */}
+        <h2 className="section-title">Past Events</h2>
+        {renderEvents(pastEvents,"past")}
 
-return (
-<>
-<Navbar />
+        {/* 🔴 HOST EVENT SECTION */}
+        <div className="host-section">
+          <div className="host-left">
+            <h2>Want to Host an Event?</h2>
+            <p>
+              Partner with us to organize your own blood donation camp and make a difference!
+            </p>
+            <button className="host-btn">Host an Event</button>
+          </div>
 
-<div className="event-container" style={{ backgroundImage: `url(${bg})` }}>
+          <div className="host-right">
+            <h3>Emergency Contact</h3>
+            <p>📞 +91 9824798785</p>
+            <p>📧 help@connectlife.org</p>
+            <p>📞 +91 9033363065</p>
+          </div>
+        </div>
 
-<h1 className="main-title">Blood Donation Events</h1>
+        {showForm && (
+          <EventForm 
+            event={selectedEvent}
+            closeForm={() => setShowForm(false)}
+          />
+        )}
 
-<h2 className="section-title">🚀 Future Event</h2>
-{renderEvents(futureEvents,"future")}
+      </div>
 
-<h2 className="section-title">📍 Present Event</h2>
-{renderEvents(presentEvents,"present")}
-
-<h2 className="section-title">🕘 Past Event</h2>
-{renderEvents(pastEvents,"past")}
-
-{showForm && (
-<EventForm 
-event={selectedEvent}
-closeForm={() => setShowForm(false)}
-/>
-)}
-
-</div>
-
-<Footer />
-</>
-);
+      <Footer />
+    </>
+  );
 };
 
 export default Event;
