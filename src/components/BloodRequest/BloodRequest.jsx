@@ -81,7 +81,6 @@ const BloodRequest = () => {
             <div className="image-side">
               <div className="image-frame">
                 <img src={savedonate} alt="Blood" />
-                <div className="floating-info">Fast Matching</div>
               </div>
             </div>
 
@@ -126,8 +125,6 @@ const BloodRequest = () => {
             <p>Our support team is available 24/7.</p>
 
             <div className="cta-actions">
-              <button className="outline-btn">Call Emergency</button>
-              <span className="divider">or</span>
               <button className="primary-btn-new">Become Donor</button>
             </div>
           </div>
