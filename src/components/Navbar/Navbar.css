@@ -291,7 +291,9 @@ body {
 
 /* ===== LOGIN BUTTON ===== */
 .login-btn {
+  
   padding: 8px 22px;
+  padding: 7px !important;
   border-radius: 25px;
   border: none;
 

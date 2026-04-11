@@ -91,6 +91,7 @@ const Indlogin = () => {
     }
 
     if (response.data.type === "hospital") {
+         localStorage.setItem("token", response.data.token); 
          localStorage.setItem("orgType", response.data.type);
          localStorage.setItem("orgData", JSON.stringify(response.data.data));
          navigate("/hospital/dashboard");

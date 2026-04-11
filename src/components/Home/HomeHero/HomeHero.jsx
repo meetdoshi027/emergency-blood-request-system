@@ -32,7 +32,7 @@ const HomeHero = () => {
               Request Blood
             </button>
 
-            <button className="btn-secondary" onClick={()=> navigate("/DonorRegister")}>
+            <button className="btn-secondary" onClick={()=> navigate("/donate")}>
               <img src={donateIcon} alt="Donate Blood" />
               Become a Donor
             </button>
