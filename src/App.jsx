@@ -24,7 +24,8 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import MyAccount from "./components/users/MyAccount";
 import HospitalAccount from "./components/users/HospitalAccount";
 import BloodbankAccount from "./components/users/BloodbankAccount";
-
+import Privacy from './components/Privacy/Privacy.jsx';
+import Terms from './components/Terms/Terms.jsx';
 function App() {
   return (
     <Router>
@@ -48,6 +49,8 @@ function App() {
           <Route path="/PostRequest" element={<RequestForm />} />
           <Route path="/hospital/account" element={<HospitalAccount />} />
           <Route path="/bloodbank/account" element={<BloodbankAccount />} />
+          <Route path="/privacy" element={<Privacy />} />
+           <Route path="/Terms" element={<Terms />} />
 
            <Route path="/account" element={
           <ProtectedRoute>

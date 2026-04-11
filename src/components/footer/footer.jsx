@@ -1,6 +1,8 @@
 import React from "react";
 import "./footer.css";
 import logo from "../../assets/logo.jpg";
+import Privacy from "../Privacy/Privacy";
+import Terms from "../Terms/Terms";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -34,9 +36,9 @@ const Footer = () => {
             <li onClick={()=> navigate("/Aboutus")}>About Us</li>
             <li onClick={()=> navigate("/BloodRequest")}>Request Blood</li>
             <li onClick={()=> navigate("/donate")}>Become Donor</li>
-            <li onClick={()=> navigate("/Contactus```````````````````````````")}>Contact Us</li>
-            <li>Privacy Policy</li>
-            <li>Terms & Conditions</li>
+            <li onClick={()=> navigate("/Contactus")}>Contact Us</li>
+            <li onClick={()=> navigate("/Privacy")}>Privacy Policy</li>
+            <li onClick={()=> navigate("/Terms")}>Terms & Conditions</li>
           </ul>
         </div>
 

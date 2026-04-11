@@ -1,0 +1,42 @@
+.terms-page {
+  padding: 60px 20px;
+  background: #0f172a;
+  color: #fff;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.terms-heading {
+  font-size: 30px;
+  margin-bottom: 30px;
+  color: #ff4d4d;
+  text-align: center;
+}
+
+.terms-list {
+  line-height: 1.8;
+}
+
+.terms-list li {
+  margin-bottom: 15px;
+  color: #ddd;
+}
+
+.checklist ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.checklist li {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  color: #00aede;
+  margin-right: 10px;
+}
