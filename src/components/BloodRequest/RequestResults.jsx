@@ -28,9 +28,7 @@ const RequestResults = () => {
 
   /* ================= ACTIONS ================= */
 
-  const handleCall = (phone) => {
-    window.open(`tel:${phone}`);
-  };
+ 
 
   const handleWhatsApp = (person) => {
     const msg = `Hello ${person.name},
@@ -94,7 +92,7 @@ Please respond urgently.`
 
         {activeIndex === i && (
           <div className="action-menu">
-            <button onClick={() => handleCall(person.phone)}>📞 Call</button>
+            
             <button onClick={() => handleWhatsApp(person)}>💬 WhatsApp</button>
             <button onClick={() => handleEmail(person)}>📧 Email</button>
           </div>

@@ -21,10 +21,13 @@
 }
 
 .footer-about p {
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.7;
+  font-weight: 550;
   color: red;
+  text-align: justify !important;
 }
+
 
 .footer-socials {
   margin-top: 20px;
@@ -44,12 +47,14 @@
 /* LINKS */
 .footer-links h4,
 .footer-contact h4 {
-  font-size: 20px;
+  font-size: 26px;
+  font-weight: 600;
   margin-bottom: 20px;
 }
 
 .footer-links ul {
   list-style: none;
+  font-weight: 550;
   padding: 0;
 }
 
@@ -75,6 +80,7 @@
   margin: 6px 0;
   color: #ffeaea;
   color: red;
+  font-weight: 550;
   font-size: 15px;
 }
 

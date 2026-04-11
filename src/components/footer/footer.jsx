@@ -1,8 +1,10 @@
 import React from "react";
 import "./footer.css";
-import logo from "../../assets/logo.jpg"; // change if needed
+import logo from "../../assets/logo.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+   const navigate = useNavigate();
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -28,12 +30,11 @@ const Footer = () => {
         <div className="footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li>Home</li>
-            <li>About Us</li>
-            <li>Find Donor</li>
-            <li>Request Blood</li>
-            <li>Become Donor</li>
-            <li>Contact Us</li>
+            <li onClick={()=> navigate("/Home")}>Home</li>
+            <li onClick={()=> navigate("/Aboutus")}>About Us</li>
+            <li onClick={()=> navigate("/BloodRequest")}>Request Blood</li>
+            <li onClick={()=> navigate("/donate")}>Become Donor</li>
+            <li onClick={()=> navigate("/Contactus```````````````````````````")}>Contact Us</li>
             <li>Privacy Policy</li>
             <li>Terms & Conditions</li>
           </ul>
