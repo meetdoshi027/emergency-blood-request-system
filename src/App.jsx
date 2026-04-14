@@ -26,6 +26,7 @@ import HospitalAccount from "./components/users/HospitalAccount";
 import BloodbankAccount from "./components/users/BloodbankAccount";
 import Privacy from './components/Privacy/Privacy.jsx';
 import Terms from './components/Terms/Terms.jsx';
+import Bloodstock from './components/Bloodstock/Bloodstock.jsx';
 function App() {
   return (
     <Router>
@@ -50,7 +51,8 @@ function App() {
           <Route path="/hospital/account" element={<HospitalAccount />} />
           <Route path="/bloodbank/account" element={<BloodbankAccount />} />
           <Route path="/privacy" element={<Privacy />} />
-           <Route path="/Terms" element={<Terms />} />
+           <Route path="/terms" element={<Terms />} />
+            <Route path="/bloodstock" element={<Bloodstock />} />
 
            <Route path="/account" element={
           <ProtectedRoute>
