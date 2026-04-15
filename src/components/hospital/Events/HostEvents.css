@@ -45,7 +45,7 @@
 /* ✅ CARD (ONLY HOST PAGE AFFECTED) */
 .host-events .event-card {
   background: linear-gradient(135deg, #1e3a8a, #2563eb); /* 🔵 BLUE THEME */
-  color: white;
+  color: black;
   border-radius: 10px;
   overflow: hidden;
   transition: 0.3s;

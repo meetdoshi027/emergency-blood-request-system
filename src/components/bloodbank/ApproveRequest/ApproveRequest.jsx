@@ -7,12 +7,12 @@ const ApproveRequest = () => {
   const org = JSON.parse(localStorage.getItem("orgData"));
   const [requests, setRequests] = useState([]);
 
-  // ✅ FIXED useEffect (NO ERROR EVER)
+  // ✅ FIXED useEffect (NO ERROR)
   useEffect(() => {
     const fetchRequests = async () => {
       try {
         const res = await axios.get(
-          `https://localhost:7156/api/hospital/normal/${org?.hospitalName}`
+          `https://localhost:7156/api/bloodbank/normal/${org?.bankName}`
         );
 
         setRequests(res.data || []);
@@ -43,7 +43,7 @@ const ApproveRequest = () => {
               <p>{r.units} Units Required</p>
             </div>
 
-            {/* ✅ ONLY UI (NO FUNCTION CALL) */}
+            {/* ✅ UI ONLY (NO FUNCTION) */}
             <button>
               Approve
             </button>

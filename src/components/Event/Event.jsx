@@ -51,10 +51,7 @@ const Event = () => {
 
   // ✅ Static events
   const events = [
-    {title:"Blood Donation Camp",location:"Ahmedabad",date:"2026-05-20",image:img1},
-    {title:"Health Checkup Camp",location:"Surat",date:"2026-06-10",image:img2},
-    {title:"Mega Blood Drive",location:"Vadodara",date:"2026-07-01",image:img3},
-    {title:"Emergency Blood Camp",location:"Rajkot",date:"2026-08-15",image:img1},
+ 
 
     {title:"Gandhinagar Blood Camp",location:"Gandhinagar",date:"2024-04-10",image:img2},
     {title:"Vadodara Mega Drive",location:"Vadodara",date:"2024-02-22",image:img3},

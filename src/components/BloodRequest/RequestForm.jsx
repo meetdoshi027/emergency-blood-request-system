@@ -43,6 +43,16 @@ const RequestForm = () => {
 
     if (!res.ok) throw new Error("Request failed");
 
+     const data = await res.json();   // ✅ IMPORTANT
+
+    if (!data.requestId) {
+      alert("❌ Failed to get request ID");
+      return;
+    }
+
+    // 🔥 STORE requestId (MOST IMPORTANT LINE)
+    localStorage.setItem("requestId", data.requestId);
+
     alert("✅ Request Submitted!");
     navigate(`/results/${formData.city}/${formData.bloodGroup}`);
 
@@ -109,7 +119,7 @@ const RequestForm = () => {
               <option value="">Select Urgency</option>
               <option>Normal</option>
               <option>Urgent</option>
-              <option>Critical</option>
+              
             </select>
 
             {/* Notes */}

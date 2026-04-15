@@ -77,7 +77,7 @@ const Aboutus = () => {
           To create a world where no patient suffers or loses their life due to
           delayed or unavailable blood supply. We envision a connected ecosystem
           where donors, hospitals, and communities unite seamlessly to save lives
-          — anytime, anywhere.
+           anytime, anywhere.
         </p>
       </div>
 

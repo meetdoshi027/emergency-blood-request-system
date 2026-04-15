@@ -35,7 +35,7 @@ const MyAccount = () => {
             <label>Email address</label>
             <div className="field-box">
               {user.email}
-              <span className="badge">Primary</span>
+            
             </div>
           </div>
 
@@ -61,7 +61,7 @@ const MyAccount = () => {
 
           <div className="account-field">
             <label>Date of Birth</label>
-            <div className="field-box">{user.dob}</div>
+            <div className="field-box">{new Date(user.dob).toLocaleDateString("en-GB")}</div>
           </div>
 
           <div className="account-field">

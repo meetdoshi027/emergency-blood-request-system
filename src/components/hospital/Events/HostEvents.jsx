@@ -4,11 +4,8 @@ import "./HostEvents.css";
 
 const HostEvents = () => {
 
-  //const hospital = JSON.parse(localStorage.getItem("orgData"));
-
   const [event, setEvent] = useState({
     eventName: "",
-    
     date: "",
     location: ""
   });
@@ -16,78 +13,80 @@ const HostEvents = () => {
   const [image, setImage] = useState(null);
   const [eventsList, setEventsList] = useState([]);
 
-  // ✅ FIX: declare BEFORE useEffect
+  // ✅ FETCH EVENTS (FILTERED BY LOGGED-IN HOSPITAL)
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("https://localhost:7156/api/HospitalEvent");
+      const res = await axios.get(
+        "https://localhost:7156/api/HospitalEvent",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }
+      );
       setEventsList(res.data);
     } catch (err) {
       console.error(err);
     }
   };
 
-   useEffect(() => {
-    const loadEvents = async () => {
-      try {
-        const res = await axios.get("https://localhost:7156/api/HospitalEvent");
-        setEventsList(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  // ✅ LOAD EVENTS ON PAGE LOAD
+  useEffect(() => {
+  const init = async () => {
+    await fetchEvents();
+  };
 
-    loadEvents();
-  }, []);
+  init();
+}, []);
 
+  // ✅ HANDLE INPUT CHANGE
   const handleChange = (e) => {
     setEvent({ ...event, [e.target.name]: e.target.value });
   };
 
+  // ✅ HANDLE FORM SUBMIT
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!image) {
-    alert("Please upload image ❌");
-    return;
-  }
-
-  const formData = new FormData();
-
-  formData.append("eventName", event.eventName);
-  
-  formData.append("date", event.date);
-  formData.append("location", event.location);
-  formData.append("image", image);
-
-  try {
-    await axios.post(
-  "https://localhost:7156/api/HospitalEvent",
-  formData,
-  {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`
+    if (!image) {
+      alert("Please upload image ❌");
+      return;
     }
-  }
-);
 
-    alert("Event Created ✅");
+    const formData = new FormData();
+    formData.append("eventName", event.eventName);
+    formData.append("date", event.date);
+    formData.append("location", event.location);
+    formData.append("image", image);
 
-    fetchEvents();
+    try {
+      await axios.post(
+        "https://localhost:7156/api/HospitalEvent",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }
+      );
 
-    setEvent({
-      eventName: "",
-     
-      date: "",
-      location: ""
-    });
+      alert("✅ Event Created");
 
-    setImage(null);
+      fetchEvents(); // 🔥 refresh only THIS hospital events
 
-  } catch (err) {
-    console.error(err);
-    alert("Error creating event ❌");
-  }
-};
+      setEvent({
+        eventName: "",
+        date: "",
+        location: ""
+      });
+
+      setImage(null);
+
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error creating event");
+    }
+  };
 
   return (
     <div className="host-events">
@@ -109,10 +108,6 @@ const HostEvents = () => {
           onChange={handleChange}
           required
         />
-
-       
-       
-       
 
         <input
           type="date"
@@ -150,7 +145,7 @@ const HostEvents = () => {
               <div className="event-content">
                 <h3>{e.eventName}</h3>
                 <p>🏥 {e.organizationName}</p>
-                 <p>📍 {e.location}</p>
+                <p>📍 {e.location}</p>
                 <p>📅 {new Date(e.date).toLocaleDateString()}</p>
               </div>
 

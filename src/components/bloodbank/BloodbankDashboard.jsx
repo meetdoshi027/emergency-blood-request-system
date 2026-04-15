@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import HostEvents from "./Events/HostEvents"; // ✅ IMPORT ADDED
+import ApproveRequest from "./ApproveRequest/ApproveRequest";
 
 import {
   BarChart,
@@ -20,9 +21,10 @@ const BloodbankDashboard = () => {
 
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({});
-  const [requests, setRequests] = useState([]);
+  
   const [inventory, setInventory] = useState([]);
   const [chartData, setChartData] = useState([]);
+  const [urgentRequests, setUrgentRequests] = useState([]);
   const [active, setActive] = useState("Dashboard");
 
    const navigate = useNavigate();
@@ -38,15 +40,15 @@ const bloodbank = JSON.parse(localStorage.getItem("orgData"));
 
   const fetchData = useCallback(async () => {
     try {
-      const [statsRes, reqRes, invRes, chartRes] = await Promise.all([
-        axios.get("https://localhost:7156/api/hospital/stats"),
-        axios.get("https://localhost:7156/api/hospital/requests"),
-        axios.get("https://localhost:7156/api/hospital/inventory"),
-        axios.get("https://localhost:7156/api/hospital/chart")
+      const [statsRes, urgentRes, invRes, chartRes] = await Promise.all([
+        axios.get("https://localhost:7156/api/bloodbank/stats"),
+        axios.get(`https://localhost:7156/api/bloodbank/urgent/${bloodbank?.bankName}`),
+        axios.get("https://localhost:7156/api/bloodbank/inventory"),
+        axios.get("https://localhost:7156/api/bloodbank/chart")
       ]);
 
       setStats(statsRes.data || {});
-      setRequests(reqRes.data || []);
+      setUrgentRequests(urgentRes.data || []); 
       setInventory(invRes.data || []);
       setChartData(chartRes.data || []);
 
@@ -55,7 +57,7 @@ const bloodbank = JSON.parse(localStorage.getItem("orgData"));
       console.error(err);
       setLoading(false);
     }
-  }, []);
+  }, [bloodbank]);
 
   useEffect(() => {
     let isMounted = true;
@@ -80,15 +82,7 @@ const bloodbank = JSON.parse(localStorage.getItem("orgData"));
     };
   }, [fetchData]);
 
-  const approveRequest = async (id) => {
-    try {
-      await axios.put(`https://localhost:7156/api/hospital/approve/${id}`);
-      fetchData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  
   return (
     <div className="layout">
 
@@ -190,29 +184,27 @@ const bloodbank = JSON.parse(localStorage.getItem("orgData"));
 
               {/* REQUESTS */}
               <div className="requests">
-                <h3>🚨 Urgent Requests</h3>
+  <h3>🚨 Urgent Requests</h3>
 
-                {loading ? (
-                  <Skeleton count={3} height={60} />
-                ) : requests.length === 0 ? (
-                  <p>No requests available</p>
-                ) : (
-                  requests.map((r) => (
-                    <div className="request-card" key={r.id}>
-                      <span className="badge">{r.bloodGroup}</span>
+  {loading ? (
+    <Skeleton count={3} height={60} />
+  ) : urgentRequests.length === 0 ? (
+    <p>No urgent requests</p>
+  ) : (
+    urgentRequests.map((r, i) => (
+      <div className="request-card" key={i}>
+        <span className="badge">{r.bloodGroup}</span>
 
-                      <div>
-                        <h4>{r.hospitalName}</h4>
-                        <p>{r.units} Units Required</p>
-                      </div>
+        <div>
+          <h4>{r.patientName}</h4>
+          <p>{r.units} Units Required</p>
+        </div>
 
-                      <button onClick={() => approveRequest(r.id)}>
-                        Approve
-                      </button>
-                    </div>
-                  ))
-                )}
-              </div>
+        <button>Approve</button>
+      </div>
+    ))
+  )}
+</div>
 
               {/* INVENTORY */}
               <div className="inventory">
@@ -257,6 +249,8 @@ const bloodbank = JSON.parse(localStorage.getItem("orgData"));
 
         {/* ================= HOST EVENTS VIEW ================= */}
         {active === "HOST EVENTS" && <HostEvents />}
+
+        {active === "APPROVE BLOOD REQUEST" && (<ApproveRequest />)}
 
       </div>
     </div>
