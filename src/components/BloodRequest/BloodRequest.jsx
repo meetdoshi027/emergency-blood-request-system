@@ -4,6 +4,7 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../footer/footer";
 import savedonate from "../../assets/savedonate.jpeg";
 import "./BloodRequest.css";
+import { motion } from "framer-motion";
 
 const BloodRequest = () => {
   const navigate = useNavigate();
@@ -29,27 +30,27 @@ const BloodRequest = () => {
           <div className="hero-blob-container">
 
             <div className="blob-text">
-              <span className="mini-label">Emergency Support System</span>
+              {/* <span className="mini-label">Emergency Support System</span> */}
 
-              <h1>
+              <motion.h1 initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.6,type:"spring"}} viewport={{once:true}}>
                 Connecting <span>Donors</span><br />
                 With <span>Lives in Need</span>
-              </h1>
+              </motion.h1>
 
-              <p>
+              <motion.p initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.9,type:"spring"}} viewport={{once:true}}>
                 Every second matters in a medical emergency. Instantly connect with
                 nearby verified donors.
-              </p>
+              </motion.p>
 
-              <div className="hero-stats">
+              <motion.div initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.9,type:"spring"}} viewport={{once:true}} className="hero-stats">
                 <span>🩸 10,000+ Donors</span>
                 <span>⚡ Fast Response</span>
                 <span>🏥 Trusted Hospitals</span>
-              </div>
+              </motion.div>
 
-             <button className="blob-btn" onClick={handleRequestClick}>
+             <motion.button initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:1.2,type:"spring"}} viewport={{once:true}} className="blob-btn" onClick={handleRequestClick}>
                       Request Blood Now
-              </button>
+              </motion.button>
             </div>
 
             <div className="abstract-shape">
@@ -66,17 +67,17 @@ const BloodRequest = () => {
           <div className="focus-content">
 
             <div className="text-side">
-              <h2>Find the Right Donor Faster</h2>
-              <p>
+              <motion.h2 initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.6,type:"spring"}} viewport={{once:true}}>Find the Right Donor Faster</motion.h2>
+              <motion.p initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.9,type:"spring"}} viewport={{once:true}}>
                 Smart matching connects patients with compatible donors quickly.
-              </p>
+              </motion.p>
 
              
             </div>
 
             <div className="image-side">
               <div className="image-frame">
-                <img src={savedonate} alt="Blood" />
+                <motion.img initial={{opacity:0,x:100}} whileInView={{opacity:1,x:0}} transition={{delay:0.9,type:"spring"}} viewport={{once:true}} src={savedonate} alt="Blood" />
               </div>
             </div>
 
@@ -85,15 +86,15 @@ const BloodRequest = () => {
 
         {/* PROCESS */}
         <section className="wave-process">
-          <h2>How It Works</h2>
+          <motion.h2 initial={{opacity:0,y:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.8,type:"spring"}} viewport={{once:true}}>How It Works</motion.h2>
 
           <div className="wave-container">
 
-            <div className="wave-step">
+            <motion.div  initial={{opacity:0,scale:0.6}} whileInView={{opacity:1,scale:1}} transition={{delay:1,type:"spring"}} viewport={{once:"true"}} className="wave-step">
               <div className="step-circle">1</div>
               <h4>Submit Request</h4>
               <p>Enter patient and hospital details.</p>
-            </div>
+            </motion.div>
 
             <div className="wave-line"></div>
 
