@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ImpactStats.css";
 import statsBg from "../../../assets/stats-bg.png";
-
+import { motion } from "framer-motion";
 import saveLife from "../../../assets/icon-save-life.png";
 import donorsIcon from "../../../assets/icon-verified.png";
 import hospitalsIcon from "../../../assets/icon-hospital.png";
@@ -33,7 +33,6 @@ const ImpactStats = () => {
 
     fetchImpact();
 
-    // OPTIONAL AUTO REFRESH
     const interval = setInterval(fetchImpact, 5000);
 
     return () => clearInterval(interval);
@@ -47,13 +46,13 @@ const ImpactStats = () => {
     >
       <div className="impact-overlay">
         <div className="impact-container">
-          <h2>Our Life-Saving Impact</h2>
+          <motion.h2 initial={{opacity:0,y:-100}} whileInView={{opacity:1,y:0}} transition={{delay:0.8,type:"spring"}} viewport={{once:true}}>Our Life-Saving Impact</motion.h2>
 
-          <p className="impact-subtitle">
+          <motion.p initial={{opacity:0,y:100}} whileInView={{opacity:1,y:0}} transition={{delay:1.1,type:"spring"}} viewport={{once:true}} className="impact-subtitle">
             Trusted by donors, hospitals and blood banks nationwide
-          </p>
+          </motion.p>
 
-          <div className="impact-grid">
+          <motion.div initial={{opacity:0,scale:0.8}} whileInView={{opacity:1,scale:1}} transition={{delay:1,type:"spring"}} viewport={{once:"true"}}  className="impact-grid">
 
             {/* LIVES SAVED */}
             <div className="impact-card">
@@ -89,7 +88,7 @@ const ImpactStats = () => {
               <p>Avg Response Time</p>
             </div>
 
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

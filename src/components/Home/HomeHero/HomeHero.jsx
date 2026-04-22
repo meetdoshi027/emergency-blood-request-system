@@ -1,6 +1,6 @@
 import React from "react";
 import "./HomeHero.css";
-
+import  {motion} from 'framer-motion';
 import heroBg from "../../../assets/home-hero-bg.png";
 import heroIllustration from "../../../assets/home-hero-illustration.png";
 import requestIcon from "../../../assets/icon-request-blood.png";
@@ -17,16 +17,16 @@ const HomeHero = () => {
       <div className="home-hero-container">
         {/* LEFT CONTENT */}
         <div className="home-hero-text">
-          <h1>
+          <motion.h1 initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.6,type:"spring"}} viewport={{once:true}}>
             Emergency Blood <span>Request & Donation</span> Platform
-          </h1>
+          </motion.h1>
 
-          <p>
+          <motion.p initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{delay:0.9,type:"spring"}} viewport={{once:true}}>
             Connect Life helps patients, donors, and hospitals connect instantly
             during blood emergencies. Every second matters  act now save lives.
-          </p>
+          </motion.p>
 
-          <div className="home-hero-actions">
+          <motion.div initial={{opacity:0,y:100}} whileInView={{opacity:1,y:0}} transition={{delay:1.1,type:"spring"}} viewport={{once:true}} className="home-hero-actions">
             <button className="btn-primary" onClick={()=> navigate("/BloodRequest")}>
               <img src={requestIcon} alt="Request Blood" />
               Request Blood
@@ -36,12 +36,12 @@ const HomeHero = () => {
               <img src={donateIcon} alt="Donate Blood" />
               Become a Donor
             </button>
-          </div>
+          </motion.div>
         </div>
 
         {/* RIGHT IMAGE */}
         <div className="home-hero-image">
-          <img src={heroIllustration} alt="Emergency Blood Support" />
+          <motion.img initial={{opacity:0,x:100}} whileInView={{opacity:1,x:0}} transition={{delay:0.9,type:"spring"}} viewport={{once:true}} src={heroIllustration} alt="Emergency Blood Support" />
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import notifyIcon from "../../../assets/icon-notify.png";
 import connectIcon from "../../../assets/icon-connect.png";
 import saveLifeIcon from "../../../assets/icon-save-life.png";
 import registerIcon from "../../../assets/icon-register.png";
+import  {motion} from 'framer-motion';
 
 const steps = [
   {
@@ -44,18 +45,18 @@ const HowItWorks = () => {
   return (
     <section className="how-it-works">
       <div className="how-it-works-container">
-        <h2>How It Works</h2>
-        <p className="subtitle">
+        <motion.h2 initial={{opacity:0,y:-100}} whileInView={{opacity:1,y:0}} transition={{delay:0.9,type:"spring"}} viewport={{once:true}}>How It Works</motion.h2>
+        <motion.p initial={{opacity:0,y:100}} whileInView={{opacity:1,y:0}} transition={{delay:1.1,type:"spring"}} viewport={{once:true}} className="subtitle">
           A simple, fast, and reliable process designed for emergencies
-        </p>
+        </motion.p>
 
         <div className="steps-grid">
           {steps.map((step, index) => (
-            <div className="step-card" key={index}>
+            <motion.div initial={{opacity:0,scale:0.8}} whileInView={{opacity:1,scale:1}} transition={{delay:1,type:"spring"}} viewport={{once:"true"}} className="step-card" key={index}>
               <img src={step.icon} alt={step.title} />
               <h3>{step.title}</h3>
               <p>{step.text}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
