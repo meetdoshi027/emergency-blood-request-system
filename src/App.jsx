@@ -27,7 +27,11 @@ import BloodbankAccount from "./components/users/BloodbankAccount";
 import Privacy from './components/Privacy/Privacy.jsx';
 import Terms from './components/Terms/Terms.jsx';
 import HospitalRequestResults from "./components/hospital/Request/HospitalRequestResults";
+
 // import Bloodstock from './components/Bloodstock/Bloodstock.jsx';
+
+//import Bloodstock from './components/Bloodstock/Bloodstock.jsx';
+
 import BloodBankRequestResults from "./components/bloodbank/Request/BloodBankRequestResults";
 function App() {
   return (
@@ -99,8 +103,7 @@ function App() {
 
           <Route path="/results/:city/:bloodGroup" element={<RequestResults />} /> 
       </Routes>
-    </Router>
-  );
+    </Router>  );
 }
 
 export default App;

@@ -46,47 +46,48 @@ const HostEvents = () => {
 
   // ✅ HANDLE FORM SUBMIT
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!image) {
-      alert("Please upload image ❌");
-      return;
-    }
+  if (!image) {
+    alert("Please upload image ❌");
+    return;
+  }
 
-    const formData = new FormData();
-    formData.append("eventName", event.eventName);
-    formData.append("date", event.date);
-    formData.append("location", event.location);
-    formData.append("image", image);
+  const formData = new FormData();
+  formData.append("eventName", event.eventName);
+  formData.append("date", event.date);
+  formData.append("location", event.location);
+  formData.append("image", image);
 
-    try {
-      await axios.post(
-        "https://localhost:7156/api/HospitalEvent/my-events",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("hospitalToken")}`
-          }
+  try {
+    await axios.post(
+      "https://localhost:7156/api/HospitalEvent",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("hospitalToken")}`,
+          "Content-Type": "multipart/form-data"
         }
-      );
+      }
+    );
 
-      alert("✅ Event Created");
+    alert("✅ Event Created");
 
-      fetchEvents(); // 🔥 refresh only THIS hospital events
+    fetchEvents();
 
-      setEvent({
-        eventName: "",
-        date: "",
-        location: ""
-      });
+    setEvent({
+      eventName: "",
+      date: "",
+      location: ""
+    });
 
-      setImage(null);
+    setImage(null);
 
-    } catch (err) {
-      console.error(err);
-      alert("❌ Error creating event");
-    }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("❌ Error creating event");
+  }
+};
 
   return (
     <div className="host-events">

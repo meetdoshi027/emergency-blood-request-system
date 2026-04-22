@@ -203,7 +203,7 @@ const Indlogin = () => {
                 {isOrg ? "Register Organization" : "Register as Individual"}
               </Link>
 
-              <span className="forgot">Forgot Password?</span>
+              
             </div>
 
             <button className="login-btn">Login</button>
