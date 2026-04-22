@@ -3,29 +3,57 @@ import axios from "axios";
 import "./ApproveRequest.css";
 
 const ApproveRequest = () => {
+  const org = JSON.parse(sessionStorage.getItem("bloodBankData"));
+  const bloodBankToken = sessionStorage.getItem("bloodBankToken");
 
-  const org = JSON.parse(localStorage.getItem("orgData"));
   const [requests, setRequests] = useState([]);
 
-  // ✅ FIXED useEffect (NO ERROR)
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const res = await axios.get(
-          `https://localhost:7156/api/bloodbank/normal/${org?.bankName}`
-        );
+        const [oldNormalRes, hospitalNormalRes, bloodBankNormalRes] = await Promise.all([
+          axios.get(
+            `https://localhost:7156/api/bloodbank/normal/${org?.bankName}`,
+            {
+              headers: {
+                Authorization: `Bearer ${bloodBankToken}`
+              }
+            }
+          ),
 
-        setRequests(res.data || []);
+          axios.get(
+            `https://localhost:7156/api/bloodbank/hospital-normal/${org?.bankName}`,
+            {
+              headers: {
+                Authorization: `Bearer ${bloodBankToken}`
+              }
+            }
+          ),
+
+          axios.get(
+            `https://localhost:7156/api/bloodbank/bloodbank-normal/${org?.bankName}`,
+            {
+              headers: {
+                Authorization: `Bearer ${bloodBankToken}`
+              }
+            }
+          )
+        ]);
+
+        setRequests([
+          ...(oldNormalRes.data || []),
+          ...(hospitalNormalRes.data || []),
+          ...(bloodBankNormalRes.data || [])
+        ]);
       } catch (err) {
         console.error(err);
       }
     };
 
-    if (org) {
+    if (org?.bankName) {
       fetchRequests();
     }
-
-  }, [org]);
+  }, [org, bloodBankToken]);
 
   return (
     <div className="approve-container">
@@ -43,8 +71,59 @@ const ApproveRequest = () => {
               <p>{r.units} Units Required</p>
             </div>
 
-            {/* ✅ UI ONLY (NO FUNCTION) */}
-            <button>
+            <button
+              onClick={async () => {
+                try {
+                  let url = "";
+
+                  if (r.hospitalBloodBankRequestId) {
+                    url = `https://localhost:7156/api/bloodbank/approve-hospital/${r.hospitalBloodBankRequestId}`;
+                  } else if (r.bloodBankRequestBloodBankId) {
+                    url = `https://localhost:7156/api/bloodbank/approve/${r.bloodBankRequestBloodBankId}`;
+                  } else {
+                    url = `https://localhost:7156/api/bloodbank/approve-old/${r.requestId}`;
+                  }
+
+                  const res = await axios.post(
+                    url,
+                    {},
+                    {
+                      headers: {
+                        Authorization: `Bearer ${bloodBankToken}`
+                      }
+                    }
+                  );
+
+                  alert(res.data.message);
+
+                  setRequests((prev) =>
+                    prev.filter((item) => {
+                      if (r.hospitalBloodBankRequestId) {
+                        return (
+                          item.hospitalBloodBankRequestId !==
+                          r.hospitalBloodBankRequestId
+                        );
+                      } else if (r.bloodBankRequestBloodBankId) {
+                        return (
+                          item.bloodBankRequestBloodBankId !==
+                          r.bloodBankRequestBloodBankId
+                        );
+                      } else {
+                        return item.requestId !== r.requestId;
+                      }
+                    })
+                  );
+                } catch (err) {
+                  console.error(err);
+
+                  alert(
+                    err.response?.data?.message ||
+                      err.response?.data ||
+                      "Approval failed"
+                  );
+                }
+              }}
+            >
               Approve
             </button>
           </div>

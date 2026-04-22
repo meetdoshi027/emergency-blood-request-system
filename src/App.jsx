@@ -28,9 +28,10 @@ import Privacy from './components/Privacy/Privacy.jsx';
 import Terms from './components/Terms/Terms.jsx';
 
 import HospitalRequestResults from "./components/hospital/Request/HospitalRequestResults";
+import BloodBankRequestResults from "./components/bloodbank/Request/BloodBankRequestResults";
 
 
-import Bloodstock from './components/Bloodstock/Bloodstock.jsx';
+
 
 function App() {
   return (
@@ -59,10 +60,10 @@ function App() {
 
            <Route path="/Terms" element={<Terms />} />
            <Route path="/hospital/results/:city/:bloodGroup" element={<HospitalRequestResults />} />
+             <Route path="/bloodbank/results/:city/:bloodGroup" element={<BloodBankRequestResults />} />
 
            <Route path="/terms" element={<Terms />} />
-            <Route path="/bloodstock" element={<Bloodstock />} />
-
+            
 
            <Route path="/account" element={
           <ProtectedRoute>

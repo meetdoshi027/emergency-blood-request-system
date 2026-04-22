@@ -51,7 +51,7 @@ const RequestForm = () => {
     }
 
     // 🔥 STORE requestId (MOST IMPORTANT LINE)
-    localStorage.setItem("requestId", data.requestId);
+    sessionStorage.setItem("requestId", data.requestId);
 
     alert("✅ Request Submitted!");
     navigate(`/results/${formData.city}/${formData.bloodGroup}`);

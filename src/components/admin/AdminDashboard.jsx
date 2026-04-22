@@ -204,63 +204,103 @@ const AdminDashboard = () => {
         )}
 
         {/* ===== APPROVAL ===== */}
-        {["users","donors","hospitals","bloodbanks"].includes(activeTab) && (
-          <div className="admin-users">
-            {data.length === 0 ? (
-              <p>No pending records</p>
-            ) : (
-              data.map(item => (
-                <div
-                  className="admin-user-card"
-                  key={
-                    item.userID ||
-                    item.hospitalID ||
-                    item.bloodBankID ||
-                    item.donorID
-                  }
-                >
-                  <p>
-                    {item.fullName ||
-                     item.name ||
-                     item.hospitalName ||
-                     item.bankName}
-                  </p>
+       {["users", "donors", "hospitals", "bloodbanks"].includes(activeTab) && (
+  <div className="admin-users">
+    {data.length === 0 ? (
+      <p>No pending records</p>
+    ) : (
+      data.map(item => {
+        const id =
+          item.userID ||
+          item.hospitalID ||
+          item.bloodBankID ||
+          item.donorID;
 
-                  <div className="admin-actions">
-                    <button
-                      className="approve"
-                      onClick={() =>
-                        approve(
-                          item.userID ||
-                          item.hospitalID ||
-                          item.bloodBankID ||
-                          item.donorID
-                        )
-                      }
-                    >
-                      Approve
-                    </button>
-
-                    <button
-                      className="reject"
-                      onClick={() =>
-                        reject(
-                          item.userID ||
-                          item.hospitalID ||
-                          item.bloodBankID ||
-                          item.donorID
-                        )
-                      }
-                    >
-                      Reject
-                    </button>
-                  </div>
-
-                </div>
-              ))
+        return (
+          <div className="admin-user-card detailed-card" key={id}>
+            
+            {/* ===== USERS ===== */}
+            {activeTab === "users" && (
+              <>
+                <h3>{item.fullName}</h3>
+                <p><strong>Email:</strong> {item.email}</p>
+                <p><strong>Username:</strong> {item.username}</p>
+                <p><strong>Phone:</strong> {item.phone}</p>
+                <p><strong>Gender:</strong> {item.gender}</p>
+                <p><strong>Blood Group:</strong> {item.bloodGroup}</p>
+                <p>
+                  <strong>DOB:</strong>{" "}
+                  {item.dob
+                    ? new Date(item.dob).toLocaleDateString("en-GB")
+                    : "N/A"}
+                </p>
+                <p><strong>Address:</strong> {item.address}</p>
+              </>
             )}
+
+            {/* ===== DONORS ===== */}
+            {activeTab === "donors" && (
+              <>
+                <h3>{item.name}</h3>
+                <p><strong>Age:</strong> {item.age}</p>
+                <p><strong>Gender:</strong> {item.gender}</p>
+                <p><strong>Blood Group:</strong> {item.bloodGroup}</p>
+                <p><strong>Weight:</strong> {item.weight}</p>
+                <p><strong>Phone:</strong> {item.phone}</p>
+                <p><strong>Email:</strong> {item.email}</p>
+                <p><strong>City:</strong> {item.city}</p>
+                <p><strong>Address:</strong> {item.address}</p>
+                <p><strong>Medical History:</strong> {item.medicalHistory}</p>
+              </>
+            )}
+
+            {/* ===== HOSPITALS ===== */}
+            {activeTab === "hospitals" && (
+              <>
+                <h3>{item.hospitalName}</h3>
+                <p><strong>Email:</strong> {item.email}</p>
+                <p><strong>Username:</strong> {item.username}</p>
+                <p><strong>Phone:</strong> {item.phone}</p>
+                <p><strong>Address:</strong> {item.address}</p>
+                <p><strong>City:</strong> {item.city}</p>
+                <p><strong>Registration No:</strong> {item.registrationNumber}</p>
+              </>
+            )}
+
+            {/* ===== BLOOD BANKS ===== */}
+            {activeTab === "bloodbanks" && (
+              <>
+                <h3>{item.bankName}</h3>
+                <p><strong>Email:</strong> {item.email}</p>
+                <p><strong>Username:</strong> {item.username}</p>
+                <p><strong>Phone:</strong> {item.phone}</p>
+                <p><strong>Address:</strong> {item.address}</p>
+                <p><strong>City:</strong> {item.city}</p>
+                <p><strong>License No:</strong> {item.licenseNumber}</p>
+              </>
+            )}
+
+            <div className="admin-actions">
+              <button
+                className="approve"
+                onClick={() => approve(id)}
+              >
+                Approve
+              </button>
+
+              <button
+                className="reject"
+                onClick={() => reject(id)}
+              >
+                Reject
+              </button>
+            </div>
           </div>
-        )}
+        );
+      })
+    )}
+  </div>
+)}
 
         {/* ===== BLOCK SYSTEM ===== */}
         {activeTab.includes("manage") && (

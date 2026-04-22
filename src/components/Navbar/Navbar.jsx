@@ -8,11 +8,11 @@
 // const Navbar = () => {
 //   const navigate = useNavigate();
 //   const location = useLocation();
-//   const user = JSON.parse(localStorage.getItem("user"));
+//   const user = JSON.parse(sessionStorage.getItem("user"));
 //   const [showMenu, setShowMenu] = useState(false);
 
 //   const logout = () => {
-//     localStorage.removeItem("user");
+//     sessionStorage.removeItem("user");
 //     navigate("/login");
 //   };
 
@@ -111,13 +111,13 @@ import femaleImg from "../../assets/profileimage1.png";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const [showMenu, setShowMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const logout = () => {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
     navigate("/login");
   };
 

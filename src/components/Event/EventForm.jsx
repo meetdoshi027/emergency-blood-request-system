@@ -1,182 +1,204 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./EventForm.css";
 
 const EventForm = ({ event, closeForm }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    gender: "",
+    dob: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+    agree: false
+  });
 
-const [formData, setFormData] = useState({
-name:"",
-phone:"",
-gender:"",
-dob:"",
-weight:"",
-address:"",
-city:"",
-state:"",
-pincode:"",
-agree:false
-});
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
 
-// DATE FORMAT
-const formatDate = (date) => {
-const d = new Date(date);
-const day = String(d.getDate()).padStart(2, '0');
-const month = String(d.getMonth() + 1).padStart(2, '0');
-const year = d.getFullYear();
-return `${day}-${month}-${year}`;
-};
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
 
-const handleChange = (e) => {
-const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value
+    });
+  };
 
-setFormData({
-...formData,
-[name]: type === "checkbox" ? checked : value
-});
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = (e) => {
-e.preventDefault();
+    if (!formData.agree) {
+      alert("Please accept Terms & Conditions");
+      return;
+    }
 
-  
+    try {
+      const payload = {
+        eventName: event?.title || "",
+        organizationName: event?.organization || "",
+        eventDate: event?.date,
+        name: formData.name,
+        phone: formData.phone,
+        gender: formData.gender,
+        dob: formData.dob,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode
+      };
 
-// CHECK TERMS
-if (!formData.agree) {
-alert("Please accept Terms & Conditions");
-return;
-}
+      const res = await axios.post(
+        "https://localhost:7156/api/EventRegistration",
+        payload
+      );
 
-alert("Registration Successful ✅");
-closeForm();
-};
+      alert(res.data.message || "Registration Successful ✅");
 
-return (
-<div className="modal">
+      setFormData({
+        name: "",
+        phone: "",
+        gender: "",
+        dob: "",
+        address: "",
+        city: "",
+        state: "",
+        pincode: "",
+        agree: false
+      });
 
-<div className="modal-box">
+      closeForm();
+    } catch (err) {
+      console.error(err);
+      alert("Registration Failed ❌");
+    }
+  };
 
-<h2>Register for Event</h2>
+  return (
+    <div className="modal">
+      <div className="modal-box">
+        <h2>Register for Event</h2>
 
-<p><b>{event?.title}</b></p>
+        <p><b>{event?.title}</b></p>
+        <p>{formatDate(event?.date)}</p>
 
-<p>{formatDate(event?.date)}</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={event?.title || ""}
+            readOnly
+            className="readonly-field"
+          />
 
-<form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            required
+            value={formData.name}
+            onChange={handleChange}
+          />
 
-{/* EVENT NAME READONLY */}
-<input 
-type="text" 
-value={event?.title || ""} 
-readOnly 
-className="readonly-field"
-/>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Mobile Number"
+            required
+            value={formData.phone}
+            onChange={handleChange}
+          />
 
-{/* NAME */}
-<input 
-type="text" 
-name="name"
-placeholder="Full Name" 
-required 
-onChange={handleChange}
-/>
+          <select
+            name="gender"
+            required
+            value={formData.gender}
+            onChange={handleChange}
+          >
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
 
-{/* PHONE */}
-<input 
-type="tel" 
-name="phone"
-placeholder="Mobile Number" 
-required 
-onChange={handleChange}
-/>
+          <input
+            type="date"
+            name="dob"
+            required
+            value={formData.dob}
+            onChange={handleChange}
+          />
 
-{/* GENDER */}
-<select name="gender" required onChange={handleChange}>
-<option value="">Select Gender</option>
-<option>Male</option>
-<option>Female</option>
-<option>Other</option>
-</select>
+          <textarea
+            name="address"
+            placeholder="Address"
+            required
+            value={formData.address}
+            onChange={handleChange}
+          />
 
-{/* DOB */}
-<input 
-type="date" 
-name="dob"
-required 
-onChange={handleChange}
-/>
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            required
+            value={formData.city}
+            onChange={handleChange}
+          />
 
-{/* WEIGHT */}
-<input 
-type="number" 
-name="weight"
-placeholder="Weight (kg)" 
-required 
-onChange={handleChange}
-/>
+          <input
+            type="text"
+            name="state"
+            placeholder="State"
+            required
+            value={formData.state}
+            onChange={handleChange}
+          />
 
-{/* ADDRESS */}
-<textarea 
-name="address"
-placeholder="Address"
-required
-onChange={handleChange}
-/>
+          <input
+            type="number"
+            name="pincode"
+            placeholder="Pincode"
+            required
+            value={formData.pincode}
+            onChange={handleChange}
+          />
 
-{/* CITY */}
-<input 
-type="text" 
-name="city"
-placeholder="City"
-required
-onChange={handleChange}
-/>
+          <label className="checkbox">
+            <input
+              type="checkbox"
+              name="agree"
+              checked={formData.agree}
+              onChange={handleChange}
+            />
+            <span>I agree to Terms & Conditions</span>
+          </label>
 
-{/* STATE */}
-<input 
-type="text" 
-name="state"
-placeholder="State"
-required
-onChange={handleChange}
-/>
+          <button
+            type="submit"
+            className="submit-btn"
+            disabled={!formData.agree}
+          >
+            Register
+          </button>
 
-{/* PINCODE */}
-<input 
-type="number" 
-name="pincode"
-placeholder="Pincode"
-required
-onChange={handleChange}
-/>
-
-{/* TERMS */}
-<label className="checkbox">
-<input 
-type="checkbox"
-name="agree"
-onChange={handleChange}
-/>
-<span>I agree to Terms & Conditions</span>   
-</label>
-
-
-{/* ✅ UPDATED BUTTON */}
-<button 
-type="submit" 
-className="submit-btn"
-disabled={!formData.agree}
->
-Register
-</button>
-
-<button type="button" className="close-btn" onClick={closeForm}>
-Cancel
-</button>
-
-</form>
-
-</div>
-</div>
-);
+          <button
+            type="button"
+            className="close-btn"
+            onClick={closeForm}
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default EventForm;

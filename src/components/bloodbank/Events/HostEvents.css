@@ -16,8 +16,7 @@
   margin-bottom: 20px;
 }
 
-.event-form input,
-.event-form textarea {
+.event-form input {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ddd;
@@ -36,18 +35,33 @@
   background: #dc2626;
 }
 
-/* EVENT LIST */
-.event-list h3 {
-  margin-bottom: 10px;
+/* GRID */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
 }
 
-.event-card {
-  background: #f8fafc;
-  padding: 12px;
+/* ✅ CARD (ONLY HOST PAGE AFFECTED) */
+.host-events .event-card {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb); /* 🔵 BLUE THEME */
+  color: black;
   border-radius: 10px;
-  margin-bottom: 10px;
+  overflow: hidden;
+  transition: 0.3s;
 }
 
-.event-card h4 {
-  margin-bottom: 5px;
+.host-events .event-card:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.event-card img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.event-content {
+  padding: 10px;
+  text-align: center;
 }

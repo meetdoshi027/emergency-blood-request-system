@@ -1,53 +1,112 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./HostEvents.css";
 
 const HostEvents = () => {
 
   const [event, setEvent] = useState({
-    name: "",
+    eventName: "",
     date: "",
-    location: "",
-    description: ""
+    location: ""
   });
 
+  const [image, setImage] = useState(null);
   const [eventsList, setEventsList] = useState([]);
 
+  // ✅ FETCH EVENTS (FILTERED BY LOGGED-IN HOSPITAL)
+  const fetchEvents = async () => {
+    try {
+      const res = await axios.get(
+        "https://localhost:7156/api/BloodBankEvent/my-events",
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("bloodBankToken")}`
+          }
+        }
+      );
+      setEventsList(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // ✅ LOAD EVENTS ON PAGE LOAD
+  useEffect(() => {
+  const init = async () => {
+    await fetchEvents();
+  };
+
+  init();
+}, []);
+
+  // ✅ HANDLE INPUT CHANGE
   const handleChange = (e) => {
     setEvent({ ...event, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // ✅ HANDLE FORM SUBMIT
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!event.name || !event.date || !event.location) {
-      alert("Please fill all required fields");
-      return;
-    }
+  if (!image) {
+    alert("Please upload image ❌");
+    return;
+  }
 
-    setEventsList([...eventsList, event]);
+  const formData = new FormData();
+  formData.append("eventName", event.eventName);
+  formData.append("date", event.date);
+  formData.append("location", event.location);
+  formData.append("image", image);
+
+  try {
+    await axios.post(
+      "https://localhost:7156/api/BloodBankEvent",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("bloodBankToken")}`
+        }
+      }
+    );
+
+    alert("✅ Event Created");
+
+    fetchEvents();
 
     setEvent({
-      name: "",
+      eventName: "",
       date: "",
-      location: "",
-      description: ""
+      location: ""
     });
-  };
+
+    setImage(null);
+
+  } catch (err) {
+    console.error(err);
+    alert("❌ Error creating event");
+  }
+};
 
   return (
     <div className="host-events">
 
       <h2>🎉 Host Blood Donation Event</h2>
 
-      {/* FORM */}
       <form onSubmit={handleSubmit} className="event-form">
 
+        <input 
+          type="file" 
+          required
+          onChange={(e) => setImage(e.target.files[0])} 
+        />
+
         <input
-          type="text"
-          name="name"
+          name="eventName"
           placeholder="Event Name"
-          value={event.name}
+          value={event.eventName}
           onChange={handleChange}
+          required
         />
 
         <input
@@ -55,39 +114,41 @@ const HostEvents = () => {
           name="date"
           value={event.date}
           onChange={handleChange}
+          required
         />
 
         <input
-          type="text"
           name="location"
           placeholder="Location"
           value={event.location}
           onChange={handleChange}
-        />
-
-        <textarea
-          name="description"
-          placeholder="Description (optional)"
-          value={event.description}
-          onChange={handleChange}
+          required
         />
 
         <button type="submit">Create Event</button>
+
       </form>
 
-      {/* EVENTS LIST */}
-      <div className="event-list">
-        <h3>📅 Upcoming Events</h3>
-
+      {/* EVENTS */}
+      <div className="event-grid">
         {eventsList.length === 0 ? (
           <p>No events created yet</p>
         ) : (
-          eventsList.map((e, index) => (
-            <div key={index} className="event-card">
-              <h4>{e.name}</h4>
-              <p>📍 {e.location}</p>
-              <p>📅 {e.date}</p>
-              <p>{e.description}</p>
+          eventsList.map((e, i) => (
+            <div key={i} className="event-card">
+
+              <img
+                src={`https://localhost:7156${e.imagePath}`}
+                alt="event"
+              />
+
+              <div className="event-content">
+                <h3>{e.eventName}</h3>
+                <p>🏥 {e.organizationName}</p>
+                <p>📍 {e.location}</p>
+                <p>📅 {new Date(e.date).toLocaleDateString()}</p>
+              </div>
+
             </div>
           ))
         )}

@@ -13,6 +13,8 @@ const RequestResults = () => {
   });
 
   const [activeIndex, setActiveIndex] = useState(null);
+const [activeType, setActiveType] = useState(null);
+
 
   useEffect(() => {
     fetch(`https://localhost:7156/api/BloodRequest/search?city=${encodeURIComponent(city)}&bloodGroup=${encodeURIComponent(bloodGroup)}`)
@@ -35,8 +37,8 @@ const RequestResults = () => {
 
 I need ${bloodGroup} blood in ${city}.
 
-📞 Contact: ${person.phone}
-📍 Address: ${person.address}
+ Contact: ${person.phone}
+ Address: ${person.address}
 
 Please help urgently.`;
 
@@ -73,7 +75,7 @@ Please respond urgently.`
   const handleRequest = async (person, type) => {
   try {
     // ✅ GET SAME USER REQUEST ID
-    const requestId = localStorage.getItem("requestId");
+    const requestId = sessionStorage.getItem("requestId");
 
     if (!requestId || requestId === "undefined") {
       alert("❌ Please submit blood request first");
@@ -115,47 +117,76 @@ Please respond urgently.`
   }
 };
   
-  const toggleMenu = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
+const toggleMenu = (index, type) => {
+  if (activeIndex === index && activeType === type) {
+    setActiveIndex(null);
+    setActiveType(null);
+  } else {
+    setActiveIndex(index);
+    setActiveType(type);
+  }
+};
+
+
 
   /* ================= CARD ================= */
 
  const renderCard = (person, i, type) => (
   <div className="card" key={i}>
-    <div>
-      <b>{person.name}</b> ({person.bloodGroup || ""})
-      <p>{person.email}</p>
-      <p>{person.phone}</p>
-      <p>{person.address}</p>
-    </div>
+   
+   <div className="card-info">
+  <b>{person.name}</b>
+  {person.bloodGroup && <span>({person.bloodGroup})</span>}
+  <p>{person.email}</p>
+  <p>{person.phone}</p>
+  <p>{person.address}</p>
+</div>
 
     <div className="action-container">
+  <div className="button-group">
+    <button
+      className={`connect-btn ${activeIndex === i && activeType === type ? "active" : ""}`}
+      onClick={() => toggleMenu(i, type)}
+    >
+      🔗 Connect
+    </button>
 
-      {/* 🔵 CONNECT BUTTON (ALL) */}
-      <button  className="connect-btn" onClick={() => toggleMenu(i)}>
-        🔗 Connect
+    {type !== "donor" && (
+      <button
+        className="request-btn"
+        onClick={() => handleRequest(person, type)}
+      >
+        ⚡ Request
+      </button>
+    )}
+  </div>
+
+  {activeIndex === i && activeType === type && (
+    <div className="contact-panel">
+      <button
+        className="contact-card whatsapp"
+        onClick={() => handleWhatsApp(person)}
+      >
+        <span className="contact-icon">💬</span>
+        <div>
+          <h4>WhatsApp</h4>
+          <p>Chat instantly with {person.name}</p>
+        </div>
       </button>
 
-      {/* Dropdown */}
-      {activeIndex === i && (
-        <div className="action-menu">
-          <button onClick={() => handleWhatsApp(person)}>💬 WhatsApp</button>
-          <button onClick={() => handleEmail(person)}>📧 Email</button>
+      <button
+        className="contact-card email"
+        onClick={() => handleEmail(person)}
+      >
+        <span className="contact-icon">📧</span>
+        <div>
+          <h4>Email</h4>
+          <p>Send a blood request email</p>
         </div>
-      )}
-
-      {/* 🔴 REQUEST BUTTON (ONLY HOSPITAL & BLOODBANK) */}
-      {type !== "donor" && (
-        <button
-          className="request-btn"
-          onClick={() => handleRequest(person, type)}
-        >
-          ⚡ Request
-        </button>
-      )}
-
+      </button>
     </div>
+  )}
+</div>
   </div>
 );
   return (

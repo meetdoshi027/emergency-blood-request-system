@@ -9,6 +9,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import HostEvents from "./Events/HostEvents"; // ✅ IMPORT ADDED
 import ApproveRequest from "./ApproveRequest/ApproveRequest";
 import HospitalRequestForm from "./Request/HospitalRequestForm";
+import BloodStock from "./BloodStock/BloodStock";
 
 import {
   BarChart,
@@ -29,7 +30,8 @@ const HospitalDashboard = () => {
   const [active, setActive] = useState("Dashboard");
 
   const navigate = useNavigate();
-const hospital = JSON.parse(localStorage.getItem("orgData"));
+  const hospital = JSON.parse(sessionStorage.getItem("hospitalData"));
+  const hospitalToken = sessionStorage.getItem("hospitalToken");
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -40,48 +42,89 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
 }, [hospital, navigate]);
 
   const fetchData = useCallback(async () => {
-    try {
-      const [statsRes, urgentRes, invRes, chartRes] = await Promise.all([
-        axios.get("https://localhost:7156/api/hospital/stats"),
-        axios.get(`https://localhost:7156/api/hospital/urgent/${hospital?.hospitalName}`),
-        axios.get("https://localhost:7156/api/hospital/inventory"),
-        axios.get("https://localhost:7156/api/hospital/chart")
-      ]);
+  try {
+    setLoading(true);
 
-      setStats(statsRes.data || {});
-      setUrgentRequests(urgentRes.data || []);
-      setInventory(invRes.data || []);
-      setChartData(chartRes.data || []);
-
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
+   const [
+  statsRes,
+  oldUrgentRes,
+  newUrgentRes,
+  bloodBankUrgentRes,
+  invRes,
+  chartRes
+] = await Promise.all([
+  axios.get(
+    `https://localhost:7156/api/hospital/stats/${hospital?.hospitalName}`,
+    {
+      headers: {
+        Authorization: `Bearer ${hospitalToken}`
+      }
     }
-  }, [hospital]);
+  ),
+
+  axios.get(
+    `https://localhost:7156/api/hospital/urgent/${hospital?.hospitalName}`,
+    {
+      headers: {
+        Authorization: `Bearer ${hospitalToken}`
+      }
+    }
+  ),
+
+  axios.get(
+    `https://localhost:7156/api/hospital/hospital-urgent/${hospital?.hospitalName}`,
+    {
+      headers: {
+        Authorization: `Bearer ${hospitalToken}`
+      }
+    }
+  ),
+
+  axios.get(
+    `https://localhost:7156/api/hospital/bloodbank-urgent/${hospital?.hospitalName}`,
+    {
+      headers: {
+        Authorization: `Bearer ${hospitalToken}`
+      }
+    }
+  ),
+
+  axios.get(
+    `https://localhost:7156/api/hospital/inventory/${hospital?.hospitalName}`,
+    {
+      headers: {
+        Authorization: `Bearer ${hospitalToken}`
+      }
+    }
+  ),
+
+  axios.get("https://localhost:7156/api/hospital/chart", {
+    headers: {
+      Authorization: `Bearer ${hospitalToken}`
+    }
+  })
+]);
+
+    setStats(statsRes.data || {});
+    setUrgentRequests([
+  ...(oldUrgentRes.data || []),
+  ...(newUrgentRes.data || []),
+  ...(bloodBankUrgentRes.data || [])
+]);
+    setInventory(invRes.data || []);
+    setChartData(chartRes.data || []);
+  } catch (err) {
+    console.error("Dashboard fetch error:", err);
+  } finally {
+    setLoading(false);
+  }
+}, [hospital?.hospitalName, hospitalToken]);
 
   useEffect(() => {
-    let isMounted = true;
-
-    const loadData = async () => {
-      if (isMounted) {
-        await fetchData();
-      }
-    };
-
-    loadData();
-
-    const interval = setInterval(() => {
-      if (isMounted) {
-        fetchData();
-      }
-    }, 5000);
-
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, [fetchData]);
+  if (hospital?.hospitalName && hospitalToken) {
+    fetchData();
+  }
+}, [fetchData, hospital?.hospitalName, hospitalToken]);
 
   
 
@@ -90,7 +133,7 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
 
       {/* ===== SIDEBAR ===== */}
       <div className="sidebar">
-        <h2 className="logo">🩸 ConnectLife</h2>
+        <h2 className="logo">ConnectLife</h2>
 
         <ul>
           {[
@@ -143,8 +186,9 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
           <button
             className="logout"
             onClick={() => {
-              localStorage.removeItem("orgData");
-              localStorage.removeItem("orgType");
+              sessionStorage.removeItem("hospitalData");
+              sessionStorage.removeItem("hospitalType");
+              sessionStorage.removeItem("hospitalToken");
               navigate("/login", { state: { loginType: "organization" } });
             }}
           >
@@ -173,8 +217,8 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
                   </div>
 
                   <div className="card green">
-                    <h2>{stats.totalDonors || 0}</h2>
-                    <p>Total Donors</p>
+                    <h2>{stats.eventHosted || 0}</h2>
+                    <p>Event Hosted</p>
                   </div>
                 </>
               )}
@@ -201,7 +245,55 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
           <p>{r.units} Units Required</p>
         </div>
 
-        <button>Approve</button>
+         <button
+  onClick={async () => {
+    try {
+     let url = "";
+
+if (r.hospitalRequestHospitalId) {
+  url = `https://localhost:7156/api/hospital/approve/${r.hospitalRequestHospitalId}`;
+} else if (r.bloodBankHospitalRequestId) {
+  url = `https://localhost:7156/api/hospital/approve-bloodbank/${r.bloodBankHospitalRequestId}`;
+} else {
+  url = `https://localhost:7156/api/hospital/approve-old/${r.requestId}`;
+}
+
+      const res = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${hospitalToken}`
+          }
+        }
+      );
+
+      alert(res.data.message);
+
+      setUrgentRequests((prev) =>
+  prev.filter((item) => {
+    if (r.hospitalRequestHospitalId) {
+      return item.hospitalRequestHospitalId !== r.hospitalRequestHospitalId;
+    } else if (r.bloodBankHospitalRequestId) {
+      return item.bloodBankHospitalRequestId !== r.bloodBankHospitalRequestId;
+    } else {
+      return item.requestId !== r.requestId;
+    }
+  })
+);
+    } catch (err) {
+      console.error(err);
+      alert(
+  err.response?.data?.message ||
+  err.response?.data ||
+  "Approval failed"
+);
+    }
+  }}
+>
+  Approve
+</button>
+
       </div>
     ))
   )}
@@ -209,23 +301,41 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
 
               {/* INVENTORY */}
               <div className="inventory">
-                <h3>🧪 Live Inventory</h3>
+  <h3>🧪 Live Inventory</h3>
 
-                {loading ? (
-                  <Skeleton count={4} height={20} />
-                ) : inventory.length === 0 ? (
-                  <p>No inventory data</p>
-                ) : (
-                  inventory.map((item) => (
-                    <div key={item.group} className="progress">
-                      <p>{item.group}</p>
-                      <div>
-                        <span style={{ width: `${item.percentage}%` }}></span>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
+  {loading ? (
+    <Skeleton count={8} height={28} />
+  ) : inventory.length === 0 ? (
+    <p>No inventory data</p>
+  ) : (
+    inventory.map((item) => (
+      <div key={item.group} className="inventory-card">
+        <div className="inventory-top">
+          <div className="blood-group-box">
+            {item.group}
+          </div>
+
+          <div className="inventory-info">
+            <div className="inventory-header">
+              <span className="units-text">{item.units} Units</span>
+
+              <span className={`inventory-status ${item.status.toLowerCase()}`}>
+                {item.status}
+              </span>
+            </div>
+
+            <div className="progress-bar">
+              <div
+                className={`progress-fill ${item.status.toLowerCase()}`}
+                style={{ width: `${item.percentage}%` }}
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))
+  )}
+</div>
 
             </div>
 
@@ -254,6 +364,8 @@ const hospital = JSON.parse(localStorage.getItem("orgData"));
         {active === "APPROVE BLOOD REQUEST" && (<ApproveRequest />)}
 
         {active === "REQUEST BLOOD" && <HospitalRequestForm />}
+
+        {active === "BLOOD STOCK MANAGEMENT" && <BloodStock />}
 
       </div>
     </div>

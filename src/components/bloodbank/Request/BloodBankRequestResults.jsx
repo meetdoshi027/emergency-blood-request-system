@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
+import "./BloodBankRequestResults.css";
 
-import "./HospitalRequestResults.css";
-
-const HospitalRequestResults = () => {
-
+const BloodBankRequestResults = () => {
   const { city, bloodGroup } = useParams();
 
-  // ✅ FIXED (useMemo prevents re-creation)
-  const hospital = useMemo(() => {
-    return JSON.parse(sessionStorage.getItem("hospitalData")) || {};
+  // Logged in blood bank data
+  const bloodbank = useMemo(() => {
+    return JSON.parse(sessionStorage.getItem("bloodBankData")) || {};
   }, []);
 
   const [data, setData] = useState({
@@ -18,38 +16,46 @@ const HospitalRequestResults = () => {
     bloodBanks: []
   });
 
- const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
 const [activeType, setActiveType] = useState(null);
 
 
-  // ✅ FETCH DATA (NO WARNING NOW)
+  // FETCH SEARCH DATA
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Blood Bank Data:", bloodbank);
+
         const res = await fetch(
-          `https://localhost:7156/api/BloodRequest/search?city=${encodeURIComponent(city)}&bloodGroup=${encodeURIComponent(bloodGroup)}`
+          `https://localhost:7156/api/BloodRequest/search?city=${encodeURIComponent(
+            city
+          )}&bloodGroup=${encodeURIComponent(bloodGroup)}`
         );
 
-        if (!res.ok) throw new Error("Failed");
+        if (!res.ok) throw new Error("Failed to fetch");
 
         const result = await res.json();
 
         setData({
           donors: result.donors || [],
-          hospitals: (result.hospitals || []).filter(
-            h => h.name !== hospital?.hospitalName
-          ),
-          bloodBanks: result.bloodBanks || []
-        });
+          hospitals: result.hospitals || [],
 
+          // Hide logged in blood bank from list
+          bloodBanks: (result.bloodBanks || []).filter(
+            (b) =>
+              b.name?.toLowerCase() !==
+              bloodbank?.bankName?.toLowerCase()
+          )
+        });
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchData();
-  }, [city, bloodGroup, hospital]); // ✅ SAFE NOW
+  }, [city, bloodGroup, bloodbank]);
 
+  // WHATSAPP
   const handleWhatsApp = (person) => {
     const msg = `Hello ${person.name},
 
@@ -60,9 +66,12 @@ I need ${bloodGroup} blood in ${city}.
 
 Please help urgently.`;
 
-    window.open(`https://wa.me/91${person.phone}?text=${encodeURIComponent(msg)}`);
+    window.open(
+      `https://wa.me/91${person.phone}?text=${encodeURIComponent(msg)}`
+    );
   };
 
+  // EMAIL
   const handleEmail = async (person) => {
     try {
       await fetch("https://localhost:7156/api/email/send", {
@@ -90,7 +99,7 @@ Please respond urgently.`
     }
   };
 
-
+  // TOGGLE CONNECT MENU
   const toggleMenu = (index, type) => {
   if (activeIndex === index && activeType === type) {
     setActiveIndex(null);
@@ -102,46 +111,67 @@ Please respond urgently.`
 };
 
 
-  // ✅ SEND REQUEST
+  // SEND REQUEST
   const handleRequest = async (person, type) => {
     try {
-      const requestId = sessionStorage.getItem("hospitalRequestId");
+      const requestId = sessionStorage.getItem("bloodBankRequestId");
 
-      if (!requestId || requestId === "undefined") {
+      console.log("RequestId:", requestId);
+      console.log("Person:", person);
+      console.log("Type:", type);
+
+      if (
+        !requestId ||
+        requestId === "undefined" ||
+        requestId === "null"
+      ) {
         alert("❌ Submit request first");
         return;
       }
 
       const url =
         type === "hospital"
-          ? "https://localhost:7156/api/HospitalBloodRequest/sendToHospital"
-          : "https://localhost:7156/api/HospitalBloodRequest/sendToBloodBank";
+          ? "https://localhost:7156/api/BloodBankBloodRequest/sendToHospital"
+          : "https://localhost:7156/api/BloodBankBloodRequest/sendToBloodBank";
 
       const body =
         type === "hospital"
-          ? { requestId: Number(requestId), hospitalName: person.name }
-          : { requestId: Number(requestId), bloodBankName: person.name };
+          ? {
+              requestId: Number(requestId),
+              hospitalName: person.name
+            }
+          : {
+              requestId: Number(requestId),
+              bloodBankName: person.name
+            };
+
+      console.log("Sending Body:", body);
 
       const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("hospitalToken")}`
+          Authorization: `Bearer ${sessionStorage.getItem("bloodBankToken")}`
         },
         body: JSON.stringify(body)
       });
 
-      if (!res.ok) throw new Error("Failed");
+      const responseText = await res.text();
+      console.log("Response:", responseText);
 
-      alert("✅ Request sent");
+      if (!res.ok) {
+        alert(responseText);
+        return;
+      }
 
+      alert("✅ Request sent successfully");
     } catch (err) {
       console.error(err);
-      alert("❌ Failed");
+      alert("❌ Failed to send request");
     }
   };
 
-  // ✅ CARD
+  // CARD UI
   const renderCard = (person, i, type) => (
     <div className="card" key={i}>
       <div>
@@ -150,7 +180,7 @@ Please respond urgently.`
         <p>{person.address}</p>
       </div>
 
-   <div className="action-container">
+      <div className="action-container">
   <div className="button-group">
     <button
       className={`connect-btn ${activeIndex === i && activeType === type ? "active" : ""}`}
@@ -201,7 +231,6 @@ Please respond urgently.`
 
   return (
     <div className="results-page">
-
       <h2>🏥 Results in {city}</h2>
 
       <h3>Donors</h3>
@@ -212,9 +241,8 @@ Please respond urgently.`
 
       <h3>Blood Banks</h3>
       {data.bloodBanks.map((b, i) => renderCard(b, i, "bloodbank"))}
-
     </div>
   );
 };
 
-export default HospitalRequestResults;
+export default BloodBankRequestResults;

@@ -16,7 +16,7 @@ const Donate = () => {
 const navigate = useNavigate();
 
 const handleDonorClick = () => {
-  const user = localStorage.getItem("user");
+  const user = sessionStorage.getItem("user");
 
   if (!user) {
     alert("Please login first");
