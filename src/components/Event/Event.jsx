@@ -31,6 +31,8 @@ const Event = () => {
       try {
         const res = await axios.get("https://localhost:7156/api/HospitalEvent");
 
+        const res1 = await axios.get("https://localhost:7156/api/BloodBankEvent");
+
         const formatted = res.data.map(e => ({
           title: e.eventName,
           organization: e.organizationName,
@@ -39,7 +41,15 @@ const Event = () => {
           image: `https://localhost:7156${e.imagePath}`,
         }));
 
-        setDbEvents(formatted);
+         const formatted1 = res1.data.map(e => ({
+          title: e.eventName,
+          organization: e.organizationName,
+          date: e.date,
+          location: e.location,
+          image: `https://localhost:7156${e.imagePath}`,
+        }));
+
+       setDbEvents([...formatted, ...formatted1]);
 
       } catch (err) {
         console.error(err);
@@ -65,7 +75,7 @@ const Event = () => {
   const allFutureEvents = [...futureEvents, ...dbEvents];
 
   const handleRegister = (event) => {
-    const user = localStorage.getItem("user");
+    const user = sessionStorage.getItem("user");
 
     if (!user) {
       alert("Please login first");

@@ -17,10 +17,10 @@ const HostEvents = () => {
   const fetchEvents = async () => {
     try {
       const res = await axios.get(
-        "https://localhost:7156/api/HospitalEvent",
+        "https://localhost:7156/api/HospitalEvent/my-events",
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            Authorization: `Bearer ${sessionStorage.getItem("hospitalToken")}`
           }
         }
       );
@@ -61,11 +61,11 @@ const HostEvents = () => {
 
     try {
       await axios.post(
-        "https://localhost:7156/api/HospitalEvent",
+        "https://localhost:7156/api/HospitalEvent/my-events",
         formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            Authorization: `Bearer ${sessionStorage.getItem("hospitalToken")}`
           }
         }
       );

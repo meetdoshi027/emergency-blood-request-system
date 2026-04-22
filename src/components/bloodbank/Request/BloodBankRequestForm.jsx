@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./HospitalRequestForm.css";
+import "./BloodBankRequestForm.css";
 
-const HospitalRequestForm = () => {
+const BloodBankRequestForm = () => {
 
   const navigate = useNavigate();
-  const hospital = JSON.parse(sessionStorage.getItem("hospitalData")) || {};
+  const bloodbank = JSON.parse(sessionStorage.getItem("bloodBankData")) || {};
 
   const [formData, setFormData] = useState({
     bloodGroup: "",
@@ -28,25 +28,25 @@ const HospitalRequestForm = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://localhost:7156/api/HospitalBloodRequest/create", {
+      const res = await fetch("https://localhost:7156/api/BloodBankBloodRequest/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("hospitalToken")}`
+          Authorization: `Bearer ${sessionStorage.getItem("bloodBankToken")}`
         },
         body: JSON.stringify({
           ...formData,
-          hospitalName: hospital?.hospitalName
+          bloodBankName: bloodbank?.bankName
         })
       });
 
       const data = await res.json();
 
-      sessionStorage.setItem("hospitalRequestId", data.requestId);
+      sessionStorage.setItem("bloodBankRequestId", data.requestId);
 
       alert("✅ Request Submitted");
 
-      navigate(`/hospital/results/${formData.city}/${formData.bloodGroup}`);
+      navigate(`/bloodbank/results/${formData.city}/${formData.bloodGroup}`);
 
     } catch (err) {
       console.error(err);
@@ -59,7 +59,7 @@ const HospitalRequestForm = () => {
 
       <div className="request-container">
 
-        <h2>🏥 Hospital Blood Request</h2>
+        <h2>🩸 Blood Bank Blood Request</h2>
         <p className="subtitle">Fill details to request blood quickly</p>
 
         <form onSubmit={handleSubmit}>
@@ -123,4 +123,4 @@ const HospitalRequestForm = () => {
   );
 };
 
-export default HospitalRequestForm;
+export default BloodBankRequestForm;

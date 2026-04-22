@@ -86,22 +86,25 @@ const Indlogin = () => {
 
     // ✅ STORE USER
     if (response.data.user) {
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      sessionStorage.setItem("user", JSON.stringify(response.data.user));
       navigate("/home");
     }
 
-    if (response.data.type === "hospital") {
-         localStorage.setItem("token", response.data.token); 
-         localStorage.setItem("orgType", response.data.type);
-         localStorage.setItem("orgData", JSON.stringify(response.data.data));
-         navigate("/hospital/dashboard");
-    }
+   if (response.data.type === "hospital") {
+       sessionStorage.setItem("hospitalToken", response.data.token);
+       sessionStorage.setItem("hospitalType", response.data.type);
+       sessionStorage.setItem("hospitalData", JSON.stringify(response.data.data));
 
-     if (response.data.type === "bloodbank") {
-         localStorage.setItem("orgType", response.data.type);
-         localStorage.setItem("orgData", JSON.stringify(response.data.data));
-         navigate("/bloodbank/dashboard");
-    }
+       navigate("/hospital/dashboard");
+      }
+
+      if (response.data.type === "bloodbank") {
+          sessionStorage.setItem("bloodBankToken", response.data.token);
+          sessionStorage.setItem("bloodBankType", response.data.type);
+          sessionStorage.setItem("bloodBankData", JSON.stringify(response.data.data));
+
+          navigate("/bloodbank/dashboard");
+       }
 
     
 

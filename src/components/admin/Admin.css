@@ -200,6 +200,36 @@
   background: #b91c1c;
 }
 
+.detailed-card {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.detailed-card h3 {
+  color: #111827;
+  margin-bottom: 12px;
+  font-size: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.detailed-card p {
+  margin: 6px 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.detailed-card strong {
+  color: #111827;
+}
+
+.admin-actions {
+  margin-top: 18px;
+}
+
 /* ===== UNBLOCK BUTTON ===== */
 .unblock {
   background: #16a34a;

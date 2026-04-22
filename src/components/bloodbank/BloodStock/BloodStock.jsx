@@ -7,7 +7,7 @@ const BloodStock = () => {
   const [selected, setSelected] = useState(null);
   const [addUnits, setAddUnits] = useState("");
 
-  const hospitalToken = sessionStorage.getItem("hospitalToken");
+ const bloodBankToken = sessionStorage.getItem("bloodBankToken");
 
   const getStatus = (units) => {
     if (units < 30) return "Critical";
@@ -19,10 +19,10 @@ const BloodStock = () => {
     const fetchStock = async () => {
       try {
         const res = await axios.get(
-          "https://localhost:7156/api/HospitalBloodStock",
+          "https://localhost:7156/api/BloodBankBloodStock",
           {
             headers: {
-              Authorization: `Bearer ${hospitalToken}`
+              Authorization: `Bearer ${bloodBankToken}`
             }
           }
         );
@@ -51,10 +51,10 @@ const BloodStock = () => {
       }
     };
 
-    if (hospitalToken) {
+    if (bloodBankToken) {
       fetchStock();
     }
-  }, [hospitalToken]);
+  }, [bloodBankToken]);
 
   const openModal = (item) => {
     setSelected(item);
@@ -69,10 +69,10 @@ const BloodStock = () => {
   const refreshStock = async () => {
     try {
       const res = await axios.get(
-        "https://localhost:7156/api/HospitalBloodStock",
+        "https://localhost:7156/api/BloodBankBloodStock",
         {
           headers: {
-            Authorization: `Bearer ${hospitalToken}`
+            Authorization: `Bearer ${bloodBankToken}`
           }
         }
       );
@@ -104,14 +104,14 @@ const BloodStock = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        "https://localhost:7156/api/HospitalBloodStock/update",
+        "https://localhost:7156/api/BloodBankBloodStock/update",
         {
           bloodGroup: selected.type,
           units: parseInt(addUnits)
         },
         {
           headers: {
-            Authorization: `Bearer ${hospitalToken}`
+            Authorization: `Bearer ${bloodBankToken}`
           }
         }
       );

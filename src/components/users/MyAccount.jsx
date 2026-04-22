@@ -2,7 +2,7 @@ import React from "react";
 import "./MyAccount.css";
 
 const MyAccount = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
  
 

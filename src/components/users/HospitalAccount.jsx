@@ -3,7 +3,7 @@ import "./MyAccount.css";
 
 const HospitalAccount = () => {
 
-  const hospital = JSON.parse(localStorage.getItem("orgData"));
+  const hospital = JSON.parse(sessionStorage.getItem("hospitalData"));
 
   return (
        <div className="account-overlay">

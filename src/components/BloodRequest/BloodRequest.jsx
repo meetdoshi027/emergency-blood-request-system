@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 const BloodRequest = () => {
   const navigate = useNavigate();
   const handleRequestClick = () => {
-  const user = localStorage.getItem("user");
+  const user = sessionStorage.getItem("user");
 
   if (!user) {
     alert("Please login first");
@@ -72,11 +72,7 @@ const BloodRequest = () => {
                 Smart matching connects patients with compatible donors quickly.
               </motion.p>
 
-              <div className="quick-tags">
-                <span className="tag urgent">O- Universal</span>
-                <span className="tag rare">AB- Rare</span>
-                <span className="tag urgent">A+ Demand</span>
-              </div>
+             
             </div>
 
             <div className="image-side">
@@ -126,7 +122,12 @@ const BloodRequest = () => {
             <p>Our support team is available 24/7.</p>
 
             <div className="cta-actions">
-              <button className="primary-btn-new">Become Donor</button>
+                <button
+                  className="primary-btn-new"
+                  onClick={() => navigate("/donate")}
+                >
+                  Become Donor
+                </button>
             </div>
           </div>
         </section>
