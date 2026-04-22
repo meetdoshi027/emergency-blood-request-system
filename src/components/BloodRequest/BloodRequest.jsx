@@ -98,25 +98,25 @@ const BloodRequest = () => {
 
             <div className="wave-line"></div>
 
-            <div className="wave-step">
+            <motion.div initial={{opacity:0,scale:0.6}} whileInView={{opacity:1,scale:1}} transition={{delay:1,type:"spring"}} viewport={{once:"true"}} className="wave-step">
               <div className="step-circle">2</div>
               <h4>Notify Donors</h4>
               <p>Nearby donors get alerts instantly.</p>
-            </div>
+            </motion.div>
 
             <div className="wave-line"></div>
 
-            <div className="wave-step">
+            <motion.div initial={{opacity:0,scale:0.6}} whileInView={{opacity:1,scale:1}} transition={{delay:1,type:"spring"}} viewport={{once:"true"}} className="wave-step">
               <div className="step-circle">3</div>
               <h4>Receive Help</h4>
               <p>Donors reach hospital quickly.</p>
-            </div>
+            </motion.div>
 
           </div>
         </section>
 
         {/* CTA */}
-        <section className="creative-cta">
+        <motion.section initial={{opacity:0,scale:0.8}} whileInView={{opacity:1,scale:1}} transition={{delay:1,type:"spring"}} viewport={{once:"true"}} className="creative-cta">
           <div className="cta-glass">
             <h3>Need Immediate Help?</h3>
             <p>Our support team is available 24/7.</p>
@@ -130,7 +130,7 @@ const BloodRequest = () => {
                 </button>
             </div>
           </div>
-        </section>
+        </motion.section>
 
       </div>
 
